@@ -165,6 +165,7 @@ return [
         /*
          * Package Service Providers...
          */
+        App\Larapid\LarapidServiceProvider::class,
 
         /*
          * Application Service Providers...
