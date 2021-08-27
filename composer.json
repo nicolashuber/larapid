@@ -1,0 +1,48 @@
+{
+    "name": "internexus/larapid",
+    "description": "A simple free alternative for Laravel Nova.",
+    "keywords": [
+      "laravel",
+      "admin"
+    ],
+    "license": "MIT",
+    "authors": [
+      {
+        "name": "Nicolas Huber",
+        "email": "nicolasluishuber@gmail.copm"
+      }
+    ],
+    "require": {
+      "php": "^7.2.5|^8.0",
+      "illuminate/support": "^7.0|^8.0"
+    },
+    "require-dev": {
+      "mockery/mockery": "^1.3.3|^1.4.2"
+    },
+    "autoload": {
+      "psr-4": {
+        "Internexus\\Larapid\\": "src/"
+      }
+    },
+    "autoload-dev": {
+      "psr-4": {
+        "Internexus\\Larapid\\Tests\\": "tests/"
+      }
+    },
+    "extra": {
+      "laravel": {
+        "providers": [
+          "Internexus\\Larapid\\LarapidServiceProvider"
+        ],
+        "aliases": {
+          "Larapid": "Internexus\\Larapid\\Facades\\Larapid"
+        }
+      }
+    },
+    "config": {
+      "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "version": "0.0.0"
+  }
