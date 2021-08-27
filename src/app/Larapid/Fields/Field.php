@@ -111,9 +111,10 @@ abstract class Field
      */
     public function render()
     {
-        $blade = explode('\\', strtolower(get_class($this)));
+        $namespaces = explode('\\', get_class($this));
+        $bladeName = lcfirst(array_pop($namespaces));
 
-        return view('larapid::fields.' . array_pop($blade), [
+        return view('larapid::fields.' . $bladeName, [
             'field' => $this
         ]);
     }

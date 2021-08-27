@@ -2,6 +2,8 @@
 
 namespace App\Larapid\Repos;
 
+use Illuminate\Database\Eloquent\Model;
+
 class LarapidRepository
 {
     /**
@@ -14,11 +16,11 @@ class LarapidRepository
     /**
      * Construct.
      *
-     * @param string $model
+     * @param Model $model
      */
-    public function __construct($model)
+    public function __construct(Model $model)
     {
-        $this->model = new $model;
+        $this->model = $model;
     }
 
     /**

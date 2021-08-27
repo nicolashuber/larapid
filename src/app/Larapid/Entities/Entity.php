@@ -12,6 +12,28 @@ abstract class Entity
     public static $model;
 
     /**
+     * Entity title column.
+     *
+     * @var string
+     */
+    public static $title = 'name';
+
+    /**
+     * Indicates if the resource should be displayed in the sidebar.
+     *
+     * @var bool
+     */
+    public static $displayInNavigation = false;
+
+    /**
+     * The logical group associated with the entity.
+     *
+     * @var string
+     */
+    public static $group ;
+
+
+    /**
      * Define entity fields.
      *
      * @return array
@@ -37,6 +59,11 @@ abstract class Entity
         }
 
         return route("larapid.{$action}", [$this->slug()]);
+    }
+
+    public function model()
+    {
+        return new static::$model;
     }
 
     /**

@@ -20,7 +20,7 @@ class LarapidController extends Controller
      */
     public function index(Entity $entity)
     {
-        $repo = new LarapidRepository($entity::$model);
+        $repo = new LarapidRepository($entity->model());
 
         return view('larapid::index', [
             'items' => $repo->list(),
@@ -50,7 +50,7 @@ class LarapidController extends Controller
      */
     public function store($entity, LarapidRequest $request)
     {
-        $repo = new LarapidRepository($entity::$model);
+        $repo = new LarapidRepository($entity->model());
         $repo->store($request->all());
 
         return redirect()->route("larapid.index", [$entity->slug()]);
@@ -65,7 +65,7 @@ class LarapidController extends Controller
      */
     public function edit($entity, $id)
     {
-        $repo = new LarapidRepository($entity::$model);
+        $repo = new LarapidRepository($entity->model());
         $item = $repo->find($id);
 
         return view('larapid::edit', [
@@ -85,7 +85,7 @@ class LarapidController extends Controller
      */
     public function update($entity, $id, LarapidRequest $request)
     {
-        $repo = new LarapidRepository($entity::$model);
+        $repo = new LarapidRepository($entity->model());
         $repo->update($id, $request->all());
 
         return redirect()->route("larapid.edit", [$entity->slug(), $id]);
@@ -100,7 +100,7 @@ class LarapidController extends Controller
      */
     public function destroy($entity, $id)
     {
-        $repo = new LarapidRepository($entity::$model);
+        $repo = new LarapidRepository($entity->model());
         $repo->destroy($id);
 
         return redirect()->route("larapid.index", [$entity->slug()]);

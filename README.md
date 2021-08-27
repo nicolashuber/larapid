@@ -1,4 +1,4 @@
-# Lararapid
+# Larapid
 
 A Docker environment for developing Laravel applications.
 

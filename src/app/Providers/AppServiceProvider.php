@@ -15,7 +15,9 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         Larapid::entities([
-            \App\Larapid\Entities\UserEntity::class
+            \App\Larapid\Entities\PostEntity::class,
+            \App\Larapid\Entities\UserEntity::class,
+            \App\Larapid\Entities\CategoryEntity::class,
         ]);
     }
 
