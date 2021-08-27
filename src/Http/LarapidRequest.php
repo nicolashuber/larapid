@@ -23,6 +23,6 @@ class LarapidRequest extends FormRequest
      */
     public function rules()
     {
-        return $this->entity->validators();
+        return $this->entity->rules($this->method());
     }
 }

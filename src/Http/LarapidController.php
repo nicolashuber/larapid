@@ -2,12 +2,12 @@
 
 namespace Internexus\Larapid\Http;
 
-use Internexus\Larapid\Entities\Entity;
-use Internexus\Larapid\Repos\LarapidRepository;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller;
+use Internexus\Larapid\Entities\Entity;
+use Internexus\Larapid\Repos\LarapidRepository;
 
 class LarapidController extends Controller
 {

@@ -123,17 +123,25 @@ abstract class Entity
     }
 
     /**
-     * Get entity validators.
+     * Get entity validators rules.
      *
      * @return array
      */
-    public function validators()
+    public function rules($method)
     {
         $validators = [];
 
         foreach ($this->fields() as $field) {
-            if ($field->validators) {
-                $validators[$field->column] = $field->validators;
+            if ($field->rules) {
+                $rules = $field->rules;
+
+                if ($method == 'POST' && $field->creationRules) {
+                    $rules =  array_merge($rules, $field->creationRules);
+                } else if ($method == 'PUT' && $field->creationRules) {
+                    $rules =  array_merge($rules, $field->updateRules);
+                }
+
+                $validators[$field->column] = $rules;
             }
         }
 

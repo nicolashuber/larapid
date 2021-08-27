@@ -2,8 +2,8 @@
 
 namespace Internexus\Larapid;
 
-use Internexus\Larapid\Entities\Entity;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Internexus\Larapid\Entities\Entity;
 use ReflectionClass;
 
 class Larapid

@@ -2,10 +2,10 @@
 
 namespace Internexus\Larapid;
 
-use Internexus\Larapid\Facades\Larapid as Facade;
-use Internexus\Larapid\Larapid;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Internexus\Larapid\Facades\Larapid as Facade;
+use Internexus\Larapid\Larapid;
 
 class LarapidServiceProvider extends ServiceProvider
 {

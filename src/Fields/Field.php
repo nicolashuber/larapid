@@ -35,11 +35,39 @@ abstract class Field
     public $placeholder;
 
     /**
-     * Field validators.
+     * Field rules.
      *
      * @var array
      */
-    public $validators;
+    public $rules = [];
+
+    /**
+     * Field rules to creation.
+     *
+     * @var array
+     */
+    public $creationRules = [];
+
+    /**
+     * Field rules to update.
+     *
+     * @var array
+     */
+    public $updateRules = [];
+
+    /**
+     * Field helper text.
+     *
+     * @var array
+     */
+    public $helper;
+
+    /**
+     * Field component name.
+     *
+     * @var string
+     */
+    public static $component;
 
     /**
      * Construct a field.
@@ -92,14 +120,53 @@ abstract class Field
     }
 
     /**
-     * Set validators to field.
+     * Set rules to field.
      *
-     * @param string $validators
+     * @param string $rules
      * @return self
      */
-    public function validators($validators)
+    public function rules($rules)
     {
-        $this->validators = $validators;
+        $this->rules = $rules;
+
+        return $this;
+    }
+
+    /**
+     * Set rules to creation.
+     *
+     * @param string $rules
+     * @return self
+     */
+    public function creationRules($rules)
+    {
+        $this->creationRules = $rules;
+
+        return $this;
+    }
+
+    /**
+     * Set rules to update.
+     *
+     * @param string $rules
+     * @return self
+     */
+    public function updateRules($rules)
+    {
+        $this->updateRules = $rules;
+
+        return $this;
+    }
+
+    /**
+     * Set field helper text.
+     *
+     * @param string $help
+     * @return self
+     */
+    public function help($help)
+    {
+        $this->help = $help;
 
         return $this;
     }
@@ -111,10 +178,7 @@ abstract class Field
      */
     public function render()
     {
-        $namespaces = explode('\\', get_class($this));
-        $bladeName = lcfirst(array_pop($namespaces));
-
-        return view('larapid::fields.' . $bladeName, [
+        return view('larapid::fields.' . static::$component, [
             'field' => $this
         ]);
     }
