@@ -106,20 +106,19 @@ abstract class Entity
      * @param mixed $model
      * @return string
      */
-    public function renderForm($model = null)
+    public function getFields($model = null)
     {
-        $html = '';
+        $fields = [];
 
         foreach ($this->fields() as $field) {
             if ($model) {
-                $value = $model->{$field->column} ?? null;
-                $field->value($value);
+                $field->value($model->{$field->column} ?? null);
             }
 
-            $html .= $field->render();
+            $fields[$field->column] = $field->getProps();
         }
 
-        return $html;
+        return $fields;
     }
 
     /**

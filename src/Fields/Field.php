@@ -60,7 +60,7 @@ abstract class Field
      *
      * @var array
      */
-    public $helper;
+    public $help;
 
     /**
      * Field component name.
@@ -176,10 +176,15 @@ abstract class Field
      *
      * @return \Illuminate\View\View
      */
-    public function render()
+    public function getProps()
     {
-        return view('larapid::fields.' . static::$component, [
-            'field' => $this
-        ]);
+        return [
+            'name' => $this->column,
+            'label' => $this->label,
+            'value' => $this->value,
+            'help' => $this->help,
+            'component' => static::$component,
+            'placeholder' => $this->placeholder
+        ];
     }
 }

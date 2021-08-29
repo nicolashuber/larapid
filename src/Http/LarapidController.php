@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller;
+use Inertia\Inertia;
 use Internexus\Larapid\Entities\Entity;
 use Internexus\Larapid\Repos\LarapidRepository;
 
@@ -22,9 +23,10 @@ class LarapidController extends Controller
     {
         $repo = new LarapidRepository($entity->model());
 
-        return view('larapid::index', [
-            'items' => $repo->list(),
-            'entity' => $entity,
+        return Inertia::render('Index', [
+            'data' => $repo->list(),
+            'headers' => $entity->headers(),
+            'createRoute' => $entity->route(null, 'create')
         ]);
     }
 
@@ -35,9 +37,9 @@ class LarapidController extends Controller
      */
     public function create($entity)
     {
-        return view('larapid::create', [
+        return Inertia::render('Create', [
             'route' => $entity->route(null, 'store'),
-            'fields' => $entity->renderForm(),
+            'fields' => $entity->getFields()
         ]);
     }
 
@@ -66,12 +68,12 @@ class LarapidController extends Controller
     public function edit($entity, $id)
     {
         $repo = new LarapidRepository($entity->model());
-        $item = $repo->find($id);
+        $data = $repo->find($id);
 
-        return view('larapid::edit', [
-            'item' => $item,
-            'route' => $entity->route($id, 'update'),
-            'fields' => $entity->renderForm($item),
+        return Inertia::render('Edit', [
+            'data' => $data,
+            'fields' => $entity->getFields(),
+            'route' => $entity->route($id, 'update')
         ]);
     }
 

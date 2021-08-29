@@ -4,6 +4,8 @@ namespace Internexus\Larapid;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Inertia\ServiceProvider as InertiaServiceProvider;
+use Internexus\Larapid\Http\Middleware\HandleInertiaRequests;
 use Internexus\Larapid\Facades\Larapid as Facade;
 use Internexus\Larapid\Larapid;
 
@@ -32,7 +34,14 @@ class LarapidServiceProvider extends ServiceProvider
             return Facade::resolveEntity($entity);
         });
 
+        $this->app->register(InertiaServiceProvider::class);
+        $this->app->router->aliasMiddleware('larapid.inertia', HandleInertiaRequests::class);
+
         $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'larapid');
+
+        $this->publishes([
+            __DIR__.'/../public' => public_path('vendor/larapid'),
+        ], 'public');
     }
 }

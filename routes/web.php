@@ -8,7 +8,7 @@ use Internexus\Larapid\Http\LarapidController;
 | CMS Web Routes
 |--------------------------------------------------------------------------
 */
-Route::prefix('cms')->middleware('web')->group(function() {
+Route::prefix('cms')->middleware(['web', 'larapid.inertia'])->group(function() {
     Route::get('/{entity}', [LarapidController::class, 'index'])->name('larapid.index');
     Route::post('/{entity}', [LarapidController::class, 'store'])->name('larapid.store');
     Route::get('/{entity}/create', [LarapidController::class, 'create'])->name('larapid.create');

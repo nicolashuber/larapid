@@ -31,7 +31,7 @@ class LarapidRepository
      */
     public function list($perPage = 25)
     {
-        return $this->model->paginate($perPage);
+        return $this->model->latest()->paginate($perPage);
     }
 
     /**
