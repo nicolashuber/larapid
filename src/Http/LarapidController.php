@@ -55,7 +55,7 @@ class LarapidController extends Controller
         $repo = new LarapidRepository($entity->model());
         $repo->store($request->all());
 
-        return redirect()->route("larapid.index", [$entity->slug()]);
+        return redirect()->route("larapid.index", [$entity::slug()]);
     }
 
     /**
@@ -90,7 +90,7 @@ class LarapidController extends Controller
         $repo = new LarapidRepository($entity->model());
         $repo->update($id, $request->all());
 
-        return redirect()->route("larapid.edit", [$entity->slug(), $id]);
+        return redirect()->route("larapid.edit", [$entity::slug(), $id]);
     }
 
     /**
@@ -105,6 +105,6 @@ class LarapidController extends Controller
         $repo = new LarapidRepository($entity->model());
         $repo->destroy($id);
 
-        return redirect()->route("larapid.index", [$entity->slug()]);
+        return redirect()->route("larapid.index", [$entity::slug()]);
     }
 }

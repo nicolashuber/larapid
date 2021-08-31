@@ -51,4 +51,25 @@ class Larapid
 
         throw new ModelNotFoundException;
     }
+
+    /**
+     * Get entities menu items.
+     *
+     * @return array
+     */
+    public function menu()
+    {
+        $items = [];
+
+        foreach ($this->entities as $entity) {
+            if ($entity::$displayInNavigation) {
+                $items[] = [
+                    'route' => route('larapid.index', [$entity::slug()]),
+                    'label' => $entity::$title
+                ];
+            }
+        }
+
+        return $items;
+    }
 }

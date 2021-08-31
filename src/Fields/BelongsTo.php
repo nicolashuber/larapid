@@ -40,7 +40,7 @@ class BelongsTo extends Field
         if ($entity) {
             $model = $entity->model();
 
-            return $model->pluck($entity::$title, $model->getKeyName())->all();
+            return $model->pluck($entity::$titleColumn, $model->getKeyName())->all();
         }
 
         return [];

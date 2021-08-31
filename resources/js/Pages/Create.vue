@@ -1,6 +1,6 @@
 <template>
-    <app>
-        <h3>Create.vue</h3>
+    <app :menu="menu">
+        <h3>Create</h3>
         <l-form
             :route="route"
             :errors="errors"
@@ -20,6 +20,10 @@ export default {
         route: {
             type: String,
             required: true
+        },
+        menu: {
+            type: Array,
+            default: []
         },
         errors: {
             type: Object,

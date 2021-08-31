@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="onSubmit">
+    <form @submit.prevent="onSubmit" class="form">
         {{ errors }}
 
         <div v-for="(field, index) of fields" :key="index">
@@ -11,7 +11,7 @@
                 />
             </l-field>
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </template>
 

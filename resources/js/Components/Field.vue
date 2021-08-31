@@ -1,6 +1,8 @@
 <template>
-    <div>
-        <label v-if="name" :for="name">{{ label }}</label>
+    <div class="mb-3">
+        <label v-if="name" :for="name" class="form-label">
+            {{ label }}
+        </label>
         <slot />
     </div>
 </template>

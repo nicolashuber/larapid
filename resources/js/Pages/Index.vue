@@ -1,8 +1,9 @@
 <template>
-    <app>
-        <h3>Index.vue</h3>
-        <Link :href="createRoute">Create new</Link>
-        <table>
+    <app :menu="menu">
+        <l-page-header title="Index">
+            <Link :href="createRoute" class="btn btn-secondary">Create new</Link>
+        </l-page-header>
+        <table class="table table-striped table-bordered bg-white">
             <thead>
                 <tr>
                     <th v-for="(header, column) in headers" :key="column">
@@ -34,6 +35,10 @@ export default {
         data: {
             type: Array,
             required: true
+        },
+        menu: {
+            type: Array,
+            default: []
         },
         headers: {
             type: Array,

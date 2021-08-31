@@ -1,10 +1,11 @@
 import { createApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/inertia-vue3'
+import { InertiaProgress } from '@inertiajs/progress'
 import components from '@/Components'
 
-for (const name in components) {
-    console.log(`l-${name}`);
-}
+InertiaProgress.init({
+    color: '#0d6efd'
+})
 
 createInertiaApp({
     resolve: name => require(`./Pages/${name}`),

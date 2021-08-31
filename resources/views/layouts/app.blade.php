@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Larapid</title>
-    {{-- <link href="{{ mix('/css/app.css', 'vendor/larapid') }}" rel="stylesheet" /> --}}
+    <link href="{{ mix('/css/app.css', 'vendor/larapid') }}" rel="stylesheet" />
 </head>
 <body>
     @inertia

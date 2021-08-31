@@ -1,6 +1,6 @@
 <template>
-    <app>
-        <h3>Edit.vue</h3>
+    <app :menu="menu">
+        <h3>Edit</h3>
         <l-form
             :data="data"
             :route="route"
@@ -22,6 +22,10 @@ export default {
         data: {
             type: Object,
             required: true
+        },
+        menu: {
+            type: Array,
+            default: []
         },
         route: {
             type: String,

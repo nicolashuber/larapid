@@ -1,0 +1,17 @@
+.aside {
+    width: $aside-width;
+    height: 100vh;
+    background: $aside-bg;
+    top: 0;
+    left: auto;
+    position: fixed;
+
+    &-header {
+        height: $header-height;
+        color: $white;
+        font-weight: $font-weight-bold;
+        line-height: $header-height;
+        text-align: center;
+        background: lighten($aside-bg, 3%);
+    }
+}

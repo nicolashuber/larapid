@@ -10,13 +10,17 @@
     "production": "mix --production"
   },
   "dependencies": {
-    "postcss": "^8.3.6"
+    "bootstrap": "^5.1.0"
   },
   "devDependencies": {
     "@inertiajs/inertia": "^0.10.1",
     "@inertiajs/inertia-vue3": "^0.5.2",
+    "@inertiajs/progress": "^0.2.6",
     "@vue/compiler-sfc": "^3.2.6",
     "laravel-mix": "^6.0.0-beta.17",
+    "resolve-url-loader": "^4.0.0",
+    "sass": "^1.38.2",
+    "sass-loader": "^12.1.0",
     "vue": "^3.2.6",
     "vue-loader": "^16.5.0"
   }

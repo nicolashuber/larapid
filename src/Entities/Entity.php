@@ -12,26 +12,32 @@ abstract class Entity
     public static $model;
 
     /**
+     * Entity title.
+     *
+     * @var string
+     */
+    public static $title = 'Entity';
+
+    /**
      * Entity title column.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $titleColumn = 'name';
 
     /**
      * Indicates if the resource should be displayed in the sidebar.
      *
      * @var bool
      */
-    public static $displayInNavigation = false;
+    public static $displayInNavigation = true;
 
     /**
      * The logical group associated with the entity.
      *
      * @var string
      */
-    public static $group ;
-
+    public static $group;
 
     /**
      * Define entity fields.
@@ -55,10 +61,10 @@ abstract class Entity
         $requiredId = $action == 'update' || $action == 'edit' || $action == 'destroy';
 
         if ($id && $requiredId) {
-            return route("larapid.{$action}", [$this->slug(), $id]);
+            return route("larapid.{$action}", [$this::slug(), $id]);
         }
 
-        return route("larapid.{$action}", [$this->slug()]);
+        return route("larapid.{$action}", [$this::slug()]);
     }
 
     /**
@@ -76,9 +82,9 @@ abstract class Entity
      *
      * @return string
      */
-    public function slug()
+    public static function slug()
     {
-        $classname = strtolower(get_class($this));
+        $classname = strtolower(get_called_class());
         $classpath = explode('\\', str_replace('entity', '', $classname));
 
         return array_pop($classpath);

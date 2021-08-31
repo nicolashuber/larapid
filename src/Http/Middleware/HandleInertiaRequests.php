@@ -4,6 +4,7 @@ namespace Internexus\Larapid\Http\Middleware;
 
 use Illuminate\Http\Request;
 use Inertia\Middleware;
+use Internexus\Larapid\Facades\Larapid;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -37,7 +38,7 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request)
     {
         return array_merge(parent::share($request), [
-            //
+            'menu' => Larapid::menu()
         ]);
     }
 }

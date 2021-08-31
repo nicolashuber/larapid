@@ -19,9 +19,7 @@ mix.alias({
 })
 
 mix.js('resources/js/app.js', 'public/js').vue().sourceMaps()
-    // .postCss('resources/css/app.css', 'public/css', [
-    //     //
-    // ]);
+mix.sass('resources/scss/app.scss', 'public/css').sourceMaps()
 
 if (mix.inProduction()) {
     mix.version()
