@@ -172,14 +172,25 @@ abstract class Field
     }
 
     /**
-     * Render field.
+     * Get field extra data.
      *
-     * @return \Illuminate\View\View
+     * @return mixed
+     */
+    public function getData()
+    {
+        //
+    }
+
+    /**
+     * Get field props.
+     *
+     * @return array
      */
     public function getProps()
     {
         return [
             'name' => $this->column,
+            'data' => $this->getData(),
             'label' => $this->label,
             'value' => $this->value,
             'help' => $this->help,

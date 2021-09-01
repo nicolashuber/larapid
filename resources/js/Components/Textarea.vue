@@ -1,9 +1,9 @@
 <template>
-    <l-input
-        type="text"
+    <textarea
         :name="name"
         :value="modelValue"
         :placeholder="placeholder"
+        class="form-control"
         @input="onInput"
     />
 </template>

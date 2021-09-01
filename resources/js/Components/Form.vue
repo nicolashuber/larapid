@@ -4,9 +4,11 @@
 
         <div v-for="(field, index) of fields" :key="index">
             <l-field :name="field.name" :label="field.label">
-                <l-text
+                <component
                     v-model="form[field.name]"
+                    :is="`l-${field.component}`"
                     :name="field.name"
+                    :data="field.data"
                     :placeholder="field.placeholder"
                 />
             </l-field>

@@ -33,7 +33,7 @@ export default {
     },
     props: {
         data: {
-            type: Array,
+            type: Object,
             required: true
         },
         menu: {
@@ -41,7 +41,7 @@ export default {
             default: []
         },
         headers: {
-            type: Array,
+            type: Object,
             required: true
         },
         createRoute: {

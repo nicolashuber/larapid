@@ -11,7 +11,7 @@ class BelongsTo extends Field
      *
      * @var string
      */
-    public static $component = 'belongsTo';
+    public static $component = 'belongs-to';
 
     /**
      * Construct a field.
@@ -33,7 +33,7 @@ class BelongsTo extends Field
      *
      * @return array
      */
-    public function options()
+    public function getData()
     {
         $entity = Larapid::resolveEntity(strtolower($this->label));
 

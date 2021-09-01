@@ -1,9 +1,10 @@
 <template>
-    <l-input
-        type="text"
+    <input
+        :type="type"
         :name="name"
         :value="modelValue"
         :placeholder="placeholder"
+        class="form-control"
         @input="onInput"
     />
 </template>
@@ -12,6 +13,12 @@
 import inputMixin from './inputMixin';
 
 export default {
-    mixins: [inputMixin]
+    mixins: [inputMixin],
+    props: {
+        type: {
+            type: String,
+            default: 'text'
+        }
+    }
 }
 </script>

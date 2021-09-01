@@ -1,6 +1,6 @@
 <template>
     <l-input
-        type="text"
+        type="email"
         :name="name"
         :value="modelValue"
         :placeholder="placeholder"

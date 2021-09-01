@@ -1,8 +1,8 @@
 <template>
-    <l-input
-        type="text"
+    <l-select
         :name="name"
         :value="modelValue"
+        :options="data"
         :placeholder="placeholder"
         @input="onInput"
     />
