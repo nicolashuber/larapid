@@ -1,9 +1,6 @@
 <template>
     <textarea
-        :name="name"
-        :value="modelValue"
-        :placeholder="placeholder"
-        class="form-control"
+        v-bind="inputBinding"
         @input="onInput"
     />
 </template>

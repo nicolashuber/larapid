@@ -29,11 +29,25 @@ class BelongsTo extends Field
     }
 
     /**
+     * Get field value.
+     *
+     * @return mixed
+     */
+    public function getValue()
+    {
+        $data = $this->getOptions();
+
+        if (isset($data[$this->value])) {
+            return $data[$this->value];
+        }
+    }
+
+    /**
      * Get select options.
      *
      * @return array
      */
-    public function getData()
+    public function getOptions()
     {
         $entity = Larapid::resolveEntity(strtolower($this->label));
 

@@ -172,11 +172,21 @@ abstract class Field
     }
 
     /**
-     * Get field extra data.
+     * Get field value.
      *
      * @return mixed
      */
-    public function getData()
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    /**
+     * Get field options.
+     *
+     * @return mixed
+     */
+    public function getOptions()
     {
         //
     }
@@ -190,12 +200,12 @@ abstract class Field
     {
         return [
             'name' => $this->column,
-            'data' => $this->getData(),
             'label' => $this->label,
-            'value' => $this->value,
+            'value' => $this->getValue(),
             'help' => $this->help,
             'component' => static::$component,
-            'placeholder' => $this->placeholder
+            'placeholder' => $this->placeholder,
+            'options' => $this->getOptions(),
         ];
     }
 }

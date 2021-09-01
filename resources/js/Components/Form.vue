@@ -1,14 +1,13 @@
 <template>
     <form @submit.prevent="onSubmit" class="form">
-        {{ errors }}
-
         <div v-for="(field, index) of fields" :key="index">
-            <l-field :name="field.name" :label="field.label">
+            <l-field :name="field.name" :label="field.label" :error="errors[field.name]">
                 <component
                     v-model="form[field.name]"
                     :is="`l-${field.component}`"
                     :name="field.name"
-                    :data="field.data"
+                    :options="field.options"
+                    :hasError="errors[field.name] != undefined"
                     :placeholder="field.placeholder"
                 />
             </l-field>

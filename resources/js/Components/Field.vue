@@ -4,6 +4,9 @@
             {{ label }}
         </label>
         <slot />
+        <div v-if="error" class="invalid-feedback">
+            {{ error }}
+        </div>
     </div>
 </template>
 
@@ -14,6 +17,12 @@ export default {
             type: String
         },
         label: {
+            type: String
+        },
+        help: {
+            type: String
+        },
+        error: {
             type: String
         }
     }

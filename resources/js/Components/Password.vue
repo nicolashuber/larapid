@@ -1,9 +1,7 @@
 <template>
     <l-input
+        v-bind="inputBinding"
         type="password"
-        :name="name"
-        :value="modelValue"
-        :placeholder="placeholder"
         @input="onInput"
     />
 </template>

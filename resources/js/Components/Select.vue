@@ -3,7 +3,7 @@
         :name="name"
         :value="modelValue"
         :placeholder="placeholder"
-        class="form-control"
+        :class="inputClasses"
         @input="onInput"
     >
         <option v-if="placeholder" value="">{{ placeholder }}</option>
@@ -17,12 +17,6 @@
 import inputMixin from './inputMixin';
 
 export default {
-    mixins: [inputMixin],
-    props: {
-        options: {
-            type: Object,
-            required: true
-        }
-    }
+    mixins: [inputMixin]
 }
 </script>

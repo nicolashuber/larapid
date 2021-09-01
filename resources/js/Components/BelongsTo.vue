@@ -2,7 +2,8 @@
     <l-select
         :name="name"
         :value="modelValue"
-        :options="data"
+        :options="options"
+        :hasError="hasError"
         :placeholder="placeholder"
         @input="onInput"
     />
