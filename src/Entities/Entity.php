@@ -2,6 +2,8 @@
 
 namespace Internexus\Larapid\Entities;
 
+use Illuminate\Database\Eloquent\Model;
+
 abstract class Entity
 {
     /**
@@ -50,6 +52,46 @@ abstract class Entity
     }
 
     /**
+     * Define entity fields for index.
+     *
+     * @return array
+     */
+    public function fieldsForIndex()
+    {
+        return [];
+    }
+
+    /**
+     * Define entity fields for detail.
+     *
+     * @return array
+     */
+    public function fieldsForDetail()
+    {
+        return [];
+    }
+
+    /**
+     * Define entity fields for create.
+     *
+     * @return array
+     */
+    public function fieldsForCreate()
+    {
+        return [];
+    }
+
+    /**
+     * Define entity fields for update.
+     *
+     * @return array
+     */
+    public function fieldsForUpdate()
+    {
+        return [];
+    }
+
+    /**
      * Get route URL.
      *
      * @param int|null $id
@@ -91,40 +133,104 @@ abstract class Entity
     }
 
     /**
-     * Get entity headers.
+     * Get entity columnns.
      *
      * @return array
      */
-    public function headers()
+    public function getHeaders()
     {
         $headers = [];
 
         foreach ($this->fields() as $field) {
-            $headers[$field->column] = $field->label;
+            if ($field->isVisibleOnIndex()) {
+                $headers[$field->getColumn()] = $field->getLabel();
+            }
         }
 
         return $headers;
     }
 
     /**
-     * Render entity form.
+     * Filter fields by visibility.
      *
-     * @param mixed $model
-     * @return string
+     * @param array $fields
+     * @param string|null $page
+     * @param Model|null $model
+     * @return array
      */
-    public function getFields($model = null)
+    private function filterFields($fields, $page = null, Model $model = null)
     {
-        $fields = [];
+        $data = [];
+        $fields = count($fields) > 0 ? $fields : $this->fields();
+        $visibilityMethod = 'isVisibleOn' . ucfirst($page);
 
-        foreach ($this->fields() as $field) {
+        foreach ($fields as $field) {
+            $column = $field->getColumn();
+
             if ($model) {
-                $field->value($model->{$field->column} ?? null);
+                $field->value($model->{$column} ?? null);
             }
 
-            $fields[$field->column] = $field->getProps();
+            if ($page && $field->{$visibilityMethod}()) {
+                $data[$column] = $field->getProps();
+            }
         }
 
-        return $fields;
+        return $data;
+    }
+
+    /**
+     * Get all fields.
+     *
+     * @param Model $model
+     * @return array
+     */
+    public function getFields(Model $model = null)
+    {
+        return $this->filterFields($this->fields(), null, $model);
+    }
+
+    /**
+     * Get fields for index.
+     *
+     * @param Model $model
+     * @return array
+     */
+    public function getIndexFields(Model $model)
+    {
+        return $this->filterFields($this->fieldsForIndex(), 'index', $model);
+    }
+
+    /**
+     * Get fields for detail.
+     *
+     * @param Model $model
+     * @return array
+     */
+    public function getDetailFields(Model $model)
+    {
+        return $this->filterFields($this->fieldsForDetail(), 'detail', $model);
+    }
+
+    /**
+     * Get fields when creating.
+     *
+     * @return array
+     */
+    public function getCreatingFields()
+    {
+        return $this->filterFields($this->fieldsForCreate(), 'creating');
+    }
+
+    /**
+     * Get fields when updating.
+     *
+     * @param Model $model
+     * @return array
+     */
+    public function getUpdatingFields(Model $model)
+    {
+        return $this->filterFields($this->fieldsForUpdate(), 'updating', $model);
     }
 
     /**
@@ -137,16 +243,16 @@ abstract class Entity
         $validators = [];
 
         foreach ($this->fields() as $field) {
-            if ($field->rules) {
-                $rules = $field->rules;
+            $rules = $field->getRules();
 
-                if ($method == 'POST' && $field->creationRules) {
-                    $rules =  array_merge($rules, $field->creationRules);
-                } else if ($method == 'PUT' && $field->creationRules) {
-                    $rules =  array_merge($rules, $field->updateRules);
+            if ($rules) {
+                if ($method == 'POST') {
+                    $rules =  array_merge($rules, $field->getCreationRules());
+                } else if ($method == 'PUT') {
+                    $rules =  array_merge($rules, $field->getUpdateRules());
                 }
 
-                $validators[$field->column] = $rules;
+                $validators[$field->getColumn()] = $rules;
             }
         }
 

@@ -11,63 +11,98 @@ abstract class Field
      *
      * @var string
      */
-    public $label;
+    protected $label;
 
     /**
      * Field column.
      *
      * @var string
      */
-    public $column;
+    protected $column;
 
     /**
      * Field value.
      *
      * @var string
      */
-    public $value;
+    protected $value;
 
     /**
      * Field placeholder.
      *
      * @var string
      */
-    public $placeholder;
+    protected $placeholder;
 
     /**
      * Field rules.
      *
      * @var array
      */
-    public $rules = [];
+    protected $rules = [];
 
     /**
      * Field rules to creation.
      *
      * @var array
      */
-    public $creationRules = [];
+    protected $creationRules = [];
 
     /**
      * Field rules to update.
      *
      * @var array
      */
-    public $updateRules = [];
+    protected $updateRules = [];
 
     /**
      * Field helper text.
      *
      * @var array
      */
-    public $help;
+    protected $help;
+
+    /**
+     * Display field callback.
+     *
+     * @var array
+     */
+    protected $displayUsing;
 
     /**
      * Field component name.
      *
      * @var string
      */
-    public static $component;
+    protected static $component;
+
+    /**
+     * Show field only on index.
+     *
+     * @var boolean
+     */
+    protected $showOnIndex = true;
+
+    /**
+     * Show field only on detail.
+     *
+     * @var boolean
+     */
+    protected $showOnDetail = true;
+
+    /**
+     * Show field only on creating.
+     *
+     * @var boolean
+     */
+    protected $showOnCreating = true;
+
+    /**
+     * Show field only on updating.
+     *
+     * @var boolean
+     */
+    protected $showOnUpdating = true;
 
     /**
      * Construct a field.
@@ -78,7 +113,7 @@ abstract class Field
     public function __construct($label, $column)
     {
         $this->label = $label;
-        $this->column = $column ?? Str::snake(Str::lower($label));
+        $this->column = $column;
     }
 
     /**
@@ -172,13 +207,94 @@ abstract class Field
     }
 
     /**
+     * Set callback to display field value.
+     *
+     * @param callable $callback
+     * @return self
+     */
+    public function displayUsing(callable $callback)
+    {
+        $this->displayUsing = $callback;
+
+        return $this;
+    }
+
+    /**
+     * Get field column name.
+     *
+     * @return string
+     */
+    public function getColumn()
+    {
+        if ($this->column) {
+            return $this->column;
+        }
+
+        return Str::snake(Str::lower($this->label));
+    }
+
+    /**
+     * Get field label.
+     *
+     * @return mixed
+     */
+    public function getLabel()
+    {
+        $label = $this->label;
+
+        if (is_callable($label)) {
+            return $label();
+        }
+
+        return $label;
+    }
+
+    /**
      * Get field value.
      *
      * @return mixed
      */
     public function getValue()
     {
-        return $this->value;
+        $value = $this->value;
+
+        if (is_callable($value)) {
+            return $value();
+        }
+
+        return $value;
+    }
+
+    /**
+     * Get field help.
+     *
+     * @return mixed
+     */
+    public function getHelp()
+    {
+        $help = $this->help;
+
+        if (is_callable($help)) {
+            return $help();
+        }
+
+        return $help;
+    }
+
+    /**
+     * Get field placeholder.
+     *
+     * @return mixed
+     */
+    public function getPlaceholder()
+    {
+        $placeholder = $this->placeholder;
+
+        if (is_callable($placeholder)) {
+            return $placeholder();
+        }
+
+        return $placeholder;
     }
 
     /**
@@ -192,6 +308,36 @@ abstract class Field
     }
 
     /**
+     * Get field rules.
+     *
+     * @return mixed
+     */
+    public function getRules()
+    {
+        return $this->rules;
+    }
+
+    /**
+     * Get field rules for creation.
+     *
+     * @return mixed
+     */
+    public function getCreationRules()
+    {
+        return $this->creationRules;
+    }
+
+    /**
+     * Get field rules for update.
+     *
+     * @return mixed
+     */
+    public function getUpdateRules()
+    {
+        return $this->updateRules;
+    }
+
+    /**
      * Get field props.
      *
      * @return array
@@ -199,13 +345,209 @@ abstract class Field
     public function getProps()
     {
         return [
-            'name' => $this->column,
-            'label' => $this->label,
+            'name' => $this->getColumn(),
+            'label' => $this->getLabel(),
             'value' => $this->getValue(),
-            'help' => $this->help,
+            'help' => $this->getHelp(),
             'component' => static::$component,
-            'placeholder' => $this->placeholder,
+            'placeholder' => $this->getPlaceholder(),
             'options' => $this->getOptions(),
         ];
+    }
+
+    /**
+     * Show field on index.
+     *
+     * @return self
+     */
+    public function showOnIndex()
+    {
+        $this->showOnIndex = true;
+
+        return $this;
+    }
+
+    /**
+     * Show field on detail.
+     *
+     * @return self
+     */
+    public function showOnDetail()
+    {
+        $this->showOnDetail = true;
+
+        return $this;
+    }
+
+    /**
+     * Show field when creating.
+     *
+     * @return self
+     */
+    public function showOnCreating()
+    {
+        $this->showOnCreating = true;
+
+        return $this;
+    }
+
+    /**
+     * Show field when updating.
+     *
+     * @return self
+     */
+    public function showOnUpdating()
+    {
+        $this->showOnUpdating = true;
+
+        return $this;
+    }
+
+    /**
+     * Hide on index.
+     *
+     * @return self
+     */
+    public function hideFromIndex()
+    {
+        $this->showOnIndex = false;
+
+        return $this;
+    }
+
+    /**
+     * Hide on detail.
+     *
+     * @return self
+     */
+    public function hideFromDetail()
+    {
+        $this->showOnDetail = false;
+
+        return $this;
+    }
+
+    /**
+     * Hide field when creating.
+     *
+     * @return self
+     */
+    public function hideWhenCreating()
+    {
+        $this->showOnCreating = false;
+
+        return $this;
+    }
+
+    /**
+     * Hide field when creating.
+     *
+     * @return self
+     */
+    public function hideWhenUpdating()
+    {
+        $this->showOnUpdating = false;
+
+        return $this;
+    }
+
+    /**
+     * Show field only on index.
+     *
+     * @return self
+     */
+    public function onlyOnIndex()
+    {
+        $this->showOnIndex = true;
+        $this->showOnDetail = false;
+        $this->showOnCreating = false;
+        $this->showOnUpdating = false;
+
+        return $this;
+    }
+
+    /**
+     * Show field only on detail.
+     *
+     * @return self
+     */
+    public function onlyOnDetail()
+    {
+        $this->showOnIndex = false;
+        $this->showOnDetail = true;
+        $this->showOnCreating = false;
+        $this->showOnUpdating = false;
+
+        return $this;
+    }
+
+    /**
+     * Show field when creating or updating.
+     *
+     * @return self
+     */
+    public function onlyOnForms()
+    {
+        $this->showOnIndex = false;
+        $this->showOnDetail = false;
+        $this->showOnCreating = true;
+        $this->showOnUpdating = true;
+
+        return $this;
+    }
+
+    /**
+     * Hide field when creating or updating.
+     *
+     * @return self
+     */
+    public function exceptOnForms()
+    {
+        $this->showOnIndex = true;
+        $this->showOnDetail = true;
+        $this->showOnCreating = false;
+        $this->showOnUpdating = false;
+
+        return $this;
+    }
+
+    /**
+     * The field is visible on index.
+     *
+     * @return boolean
+     */
+    public function isVisibleOnIndex()
+    {
+        return $this->showOnIndex;
+    }
+
+    /**
+     * The field is visible on detail.
+     *
+     * @return boolean
+     */
+    public function isVisibleOnDetail()
+    {
+        return $this->showOnDetail;
+    }
+
+    /**
+     * The field is visible when creating.
+     *
+     * @return boolean
+     */
+    public function isVisibleOnCreating()
+    {
+        return $this->showOnCreating;
+    }
+
+    /**
+     * The field is visible when updating.
+     *
+     * @return boolean
+     */
+    public function isVisibleOnUpdating()
+    {
+        return $this->showOnUpdating;
     }
 }
