@@ -266,7 +266,7 @@ abstract class Entity
 
         foreach ($this->getFields($page) as $column => $field) {
             if ($model) {
-                $field->value($model->{$column} ?? null);
+                $field->defaultValue($model);
             }
 
             $data[$column] = $field->getProps();

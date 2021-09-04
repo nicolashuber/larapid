@@ -2,6 +2,7 @@
 
 namespace Internexus\Larapid\Fields;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 abstract class Field
@@ -134,7 +135,7 @@ abstract class Field
      * @param string $value
      * @return self
      */
-    public function value($value)
+    public function defaultValue($value)
     {
         $this->value = $value;
 
@@ -264,17 +265,11 @@ abstract class Field
     /**
      * Get field value.
      *
-     * @return mixed
+     * @return string
      */
     public function getValue()
     {
-        $value = $this->value;
-
-        if (is_callable($value)) {
-            return $value();
-        }
-
-        return $value;
+        return $this->value;
     }
 
     /**
@@ -365,6 +360,17 @@ abstract class Field
             'placeholder' => $this->getPlaceholder(),
             'options' => $this->getOptions(),
         ];
+    }
+
+    /**
+     * Display field value.
+     *
+     * @param Model $model
+     * @return mixed
+     */
+    public function display(Model $model)
+    {
+        return $model->{$this->getColumn()} ?? null;
     }
 
     /**

@@ -2,6 +2,8 @@
 
 namespace Internexus\Larapid\Fields;
 
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Internexus\Larapid\Facades\Larapid;
 
 class BelongsTo extends Field
@@ -14,32 +16,42 @@ class BelongsTo extends Field
     public static $component = 'belongs-to';
 
     /**
-     * Construct a field.
+     * Get field column name.
      *
-     * @param string $label
-     * @param string $column
+     * @return string
      */
-    public function __construct($label, $column = null)
+    public function getColumn()
     {
-        parent::__construct($label, $column);
-
-        if (empty($column)) {
-            $this->column .= '_id';
+        if ($this->column) {
+            return $this->column;
         }
+
+        return Str::snake(Str::lower($this->label)) . '_id';
     }
 
     /**
      * Get field value.
      *
-     * @return mixed
+     * @return string
      */
-    public function getValue()
+    public function display(Model $model)
     {
-        $data = $this->getOptions();
+        $method = strtolower($this->label);
 
-        if (isset($data[$this->value])) {
-            return $data[$this->value];
+        if (method_exists($model, $method)) {
+            $entity = $this->resolveRelationEntity();
+
+            if (isset($model->{$entity::slug()})) {
+                return $model->{$entity::slug()}->{$entity::$titleColumn};
+            }
         }
+
+        return $this->value;
+    }
+
+    private function resolveRelationEntity()
+    {
+        return Larapid::resolveEntity(strtolower($this->label));
     }
 
     /**
@@ -49,7 +61,7 @@ class BelongsTo extends Field
      */
     public function getOptions()
     {
-        $entity = Larapid::resolveEntity(strtolower($this->label));
+        $entity = $this->resolveRelationEntity();
 
         if ($entity) {
             $model = $entity->model();

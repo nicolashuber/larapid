@@ -22,13 +22,10 @@ class LarapidResource extends JsonResource
     public function toArray($request)
     {
         $data = [];
-        $visibility = 'isVisibleOn' . ($request->id ? 'Detail' : 'Index');
 
         foreach ($request->entity->fields() as $field) {
-            if ($field->{$visibility}()) {
-                $column = $field->getColumn();
-
-                $data[$column] = $this->{$column};
+            if ($field->isVisibleOn($request->id ? 'Detail' : 'Index')) {
+                $data[$field->getColumn()] = $field->display($this->resource);
             }
 
             if (! $request->id) {
