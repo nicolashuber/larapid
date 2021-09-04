@@ -1,24 +1,30 @@
 <template>
-    <form @submit.prevent="onSubmit" class="form">
-        <div v-for="(field, index) of fields" :key="index">
-            <l-field
-                horizontal
-                :name="field.name"
-                :label="field.label"
-                :error="errors[field.name]"
-            >
-                <component
-                    v-model="form[field.name]"
-                    :is="`l-${field.component}`"
+    <l-panel>
+        <form @submit.prevent="onSubmit" class="form">
+            <div v-for="(field, index) of fields" :key="index">
+                <l-field
+                    horizontal
                     :name="field.name"
-                    :options="field.options"
-                    :hasError="errors[field.name] != undefined"
-                    :placeholder="field.placeholder"
-                />
-            </l-field>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+                    :label="field.label"
+                    :error="errors[field.name]"
+                >
+                    <component
+                        v-model="form[field.name]"
+                        :is="`l-${field.component}`"
+                        :name="field.name"
+                        :options="field.options"
+                        :hasError="errors[field.name] != undefined"
+                        :placeholder="field.placeholder"
+                    />
+                </l-field>
+            </div>
+            <div class="form-footer">
+                <l-btn type="submit" variant="primary">
+                    Submit
+                </l-btn>
+            </div>
+        </form>
+    </l-panel>
 </template>
 
 <script>

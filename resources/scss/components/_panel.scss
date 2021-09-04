@@ -1,0 +1,10 @@
+.panel {
+    padding: 1rem;
+    border: 1px solid $table-border-color;
+    background: $white;
+    border-radius: $border-radius;
+
+    & + & {
+        margin-top: 2rem;
+    }
+}

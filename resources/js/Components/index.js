@@ -1,4 +1,3 @@
-import Form from './Form'
 import Url from './Url'
 import Text from './Text'
 import Input from './Input'
@@ -9,10 +8,15 @@ import Password from './Password'
 import Textarea from './Textarea'
 import PlainText from './PlainText'
 import BelongsTo from './BelongsTo'
+
+import Btn from './Btn'
+
+import Form from './Form'
+import Panel from './Panel'
+import DataTable from './DataTable'
 import PageHeader from './PageHeader'
 
 export default {
-    'form': Form,
     'url': Url,
     'text': Text,
     'input': Input,
@@ -23,5 +27,11 @@ export default {
     'textarea': Textarea,
     'plain-text': PlainText,
     'belongs-to': BelongsTo,
+
+    'btn': Btn,
+
+    'form': Form,
+    'panel': Panel,
+    'data-table': DataTable,
     'page-header': PageHeader
 }
