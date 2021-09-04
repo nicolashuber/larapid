@@ -162,6 +162,10 @@ abstract class Field
      */
     public function rules($rules)
     {
+        if (is_string($rules)) {
+            $rules = explode('|', $rules);
+        }
+
         $this->rules = $rules;
 
         return $this;
@@ -175,6 +179,10 @@ abstract class Field
      */
     public function creationRules($rules)
     {
+        if (is_string($rules)) {
+            $rules = explode('|', $rules);
+        }
+
         $this->creationRules = $rules;
 
         return $this;
@@ -188,6 +196,10 @@ abstract class Field
      */
     public function updateRules($rules)
     {
+        if (is_string($rules)) {
+            $rules = explode('|', $rules);
+        }
+
         $this->updateRules = $rules;
 
         return $this;
@@ -310,7 +322,7 @@ abstract class Field
     /**
      * Get field rules.
      *
-     * @return mixed
+     * @return array
      */
     public function getRules()
     {
@@ -509,6 +521,23 @@ abstract class Field
         $this->showOnUpdating = false;
 
         return $this;
+    }
+
+    /**
+     * Check if field is visible on page.
+     *
+     * @param string $page
+     * @return boolean
+     */
+    public function isVisibleOn($page)
+    {
+        $page = 'showOn' . ucfirst($page);
+
+        if (property_exists($this, $page)) {
+            return $this->{$page};
+        }
+
+        return false;
     }
 
     /**

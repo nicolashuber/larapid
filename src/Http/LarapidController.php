@@ -8,6 +8,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller;
 use Inertia\Inertia;
 use Internexus\Larapid\Entities\Entity;
+use Internexus\Larapid\Http\Resources\LarapidResource;
 use Internexus\Larapid\Repos\LarapidRepository;
 
 class LarapidController extends Controller
@@ -17,6 +18,7 @@ class LarapidController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Entity $entity
      * @return \Illuminate\Http\Response
      */
     public function index(Entity $entity)
@@ -24,8 +26,8 @@ class LarapidController extends Controller
         $repo = new LarapidRepository($entity->model());
 
         return Inertia::render('Index', [
-            'data' => $repo->list(),
-            'headers' => $entity->headers(),
+            'data' => LarapidResource::collection($repo->list()),
+            'headers' => $entity->getIndexColumns(),
             'createRoute' => $entity->route(null, 'create')
         ]);
     }
@@ -33,13 +35,14 @@ class LarapidController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param Entity $entity
      * @return \Illuminate\Http\Response
      */
-    public function create($entity)
+    public function create(Entity $entity)
     {
         return Inertia::render('Create', [
             'route' => $entity->route(null, 'store'),
-            'fields' => $entity->getFields()
+            'fields' => $entity->getCreatingFieldsProps()
         ]);
     }
 
@@ -50,12 +53,30 @@ class LarapidController extends Controller
      * @param LarapidRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store($entity, LarapidRequest $request)
+    public function store(Entity $entity, LarapidRequest $request)
     {
         $repo = new LarapidRepository($entity->model());
         $repo->store($request->all());
 
         return redirect()->route("larapid.index", [$entity::slug()]);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param Entity $entity
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function detail(Entity $entity, $id)
+    {
+        $repo = new LarapidRepository($entity->model());
+        $data = $repo->find($id);
+
+        return Inertia::render('Detail', [
+            'data' => new LarapidResource($data),
+            'columns' => $entity->getDetailColumns(),
+        ]);
     }
 
     /**
@@ -65,14 +86,14 @@ class LarapidController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($entity, $id)
+    public function edit(Entity $entity, $id)
     {
         $repo = new LarapidRepository($entity->model());
         $data = $repo->find($id);
 
         return Inertia::render('Edit', [
             'data' => $data,
-            'fields' => $entity->getFields(),
+            'fields' => $entity->getUpdatingFieldsProps($data),
             'route' => $entity->route($id, 'update')
         ]);
     }

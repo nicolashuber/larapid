@@ -23,6 +23,23 @@ class LarapidRequest extends FormRequest
      */
     public function rules()
     {
-        return $this->entity->rules($this->method());
+        $validators = [];
+        $entity = $this->entity;
+        $method = $this->method();
+        $fields = $this->id ? $entity->getUpdatingFields() : $entity->getCreatingFields();
+
+        foreach ($fields as $column => $field) {
+            $rules = $field->getRules();
+
+            if ($method == 'POST') {
+                $rules =  array_merge($rules, $field->getCreationRules());
+            } else if ($method == 'PUT') {
+                $rules =  array_merge($rules, $field->getUpdateRules());
+            }
+
+            $validators[$column] = $rules;
+        }
+
+        return $validators;
     }
 }

@@ -7,6 +7,7 @@ import Email from './Email'
 import Select from './Select'
 import Password from './Password'
 import Textarea from './Textarea'
+import PlainText from './PlainText'
 import BelongsTo from './BelongsTo'
 import PageHeader from './PageHeader'
 
@@ -20,6 +21,7 @@ export default {
     'select': Select,
     'password': Password,
     'textarea': Textarea,
+    'plain-text': PlainText,
     'belongs-to': BelongsTo,
     'page-header': PageHeader
 }

@@ -16,6 +16,19 @@
                     <td v-for="(header, column) in headers" :key="column">
                         {{ item[column] }}
                     </td>
+                    <td width="140px" class="text-center">
+                        <Link :href="item.routes.edit" class="btn btn-sm btn-outline-info me-2">
+                            Edit
+                        </Link>
+                        <Link :href="item.routes.detail" class="btn btn-sm btn-outline-primary">
+                            Detail
+                        </Link>
+                    </td>
+                </tr>
+                <tr v-if="data.data.length == 0">
+                    <td :colspan="Object.keys(headers).length" class="text-center">
+                        No records.
+                    </td>
                 </tr>
             </tbody>
         </table>

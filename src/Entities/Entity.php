@@ -100,7 +100,7 @@ abstract class Entity
      */
     public function route($id = null, $action = 'index')
     {
-        $requiredId = $action == 'update' || $action == 'edit' || $action == 'destroy';
+        $requiredId = $action == 'update' || $action == 'edit' || $action == 'destroy' || $action == 'detail';
 
         if ($id && $requiredId) {
             return route("larapid.{$action}", [$this::slug(), $id]);
@@ -133,11 +133,11 @@ abstract class Entity
     }
 
     /**
-     * Get entity columnns.
+     * Get entity columnns for index.
      *
      * @return array
      */
-    public function getHeaders()
+    public function getIndexColumns()
     {
         $headers = [];
 
@@ -151,28 +151,38 @@ abstract class Entity
     }
 
     /**
-     * Filter fields by visibility.
+     * Get entity columnns for detail.
      *
-     * @param array $fields
-     * @param string|null $page
-     * @param Model|null $model
      * @return array
      */
-    private function filterFields($fields, $page = null, Model $model = null)
+    public function getDetailColumns()
+    {
+        $headers = [];
+
+        foreach ($this->fields() as $field) {
+            if ($field->isVisibleOnDetail()) {
+                $headers[$field->getColumn()] = $field->getLabel();
+            }
+        }
+
+        return $headers;
+    }
+
+    /**
+     * Get fields for page.
+     *
+     * @param string $page
+     * @return array
+     */
+    private function getFields($page)
     {
         $data = [];
-        $fields = count($fields) > 0 ? $fields : $this->fields();
-        $visibilityMethod = 'isVisibleOn' . ucfirst($page);
 
-        foreach ($fields as $field) {
+        foreach ($this->getFieldsForPage($page) as $field) {
             $column = $field->getColumn();
 
-            if ($model) {
-                $field->value($model->{$column} ?? null);
-            }
-
-            if ($page && $field->{$visibilityMethod}()) {
-                $data[$column] = $field->getProps();
+            if ($field->isVisibleOn($page)) {
+                $data[$column] = $field;
             }
         }
 
@@ -180,36 +190,47 @@ abstract class Entity
     }
 
     /**
-     * Get all fields.
+     * Get fields for specified page.
      *
-     * @param Model $model
+     * @param string $page
      * @return array
      */
-    public function getFields(Model $model = null)
+    private function getFieldsForPage($page)
     {
-        return $this->filterFields($this->fields(), null, $model);
+        $page = str_replace(
+            ['Updating', 'Creating'],
+            ['Update', 'Create'],
+            ucfirst($page)
+        );
+
+        $fields = [];
+        $fieldsMethod = 'fieldsFor' . $page;
+
+        if (method_exists($this, $fieldsMethod)) {
+            $fields = $this->{$fieldsMethod}();
+        }
+
+        return count($fields) > 0 ? $fields : $this->fields();
     }
 
     /**
      * Get fields for index.
      *
-     * @param Model $model
      * @return array
      */
-    public function getIndexFields(Model $model)
+    public function getIndexFields()
     {
-        return $this->filterFields($this->fieldsForIndex(), 'index', $model);
+        return $this->getFields('creating');
     }
 
     /**
      * Get fields for detail.
      *
-     * @param Model $model
      * @return array
      */
-    public function getDetailFields(Model $model)
+    public function getDetailFields()
     {
-        return $this->filterFields($this->fieldsForDetail(), 'detail', $model);
+        return $this->getFields('detail');
     }
 
     /**
@@ -219,7 +240,49 @@ abstract class Entity
      */
     public function getCreatingFields()
     {
-        return $this->filterFields($this->fieldsForCreate(), 'creating');
+        return $this->getFields('creating');
+    }
+
+    /**
+     * Get fields when updating.
+     *
+     * @return array
+     */
+    public function getUpdatingFields()
+    {
+        return $this->getFields('updating');
+    }
+
+    /**
+     * Get fields props.
+     *
+     * @param string $page
+     * @param Model $model
+     * @return array
+     */
+    public function getFieldsProps($page, Model $model = null)
+    {
+        $data = [];
+
+        foreach ($this->getFields($page) as $column => $field) {
+            if ($model) {
+                $field->value($model->{$column} ?? null);
+            }
+
+            $data[$column] = $field->getProps();
+        }
+
+        return $data;
+    }
+
+    /**
+     * Get fields when creating.
+     *
+     * @return array
+     */
+    public function getCreatingFieldsProps()
+    {
+        return $this->getFieldsProps('creating');
     }
 
     /**
@@ -228,34 +291,8 @@ abstract class Entity
      * @param Model $model
      * @return array
      */
-    public function getUpdatingFields(Model $model)
+    public function getUpdatingFieldsProps(Model $model)
     {
-        return $this->filterFields($this->fieldsForUpdate(), 'updating', $model);
-    }
-
-    /**
-     * Get entity validators rules.
-     *
-     * @return array
-     */
-    public function rules($method)
-    {
-        $validators = [];
-
-        foreach ($this->fields() as $field) {
-            $rules = $field->getRules();
-
-            if ($rules) {
-                if ($method == 'POST') {
-                    $rules =  array_merge($rules, $field->getCreationRules());
-                } else if ($method == 'PUT') {
-                    $rules =  array_merge($rules, $field->getUpdateRules());
-                }
-
-                $validators[$field->getColumn()] = $rules;
-            }
-        }
-
-        return $validators;
+        return $this->getFieldsProps('updating', $model);
     }
 }

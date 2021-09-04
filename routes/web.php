@@ -12,6 +12,7 @@ Route::prefix('cms')->middleware(['web', 'larapid.inertia'])->group(function() {
     Route::get('/{entity}', [LarapidController::class, 'index'])->name('larapid.index');
     Route::post('/{entity}', [LarapidController::class, 'store'])->name('larapid.store');
     Route::get('/{entity}/create', [LarapidController::class, 'create'])->name('larapid.create');
+    Route::get('/{entity}/{id}/detail', [LarapidController::class, 'detail'])->name('larapid.detail');
     Route::get('/{entity}/{id}', [LarapidController::class, 'edit'])->name('larapid.edit');
     Route::put('/{entity}/{id}', [LarapidController::class, 'update'])->name('larapid.update');
     Route::delete('/{entity}/{id}', [LarapidController::class, 'destroy'])->name('larapid.destroy');
