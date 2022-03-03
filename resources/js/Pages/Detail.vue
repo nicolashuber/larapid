@@ -1,11 +1,20 @@
 <template>
     <app :menu="menu">
         <l-page-header title="Detail"></l-page-header>
-        <div class="detail">
+        <l-panel>
             <l-field v-for="(label, column) of columns" horizontal :key="column" :label="label">
                 <l-plain-text :value="data[column]" />
             </l-field>
-        </div>
+        </l-panel>
+
+        <l-panel v-for="(relation, index) in relations" :key="index" :title="relation.title">
+            <template #header>
+                <l-btn size="sm" variant="secondary">
+                    Create new
+                </l-btn>
+            </template>
+            <l-data-table :data="relation.data" :headers="relation.columns" />
+        </l-panel>
     </app>
 </template>
 
@@ -28,6 +37,9 @@ export default {
         columns: {
             type: Object,
             required: true
+        },
+        relations: {
+            type: Object
         }
     }
 }

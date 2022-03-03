@@ -76,6 +76,7 @@ class LarapidController extends Controller
         return Inertia::render('Detail', [
             'data' => new LarapidResource($data),
             'columns' => $entity->getDetailColumns(),
+            'relations' => $entity->getRelations($data)
         ]);
     }
 

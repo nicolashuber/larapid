@@ -8,5 +8,11 @@
 
     &-item {
         padding: .5rem 1.25rem;
+
+        a {
+            color: $white;
+            text-transform: uppercase;
+            text-decoration: none;
+        }
     }
 }

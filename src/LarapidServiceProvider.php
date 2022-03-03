@@ -42,6 +42,6 @@ class LarapidServiceProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__.'/../public' => public_path('vendor/larapid'),
-        ], 'public');
+        ], 'larapid');
     }
 }

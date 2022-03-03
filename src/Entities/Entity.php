@@ -3,6 +3,7 @@
 namespace Internexus\Larapid\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Internexus\Larapid\Fields\HasMany;
 
 abstract class Entity
 {
@@ -294,5 +295,19 @@ abstract class Entity
     public function getUpdatingFieldsProps(Model $model)
     {
         return $this->getFieldsProps('updating', $model);
+    }
+
+    public function getRelations(Model $model)
+    {
+        $fields = [];
+        $relationable = [HasMany::class];
+
+        foreach ($this->fields() as $field) {
+            if (in_array(get_class($field), $relationable)) {
+                $fields[] = $field->getRelation($model);
+            }
+        }
+
+        return $fields;
     }
 }

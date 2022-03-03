@@ -4,6 +4,7 @@ namespace Internexus\Larapid\Fields;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Internexus\Larapid\Entities\Entity;
 use Internexus\Larapid\Facades\Larapid;
 
 class BelongsTo extends Field
@@ -30,9 +31,10 @@ class BelongsTo extends Field
     }
 
     /**
-     * Get field value.
+     * Display field value.
      *
-     * @return string
+     * @param Model $model
+     * @return mixed
      */
     public function display(Model $model)
     {
@@ -49,6 +51,11 @@ class BelongsTo extends Field
         return $this->value;
     }
 
+    /**
+     * Resolve relation entity
+     *
+     * @return Entity
+     */
     private function resolveRelationEntity()
     {
         return Larapid::resolveEntity(strtolower($this->label));
