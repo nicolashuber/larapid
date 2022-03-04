@@ -1,7 +1,7 @@
 <template>
-    <input
+    <l-input
         v-bind="inputBinding"
-        :type="type"
+        type="text"
         @input="onInput"
     />
 </template>
@@ -10,12 +10,6 @@
 import inputMixin from './inputMixin';
 
 export default {
-    mixins: [inputMixin],
-    props: {
-        type: {
-            type: String,
-            default: 'text'
-        }
-    }
+    mixins: [inputMixin]
 }
 </script>

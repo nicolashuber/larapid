@@ -1,6 +1,8 @@
 import Url from './Url'
 import Text from './Text'
 import Input from './Input'
+import Price from './Price'
+import Number from './Number'
 import Field from './Field'
 import Email from './Email'
 import Select from './Select'
@@ -20,6 +22,8 @@ export default {
     'url': Url,
     'text': Text,
     'input': Input,
+    'price': Price,
+    'number': Number,
     'field': Field,
     'email': Email,
     'select': Select,
