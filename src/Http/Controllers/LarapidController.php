@@ -5,6 +5,7 @@ namespace Internexus\Larapid\Http\Controllers;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Inertia\Inertia;
 use Internexus\Larapid\Entities\Entity;
@@ -79,13 +80,15 @@ class LarapidController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function detail(Entity $entity, $id)
+    public function detail(Entity $entity, $id, Request $request)
     {
         $repo = new LarapidRepository($entity->model());
         $data = $repo->find($id);
 
+        $resource = new LarapidResource($data);
+
         return Inertia::render('Detail', [
-            'data' => new LarapidResource($data),
+            'data' => $resource->toArray($request),
             'columns' => $entity->getDetailColumns(),
             'relations' => $entity->getRelations($data)
         ]);

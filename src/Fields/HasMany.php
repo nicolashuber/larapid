@@ -5,6 +5,7 @@ namespace Internexus\Larapid\Fields;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Internexus\Larapid\Facades\Larapid;
+use Internexus\Larapid\Http\Resources\LarapidResource;
 
 class HasMany extends Field
 {
@@ -51,12 +52,17 @@ class HasMany extends Field
     public function getRelation(Model $model)
     {
         $data = [];
-        $method = strtolower($this->label);
+        $method = lcfirst($this->label);
         $entity = Larapid::resolveEntity(Str::of($method)->singular());
 
         if (isset($model->{$method})) {
             $data = $model->{$method}()->paginate();
         }
+
+        $request = request();
+        $request->entity = $entity;
+
+        LarapidResource::collection($data);
 
         return [
             'data' => $data,

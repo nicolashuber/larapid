@@ -28,7 +28,7 @@ class LarapidResource extends JsonResource
                 $data[$field->getColumn()] = $field->display($this->resource);
             }
 
-            if (! $request->id) {
+            if ($this->id) {
                 $data['routes'] = [
                     'edit' => $request->entity->route($this->id, 'edit'),
                     'detail' => $request->entity->route($this->id, 'detail')

@@ -11284,8 +11284,17 @@ textarea.form-control-lg {
 }
 .nav-item a {
   color: #fff;
-  text-transform: uppercase;
+  font-size: 0.875rem;
+  font-weight: 300;
   text-decoration: none;
+}
+
+.auth {
+  width: 20rem;
+  padding: 1.5rem;
+  margin: 5rem auto;
+  border-radius: 0.25rem;
+  border: 1px solid #e9ecef;
 }
 
 .aside {

@@ -17,11 +17,11 @@
                 </td>
                 <td width="140px" class="text-center">
                     <div class="d-inline-block me-2">
-                        <l-btn :href="item.routes.edit" size="sm" variant="outline-info">
+                        <l-btn v-if="item.routes" :href="item.routes.edit" size="sm" variant="outline-info">
                             Edit
                         </l-btn>
                     </div>
-                    <l-btn :href="item.routes.detail" size="sm" variant="outline-primary">
+                    <l-btn v-if="item.routes" :href="item.routes.detail" size="sm" variant="outline-primary">
                         Detail
                     </l-btn>
                 </td>
