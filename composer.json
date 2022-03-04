@@ -3,7 +3,8 @@
     "description": "A simple free alternative for Laravel Nova.",
     "keywords": [
       "laravel",
-      "admin"
+      "admin",
+      "cms"
     ],
     "license": "MIT",
     "authors": [
@@ -45,6 +46,5 @@
       "sort-packages": true
     },
     "minimum-stability": "dev",
-    "prefer-stable": true,
-    "version": "0.0.0"
+    "prefer-stable": true
   }
