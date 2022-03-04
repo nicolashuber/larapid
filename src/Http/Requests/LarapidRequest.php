@@ -1,6 +1,6 @@
 <?php
 
-namespace Internexus\Larapid\Http;
+namespace Internexus\Larapid\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Internexus\Larapid\Http;
+namespace Internexus\Larapid\Http\Controllers;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -8,12 +8,23 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller;
 use Inertia\Inertia;
 use Internexus\Larapid\Entities\Entity;
+use Internexus\Larapid\Http\Requests\LarapidRequest;
 use Internexus\Larapid\Http\Resources\LarapidResource;
 use Internexus\Larapid\Repos\LarapidRepository;
 
 class LarapidController extends Controller
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    /**
+     * Display the dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function dashboard()
+    {
+        return Inertia::render('Dashboard');
+    }
 
     /**
      * Display a listing of the resource.
@@ -58,7 +69,7 @@ class LarapidController extends Controller
         $repo = new LarapidRepository($entity->model());
         $repo->store($request->all());
 
-        return redirect()->route("larapid.index", [$entity::slug()]);
+        return redirect()->route('larapid.index', [$entity::slug()]);
     }
 
     /**
@@ -112,7 +123,7 @@ class LarapidController extends Controller
         $repo = new LarapidRepository($entity->model());
         $repo->update($id, $request->all());
 
-        return redirect()->route("larapid.edit", [$entity::slug(), $id]);
+        return redirect()->route('larapid.edit', [$entity::slug(), $id]);
     }
 
     /**
@@ -127,6 +138,6 @@ class LarapidController extends Controller
         $repo = new LarapidRepository($entity->model());
         $repo->destroy($id);
 
-        return redirect()->route("larapid.index", [$entity::slug()]);
+        return redirect()->route('larapid.index', [$entity::slug()]);
     }
 }

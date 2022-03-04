@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Internexus\Larapid\Http\LarapidController;
+use Internexus\Larapid\Http\Controllers\LarapidController;
+use Internexus\Larapid\Http\Controllers\LoginController;
+use Internexus\Larapid\Http\Middleware\Authenticate;
 
 /*
 |--------------------------------------------------------------------------
@@ -9,11 +11,17 @@ use Internexus\Larapid\Http\LarapidController;
 |--------------------------------------------------------------------------
 */
 Route::prefix('cms')->middleware(['web', 'larapid.inertia'])->group(function() {
-    Route::get('/{entity}', [LarapidController::class, 'index'])->name('larapid.index');
-    Route::post('/{entity}', [LarapidController::class, 'store'])->name('larapid.store');
-    Route::get('/{entity}/create', [LarapidController::class, 'create'])->name('larapid.create');
-    Route::get('/{entity}/{id}/detail', [LarapidController::class, 'detail'])->name('larapid.detail');
-    Route::get('/{entity}/{id}', [LarapidController::class, 'edit'])->name('larapid.edit');
-    Route::put('/{entity}/{id}', [LarapidController::class, 'update'])->name('larapid.update');
-    Route::delete('/{entity}/{id}', [LarapidController::class, 'destroy'])->name('larapid.destroy');
+    Route::get('/auth/login', [LoginController::class, 'showLoginForm'])->name('larapid.login');
+    Route::post('/auth/login', [LoginController::class, 'login'])->name('larapid.login');
+
+    Route::middleware(Authenticate::class)->group(function () {
+        Route::get('/dash', [LarapidController::class, 'dashboard'])->name('larapid.dash');
+        Route::get('/{entity}/create', [LarapidController::class, 'create'])->name('larapid.create');
+        Route::get('/{entity}/{id}/detail', [LarapidController::class, 'detail'])->name('larapid.detail');
+        Route::get('/{entity}/{id}', [LarapidController::class, 'edit'])->name('larapid.edit');
+        Route::put('/{entity}/{id}', [LarapidController::class, 'update'])->name('larapid.update');
+        Route::delete('/{entity}/{id}', [LarapidController::class, 'destroy'])->name('larapid.destroy');
+        Route::get('/{entity}', [LarapidController::class, 'index'])->name('larapid.index');
+        Route::post('/{entity}', [LarapidController::class, 'store'])->name('larapid.store');
+    });
 });
