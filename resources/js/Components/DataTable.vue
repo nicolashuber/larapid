@@ -15,14 +15,15 @@
                 <td v-for="(header, column) in headers" :key="column">
                     {{ item[column] }}
                 </td>
-                <td width="140px" class="text-center">
-                    <div class="d-inline-block me-2">
-                        <l-btn v-if="item.routes" :href="item.routes.edit" size="sm" variant="outline-info">
-                            Edit
-                        </l-btn>
-                    </div>
-                    <l-btn v-if="item.routes" :href="item.routes.detail" size="sm" variant="outline-primary">
+                <td width="190px" class="text-center">
+                    <l-btn v-if="item.routes" :href="item.routes.edit" size="sm" variant="outline-info" class="me-2">
+                        Edit
+                    </l-btn>
+                    <l-btn v-if="item.routes" :href="item.routes.detail" size="sm" variant="outline-primary" class="me-2">
                         Detail
+                    </l-btn>
+                    <l-btn v-if="item.routes" size="sm" variant="outline-danger" @click="onDestroy(item.routes.destroy)">
+                        Delete
                     </l-btn>
                 </td>
             </tr>
@@ -45,6 +46,13 @@ export default {
         headers: {
             type: Object,
             required: true
+        }
+    },
+    methods: {
+        onDestroy (route) {
+            if (window.confirm('Do you really want to delete this item?')) {
+                this.$inertia.delete(route)
+            }
         }
     }
 }

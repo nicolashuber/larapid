@@ -31,7 +31,8 @@ class LarapidResource extends JsonResource
             if ($this->id) {
                 $data['routes'] = [
                     'edit' => $request->entity->route($this->id, 'edit'),
-                    'detail' => $request->entity->route($this->id, 'detail')
+                    'detail' => $request->entity->route($this->id, 'detail'),
+                    'destroy' => $request->entity->route($this->id, 'destroy'),
                 ];
             }
         }
