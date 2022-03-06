@@ -78,6 +78,7 @@ class LarapidController extends Controller
      *
      * @param Entity $entity
      * @param int $id
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
     public function detail(Entity $entity, $id, Request $request)
@@ -99,15 +100,18 @@ class LarapidController extends Controller
      *
      * @param Entity $entity
      * @param int $id
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function edit(Entity $entity, $id)
+    public function edit(Entity $entity, $id, Request $request)
     {
         $repo = new LarapidRepository($entity->model());
         $data = $repo->find($id);
 
+        $resource = new LarapidResource($data);
+
         return Inertia::render('Edit', [
-            'data' => $data,
+            'data' => $resource->toArray($request),
             'fields' => $entity->getUpdatingFieldsProps($data),
             'route' => $entity->route($id, 'update')
         ]);

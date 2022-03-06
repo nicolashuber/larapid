@@ -10,7 +10,9 @@
     "production": "mix --production"
   },
   "dependencies": {
-    "bootstrap": "^5.1.0"
+    "bootstrap": "^5.1.0",
+    "maska": "^1.5.0",
+    "vue-currency-input": "^2.4.0"
   },
   "devDependencies": {
     "@inertiajs/inertia": "^0.10.1",

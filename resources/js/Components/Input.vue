@@ -2,6 +2,7 @@
     <input
         v-bind="inputBinding"
         :type="type"
+        v-maska="mask"
         @input="onInput"
     />
 </template>

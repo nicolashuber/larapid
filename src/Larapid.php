@@ -15,6 +15,26 @@ class Larapid
      */
     private $entities = [];
 
+    public function __construct(array $config)
+    {
+        $this->config = array_merge([
+            'currency' => 'BRL',
+            'date_mask' => '##/##/####',
+            'date_format' => 'd/m/Y',
+        ], $config);
+    }
+
+    /**
+     * Get config value by name.
+     *
+     * @param string $name
+     * @return mixed
+     */
+    public function getConfig($name)
+    {
+        return $this->config[$name] ?? null;
+    }
+
     /**
      * Set application entities.
      *

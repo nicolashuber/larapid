@@ -38,7 +38,7 @@ class BelongsTo extends Field
      */
     public function display(Model $model)
     {
-        $method = strtolower($this->label);
+        $method = $this->guestRelationMethod();
 
         if (method_exists($model, $method)) {
             $entity = $this->resolveRelationEntity();
@@ -52,13 +52,23 @@ class BelongsTo extends Field
     }
 
     /**
+     * Guest method name for relation.
+     *
+     * @return string
+     */
+    private function guestRelationMethod()
+    {
+        return str_replace('_id', '', $this->getColumn());
+    }
+
+    /**
      * Resolve relation entity
      *
      * @return Entity
      */
     private function resolveRelationEntity()
     {
-        return Larapid::resolveEntity(strtolower($this->label));
+        return Larapid::resolveEntity($this->guestRelationMethod());
     }
 
     /**

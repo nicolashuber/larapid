@@ -1,11 +1,13 @@
 import Url from './Url'
 import Text from './Text'
+import Date from './Date'
 import Input from './Input'
-import Price from './Price'
+import Money from './Money'
 import Number from './Number'
 import Field from './Field'
 import Email from './Email'
 import Select from './Select'
+import Boolean from './Boolean'
 import Password from './Password'
 import Textarea from './Textarea'
 import PlainText from './PlainText'
@@ -21,12 +23,14 @@ import PageHeader from './PageHeader'
 export default {
     'url': Url,
     'text': Text,
+    'date': Date,
     'input': Input,
-    'price': Price,
+    'money': Money,
     'number': Number,
     'field': Field,
     'email': Email,
     'select': Select,
+    'boolean': Boolean,
     'password': Password,
     'textarea': Textarea,
     'plain-text': PlainText,

@@ -19,7 +19,7 @@ class LarapidServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(Larapid::class, function ($app) {
-            return new Larapid();
+            return new Larapid($app['config']['larapid'] ?? []);
         });
     }
 
@@ -41,6 +41,7 @@ class LarapidServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'larapid');
 
         $this->publishes([
+            __DIR__.'/../config/larapid.php' => config_path('larapid.php'),
             __DIR__.'/../public' => public_path('vendor/larapid'),
         ], 'larapid');
     }

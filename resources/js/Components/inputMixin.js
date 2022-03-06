@@ -7,6 +7,10 @@ export default {
             type: String,
             required: true
         },
+        mask: {
+            type: String,
+            default: ''
+        },
         modelValue: {
             type: [Number, String]
         },

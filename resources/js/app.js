@@ -1,6 +1,8 @@
 import { createApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/inertia-vue3'
 import { InertiaProgress } from '@inertiajs/progress'
+
+import Maska from 'maska'
 import components from '@/Components'
 
 InertiaProgress.init({
@@ -17,6 +19,8 @@ createInertiaApp({
         for (const name in components) {
             app.component(`l-${name}`, components[name])
         }
+
+        app.use(Maska)
 
         app.use(plugin).mount(el)
     }

@@ -1,8 +1,8 @@
 <template>
     <l-input
         v-bind="inputBinding"
-        type="number"
-        mask="#*"
+        type="text"
+        :mask="mask"
         @input="onInput"
     />
 </template>
@@ -11,6 +11,11 @@
 import inputMixin from './inputMixin';
 
 export default {
-    mixins: [inputMixin]
+    mixins: [inputMixin],
+    computed: {
+        mask () {
+            return this.options.mask ?? '##/##/####'
+        }
+    }
 }
 </script>
