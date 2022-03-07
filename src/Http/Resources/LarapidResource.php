@@ -24,8 +24,16 @@ class LarapidResource extends JsonResource
         $data = [];
 
         foreach ($request->entity->fields() as $field) {
-            if ($field->isVisibleOn($request->id ? 'Detail' : 'Index')) {
-                $data[$field->getColumn()] = $field->display($this->resource);
+            $page = $request->id ? 'Detail' : 'Index';
+
+            if ($field->isVisibleOn($page)) {
+                if ($page === 'Index') {
+                    $value = $field->displayOnIndex($this->resource);
+                } else {
+                    $value = $field->display($this->resource);
+                }
+
+                $data[$field->getColumn()] = $value;
             }
 
             if ($this->id) {

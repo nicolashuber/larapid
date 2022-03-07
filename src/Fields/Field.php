@@ -374,6 +374,17 @@ abstract class Field
     }
 
     /**
+     * Display field value.
+     *
+     * @param Model $model
+     * @return mixed
+     */
+    public function displayOnIndex(Model $model)
+    {
+        return $this->display($model);
+    }
+
+    /**
      * Show field on index.
      *
      * @return self
