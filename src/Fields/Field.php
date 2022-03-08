@@ -255,9 +255,9 @@ abstract class Field
     {
         $label = $this->label;
 
-        if (is_callable($label)) {
-            return $label();
-        }
+        // if (is_callable($label)) {
+        //     return $label();
+        // }
 
         return $label;
     }

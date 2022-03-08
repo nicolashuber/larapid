@@ -11,11 +11,11 @@ use Internexus\Larapid\Http\Middleware\Authenticate;
 |--------------------------------------------------------------------------
 */
 Route::prefix('cms')->middleware(['web', 'larapid.inertia'])->group(function() {
-    Route::get('/auth/login', [LoginController::class, 'showLoginForm'])->name('larapid.login');
-    Route::post('/auth/login', [LoginController::class, 'login'])->name('larapid.login');
+    Route::get('/login', [LoginController::class, 'showLoginForm'])->name('larapid.login');
+    Route::post('/login', [LoginController::class, 'login'])->name('larapid.login');
 
     Route::middleware(Authenticate::class)->group(function () {
-        Route::get('/dash', [LarapidController::class, 'dashboard'])->name('larapid.dash');
+        Route::get('/', [LarapidController::class, 'dashboard'])->name('larapid.dash');
         Route::get('/{entity}/create', [LarapidController::class, 'create'])->name('larapid.create');
         Route::get('/{entity}/{id}/detail', [LarapidController::class, 'detail'])->name('larapid.detail');
         Route::get('/{entity}/{id}', [LarapidController::class, 'edit'])->name('larapid.edit');

@@ -1,15 +1,21 @@
 <template>
-    <div>
-        Dashboard
-    </div>
+    <app :menu="menu">
+        <h3>Welcome back!</h3>
+    </app>
 </template>
 
 <script>
-export default {
+import App from '@/Layouts/App'
 
+export default {
+    components: {
+        App
+    },
+    props: {
+        menu: {
+            type: Array,
+            default: []
+        }
+    }
 }
 </script>
-
-<style>
-
-</style>
