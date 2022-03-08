@@ -17,6 +17,7 @@ import Btn from './Btn'
 
 import Form from './Form'
 import Panel from './Panel'
+import Pagination from './Pagination'
 import DataTable from './DataTable'
 import PageHeader from './PageHeader'
 
@@ -40,6 +41,7 @@ export default {
 
     'form': Form,
     'panel': Panel,
+    'pagination': Pagination,
     'data-table': DataTable,
     'page-header': PageHeader
 }
