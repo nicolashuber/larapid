@@ -374,6 +374,23 @@ abstract class Field
     }
 
     /**
+     * Check if field is visible on page.
+     *
+     * @param string $page
+     * @return boolean
+     */
+    public function displayOn($page, Model $model)
+    {
+        $method = 'displayOn' . ucfirst($page);
+
+        if (method_exists($this, $method)) {
+            return $this->{$method}($model);
+        }
+
+        return $this->display($model);
+    }
+
+    /**
      * Display field value.
      *
      * @param Model $model

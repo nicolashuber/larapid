@@ -6,7 +6,6 @@
             :route="route"
             :fields="fields"
             :errors="errors"
-            @submit="onSubmit"
         />
     </app>
 </template>

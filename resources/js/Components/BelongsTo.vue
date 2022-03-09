@@ -1,7 +1,7 @@
 <template>
     <l-select
         :name="name"
-        :value="modelValue"
+        :modelValue="modelValue"
         :options="options"
         :hasError="hasError"
         :placeholder="placeholder"

@@ -27,16 +27,14 @@ class LarapidResource extends JsonResource
             $page = $request->id ? 'Detail' : 'Index';
 
             if ($field->isVisibleOn($page)) {
-                if ($page === 'Index') {
-                    $value = $field->displayOnIndex($this->resource);
-                } else {
-                    $value = $field->display($this->resource);
-                }
+                $value = $field->displayOn($page, $this->resource);
 
                 $data[$field->getColumn()] = $value;
             }
 
             if ($this->id) {
+                $data['id'] = $this->id;
+
                 $data['routes'] = [
                     'edit' => $request->entity->route($this->id, 'edit'),
                     'detail' => $request->entity->route($this->id, 'detail'),

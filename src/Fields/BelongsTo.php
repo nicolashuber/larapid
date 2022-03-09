@@ -31,12 +31,12 @@ class BelongsTo extends Field
     }
 
     /**
-     * Display field value.
+     * Display field value on index.
      *
      * @param Model $model
      * @return mixed
      */
-    public function display(Model $model)
+    protected function displayRelation(Model $model)
     {
         $method = $this->guestRelationMethod();
 
@@ -48,7 +48,29 @@ class BelongsTo extends Field
             }
         }
 
-        return $this->value;
+        return $this->display($model);
+    }
+
+    /**
+     * Display field value on index.
+     *
+     * @param Model $model
+     * @return mixed
+     */
+    public function displayOnIndex(Model $model)
+    {
+        return $this->displayRelation($model);
+    }
+
+    /**
+     * Display field value on detail.
+     *
+     * @param Model $model
+     * @return mixed
+     */
+    public function displayOnDetail(Model $model)
+    {
+        return $this->displayRelation($model);
     }
 
     /**

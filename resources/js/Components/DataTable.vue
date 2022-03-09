@@ -62,3 +62,9 @@ export default {
     }
 }
 </script>
+
+<style lang="scss">
+    .data-table {
+        font-size: .875rem
+    }
+</style>
