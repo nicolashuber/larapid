@@ -53,7 +53,7 @@ class HasMany extends Field
     {
         $data = [];
         $method = lcfirst($this->label);
-        $entity = Larapid::resolveEntity(Str::of($method)->singular());
+        $entity = Larapid::guestEntity(Str::of($method)->singular());
 
         if (isset($model->{$method})) {
             $data = $model->{$method}()->paginate();

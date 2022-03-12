@@ -3,6 +3,7 @@
 namespace Internexus\Larapid;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Str;
 use Internexus\Larapid\Entities\Entity;
 use ReflectionClass;
 
@@ -53,14 +54,12 @@ class Larapid
      * @throws ModelNotFoundException
      * @return Entity
      */
-    public function resolveEntity($entitySlug)
+    public function resolveEntity($className)
     {
-        $className = ucfirst($entitySlug) . 'Entity';
+        $className = strtolower($className);
 
         foreach ($this->entities as $entity) {
-            $reflect = new ReflectionClass($entity);
-
-            if ($reflect->getShortName() == $className) {
+            if (Str::endsWith(strtolower($entity), $className)) {
                 $instance = new $entity();
 
                 if ($instance instanceof Entity) {
@@ -70,6 +69,13 @@ class Larapid
         }
 
         throw new ModelNotFoundException;
+    }
+
+    public function guestEntity($entitySlug)
+    {
+        return $this->resolveEntity(
+            ucfirst($entitySlug) . 'Entity'
+        );
     }
 
     /**
@@ -83,10 +89,16 @@ class Larapid
 
         foreach ($this->entities as $entity) {
             if ($entity::$displayInNavigation) {
-                $items[] = [
+                $item = [
                     'route' => route('larapid.index', [$entity::slug()]),
                     'label' => $entity::$title
                 ];
+
+                if ($entity::$group) {
+                    $items[$entity::$group]['subMenu'][] = $item;
+                } else {
+                    $items[$entity::$title] = $item;
+                }
             }
         }
 

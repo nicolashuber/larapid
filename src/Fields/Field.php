@@ -111,7 +111,7 @@ abstract class Field
      * @param string $label
      * @param string $column
      */
-    public function __construct($label, $column)
+    public function __construct($label, $column = null)
     {
         $this->label = $label;
         $this->column = $column;
@@ -120,13 +120,12 @@ abstract class Field
     /**
      * Instantiate a field.
      *
-     * @param string $label
-     * @param string $column
+     * @param mixed $arguments
      * @return self
      */
-    public static function make($label, $column = null)
+    public static function make(...$arguments)
     {
-        return new static($label, $column);
+        return new static(...$arguments);
     }
 
     /**

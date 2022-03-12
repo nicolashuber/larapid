@@ -31,7 +31,7 @@ class LarapidServiceProvider extends ServiceProvider
     public function boot()
     {
         Route::bind('entity', function ($entity) {
-            return Facade::resolveEntity($entity);
+            return Facade::guestEntity($entity);
         });
 
         $this->app->register(InertiaServiceProvider::class);

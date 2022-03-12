@@ -7,7 +7,13 @@
             <nav class="nav">
                 <ul class="nav-list">
                     <li v-for="(item, index) in menu" :key="index" class="nav-item">
-                        <Link :href="item.route">{{ item.label }}</Link>
+                        <ul v-if="item.subMenu" class="nav-sublist">
+                            <li class="nav-group">{{ index }}</li>
+                            <li v-for="(subItem, index) in item.subMenu" :key="index" class="nav-item">
+                                <Link :href="subItem.route">{{ subItem.label }}</Link>
+                            </li>
+                        </ul>
+                        <Link v-else :href="item.route">{{ item.label }}</Link>
                     </li>
                 </ul>
             </nav>

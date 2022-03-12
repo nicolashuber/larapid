@@ -1,18 +1,35 @@
 .nav {
-    &-list {
+    $this: &;
+
+    &-list,
+    &-sublist {
         width: 100%;
         margin: 0;
         padding: 0;
         list-style: none;
     }
 
+    &-sublist {
+        #{$this}-item {
+            padding: .15rem 0 .15rem 1rem;
+        }
+    }
+
+    &-group {
+        font-size: .75rem;
+        color: rgba($white, .8);
+        text-transform: uppercase;
+        margin-bottom: .5rem;
+    }
+
     &-item {
-        padding: .5rem 1.25rem;
+        padding: .5rem 1rem;
+        color: $white;
+        font-size: .875rem;
+        font-weight: $font-weight-light;
 
         a {
             color: $white;
-            font-size: .875rem;
-            font-weight: $font-weight-light;
             text-decoration: none;
         }
     }

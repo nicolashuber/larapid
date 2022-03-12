@@ -21,6 +21,7 @@ abstract class Entity
      */
     public static $title = 'Entity';
 
+
     /**
      * Entity title column.
      *
@@ -40,7 +41,7 @@ abstract class Entity
      *
      * @var string
      */
-    public static $group;
+    public static $group = '';
 
     /**
      * Define entity fields.

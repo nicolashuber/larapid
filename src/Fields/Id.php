@@ -12,21 +12,41 @@ class Id extends Field
     public static $component = 'id';
 
     /**
+     * Show field only on index.
+     *
+     * @var boolean
+     */
+    protected $showOnIndex = true;
+
+    /**
      * Show field only on detail.
      *
      * @var boolean
      */
-    protected $showOnDetail = false;
+    protected $showOnDetail = true;
 
     /**
-     * Instantiate a field.
+     * Show field only on creating.
+     *
+     * @var boolean
+     */
+    protected $showOnCreating = false;
+
+    /**
+     * Show field only on updating.
+     *
+     * @var boolean
+     */
+    protected $showOnUpdating = false;
+
+    /**
+     * Construct a field.
      *
      * @param string $label
      * @param string $column
-     * @return self
      */
-    public static function make($label = '#', $column = 'id')
+    public function __construct($label = 'ID', $column = 'id')
     {
-        return new static($label, $column);
+        parent::__construct($label, $column);
     }
 }

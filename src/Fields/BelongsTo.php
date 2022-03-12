@@ -16,6 +16,22 @@ class BelongsTo extends Field
      */
     public static $component = 'belongs-to';
 
+    protected $entity = null;
+
+    /**
+     * Construct a field.
+     *
+     * @param string $label
+     * @param string $column
+     * @param mixed $entity
+     */
+    public function __construct($label, $column, $entity = null)
+    {
+        parent::__construct($label, $column);
+
+        $this->entity = $entity;
+    }
+
     /**
      * Get field column name.
      *
@@ -90,7 +106,11 @@ class BelongsTo extends Field
      */
     private function resolveRelationEntity()
     {
-        return Larapid::resolveEntity($this->guestRelationMethod());
+        if ($this->entity) {
+            return Larapid::resolveEntity($this->entity);
+        }
+
+        return Larapid::guestEntity($this->guestRelationMethod());
     }
 
     /**
