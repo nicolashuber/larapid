@@ -14,6 +14,24 @@ class LarapidResource extends JsonResource
     public static $wrap = '';
 
     /**
+     * Get page verb from request.
+     *
+     * @param \Illuminate\Http\Request  $request
+     * @return string|null
+     */
+    protected function page($request)
+    {
+        $route = $request->route()->getName();
+        $parts = explode('.', $route);
+
+        if (count($parts) > 1) {
+            return ucfirst($parts[1]);
+        }
+
+        return null;
+    }
+
+    /**
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -22,10 +40,9 @@ class LarapidResource extends JsonResource
     public function toArray($request)
     {
         $data = [];
+        $page = $this->page($request);
 
-        foreach ($request->entity->fields() as $field) {
-            $page = $request->id ? 'Detail' : 'Index';
-
+        foreach ($request->entity->getColumns($page) as $field) {
             if ($field->isVisibleOn($page)) {
                 $value = $field->displayOn($page, $this->resource);
 

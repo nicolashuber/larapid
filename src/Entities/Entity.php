@@ -135,6 +135,24 @@ abstract class Entity
     }
 
     /**
+     * Get columns for page.
+     *
+     * @param string $page
+     * @return array
+     */
+    public function getColumns($page)
+    {
+        $method = 'fieldsFor' . ucfirst($page);
+        $fields = $this->$method();
+
+        if (count($fields) == 0) {
+            return $this->fields();
+        }
+
+        return $fields;
+    }
+
+    /**
      * Get entity columnns for index.
      *
      * @return array
@@ -143,7 +161,7 @@ abstract class Entity
     {
         $headers = [];
 
-        foreach ($this->fields() as $field) {
+        foreach ($this->getColumns('index') as $field) {
             if ($field->isVisibleOnIndex()) {
                 $headers[$field->getColumn()] = $field->getLabel();
             }
@@ -161,7 +179,7 @@ abstract class Entity
     {
         $headers = [];
 
-        foreach ($this->fields() as $field) {
+        foreach ($this->getColumns('detail') as $field) {
             if ($field->isVisibleOnDetail()) {
                 $headers[$field->getColumn()] = $field->getLabel();
             }
