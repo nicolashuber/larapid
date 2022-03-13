@@ -5,10 +5,24 @@ namespace Internexus\Larapid;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
 use Internexus\Larapid\Entities\Entity;
-use ReflectionClass;
 
 class Larapid
 {
+    /**
+     * Default configuration.
+     *
+     * @var array
+     */
+    const DEFAULT_CONFIG = [
+        'currency' => 'BRL',
+        'date_mask' => '##/##/####',
+        'date_format' => 'd/m/Y',
+        'datetime_mask' => '##/##/#### ##:##',
+        'datetime_format' => 'd/m/Y H:i',
+        'bool_true' => 'Sim',
+        'bool_false' => 'Não',
+    ];
+
     /**
      * Application entities.
      *
@@ -16,13 +30,14 @@ class Larapid
      */
     private $entities = [];
 
+    /**
+     * Constructor.
+     *
+     * @param array $config
+     */
     public function __construct(array $config)
     {
-        $this->config = array_merge([
-            'currency' => 'BRL',
-            'date_mask' => '##/##/####',
-            'date_format' => 'd/m/Y',
-        ], $config);
+        $this->config = array_merge(self::DEFAULT_CONFIG, $config);
     }
 
     /**

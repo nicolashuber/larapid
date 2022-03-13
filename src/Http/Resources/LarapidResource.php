@@ -25,7 +25,7 @@ class LarapidResource extends JsonResource
         $parts = explode('.', $route);
 
         if (count($parts) > 1) {
-            return ucfirst($parts[1]);
+            return $parts[1];
         }
 
         return null;
@@ -40,7 +40,7 @@ class LarapidResource extends JsonResource
     public function toArray($request)
     {
         $data = [];
-        $page = $this->page($request);
+        $page = $request->entity->getPageMethod($this->page($request));
 
         foreach ($request->entity->getColumns($page) as $field) {
             if ($field->isVisibleOn($page)) {

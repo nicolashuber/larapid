@@ -78,7 +78,7 @@ abstract class Entity
      *
      * @return array
      */
-    public function fieldsForCreate()
+    public function fieldsForCreating()
     {
         return [];
     }
@@ -88,7 +88,7 @@ abstract class Entity
      *
      * @return array
      */
-    public function fieldsForUpdate()
+    public function fieldsForUpdating()
     {
         return [];
     }
@@ -142,7 +142,7 @@ abstract class Entity
      */
     public function getColumns($page)
     {
-        $method = 'fieldsFor' . ucfirst($page);
+        $method = 'fieldsFor' . $this->getPageMethod($page);
         $fields = $this->$method();
 
         if (count($fields) == 0) {
@@ -209,6 +209,22 @@ abstract class Entity
         return $data;
     }
 
+    public function getPageMethod($page)
+    {
+        $replace = [
+            'index' => 'Index',
+            'detail' => 'Detail',
+            'edit' => 'Updating',
+            'create' => 'Creating',
+        ];
+
+        return str_replace(
+            array_keys($replace),
+            array_values($replace),
+            $page
+        );
+    }
+
     /**
      * Get fields for specified page.
      *
@@ -217,14 +233,8 @@ abstract class Entity
      */
     private function getFieldsForPage($page)
     {
-        $page = str_replace(
-            ['Updating', 'Creating'],
-            ['Update', 'Create'],
-            ucfirst($page)
-        );
-
         $fields = [];
-        $fieldsMethod = 'fieldsFor' . $page;
+        $fieldsMethod = 'fieldsFor' . ucfirst($page);
 
         if (method_exists($this, $fieldsMethod)) {
             $fields = $this->{$fieldsMethod}();

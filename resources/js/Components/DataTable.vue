@@ -13,17 +13,15 @@
             </thead>
             <tbody>
                 <tr v-for="(item, index) in data.data" :key="index">
-                    <td v-for="(header, column) in headers" :key="column">
-                        {{ item[column] }}
-                    </td>
+                    <td v-for="(header, column) in headers" :key="column" v-html="item[column]" />
                     <td width="200px" class="text-center">
-                        <l-btn v-if="item.routes" :href="item.routes.edit" size="sm" variant="outline-info" class="me-2">
+                        <l-btn v-if="item.larapid.routes" :href="item.larapid.routes.edit" size="sm" variant="outline-info" class="me-2">
                             Edit
                         </l-btn>
-                        <l-btn v-if="item.routes" :href="item.routes.detail" size="sm" variant="outline-primary" class="me-2">
+                        <l-btn v-if="item.larapid.routes" :href="item.larapid.routes.detail" size="sm" variant="outline-primary" class="me-2">
                             Detail
                         </l-btn>
-                        <l-btn v-if="item.routes" size="sm" variant="outline-danger" @click="onDestroy(item.routes.destroy)">
+                        <l-btn v-if="item.larapid.routes" size="sm" variant="outline-danger" @click="onDestroy(item.routes.destroy)">
                             Delete
                         </l-btn>
                     </td>
