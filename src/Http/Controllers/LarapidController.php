@@ -67,8 +67,21 @@ class LarapidController extends Controller
      */
     public function store(Entity $entity, LarapidRequest $request)
     {
+        $data = $request->all();
         $repo = new LarapidRepository($entity->model());
-        $repo->store($request->all());
+        $isRelation = $request->has('relatedId') && $request->has('relatedColumn');
+
+        if ($isRelation) {
+            $data = array_merge($data, [
+                $request->relatedColumn => $request->relatedId
+            ]);
+        }
+
+        $repo->store($data);
+
+        if ($isRelation) {
+            return redirect()->route('larapid.detail', [$request->relatedEntity, $request->relatedId]);
+        }
 
         return redirect()->route('larapid.index', [$entity::slug()]);
     }

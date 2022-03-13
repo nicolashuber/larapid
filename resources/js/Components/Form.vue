@@ -67,8 +67,11 @@ export default {
     methods: {
         onSubmit () {
             const method = this.form.id ? 'put' : 'post'
+            const searchParms = new URLSearchParams(window.location.search)
+            const query = searchParms.toString()
+            const route = query ? `${this.route}?${query}` : this.route
 
-            this.form.submit(method, this.route, {})
+            this.form.submit(method, route)
             this.$emit('submited')
         }
     }

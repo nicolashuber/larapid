@@ -21,7 +21,6 @@ abstract class Entity
      */
     public static $title = 'Entity';
 
-
     /**
      * Entity title column.
      *

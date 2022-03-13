@@ -52,6 +52,7 @@ class HasMany extends Field
     public function getRelation(Model $model)
     {
         $data = [];
+        $request = request();
         $method = lcfirst($this->label);
         $entity = Larapid::guestEntity(Str::of($method)->singular());
 
@@ -59,7 +60,12 @@ class HasMany extends Field
             $data = $model->{$method}()->paginate();
         }
 
-        $request = request();
+        $query = [
+            'relatedId' => $model->id,
+            'relatedEntity' => $request->entity->slug(),
+            'relatedColumn' => $this->column,
+        ];
+
         $request->entity = $entity;
 
         LarapidResource::collection($data);
@@ -68,7 +74,10 @@ class HasMany extends Field
             'data' => $data,
             'title' => $entity::$title,
             'columns' => $entity->getIndexColumns(),
-            'fields' => $entity->getCreatingFieldsProps()
+            'fields' => $entity->getCreatingFieldsProps(),
+            'routes' => [
+                'create' => $entity->route(null, 'create') . '?' . http_build_query($query)
+            ],
         ];
     }
 

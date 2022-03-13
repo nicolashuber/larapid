@@ -9,7 +9,7 @@
 
         <l-panel v-for="(relation, index) in relations" :key="index" :title="relation.title">
             <template #header>
-                <l-btn size="sm" variant="secondary">
+                <l-btn size="sm" variant="secondary" :href="relation.routes.create">
                     Create new
                 </l-btn>
             </template>
