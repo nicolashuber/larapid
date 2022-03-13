@@ -11,6 +11,10 @@ export default {
             type: String,
             default: ''
         },
+        readOnly: {
+            type: Boolean,
+            default: false
+        },
         modelValue: {
             type: [Number, String]
         },
@@ -29,6 +33,7 @@ export default {
                 value: this.modelValue,
                 class: this.inputClasses,
                 options: this.options,
+                readonly: this.readOnly,
                 placeholder: this.placeholder
             }
         },

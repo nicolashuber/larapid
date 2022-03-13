@@ -64,6 +64,13 @@ abstract class Field
     protected $help;
 
     /**
+     * Field read only.
+     *
+     * @var array
+     */
+    protected $readOnly = false;
+
+    /**
      * Display field callback.
      *
      * @var array
@@ -219,6 +226,18 @@ abstract class Field
     }
 
     /**
+     * Set field readonly.
+     *
+     * @return self
+     */
+    public function readOnly()
+    {
+        $this->readOnly = true;
+
+        return $this;
+    }
+
+    /**
      * Set callback to display field value.
      *
      * @param callable $callback
@@ -285,6 +304,16 @@ abstract class Field
         }
 
         return $help;
+    }
+
+    /**
+     * Get field ready only.
+     *
+     * @return mixed
+     */
+    public function getReadOnly()
+    {
+        return $this->readOnly;
     }
 
     /**
@@ -355,6 +384,7 @@ abstract class Field
             'label' => $this->getLabel(),
             'value' => $this->getValue(),
             'help' => $this->getHelp(),
+            'readOnly' => $this->getReadOnly(),
             'component' => static::$component,
             'placeholder' => $this->getPlaceholder(),
             'options' => $this->getOptions(),

@@ -12,6 +12,7 @@
                         v-model="form[field.name]"
                         :is="`l-${field.component}`"
                         :name="field.name"
+                        :readonly="field.readOnly"
                         :options="field.options"
                         :hasError="errors[field.name] != undefined"
                         :placeholder="field.placeholder"
