@@ -4,7 +4,7 @@ namespace Internexus\Larapid\Fields;
 
 use Internexus\Larapid\Facades\Larapid;
 
-class Date extends Timestamp
+class Datetime extends Timestamp
 {
     /**
      * Field component name.
@@ -20,7 +20,7 @@ class Date extends Timestamp
      */
     public function getFormat()
     {
-        return $this->format ?? Larapid::getConfig('date_format');
+        return $this->format ?? Larapid::getConfig('datetime_format');
     }
 
     /**
@@ -31,7 +31,7 @@ class Date extends Timestamp
     public function getOptions()
     {
         return [
-            'mask' => Larapid::getConfig('date_mask')
+            'mask' => Larapid::getConfig('datetime_mask')
         ];
     }
 }
