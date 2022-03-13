@@ -22,7 +22,7 @@ class Boolean extends Field
      */
     protected function getText($boolean)
     {
-        return Larapid::getConfig('bool_' . boolval($boolean));
+        return Larapid::getConfig('bool_' . json_encode(boolval($boolean)));
     }
 
     /**
