@@ -59,8 +59,8 @@ class BelongsTo extends Field
         if (method_exists($model, $method)) {
             $entity = $this->resolveRelationEntity();
 
-            if (isset($model->{$entity::slug()})) {
-                return $model->{$entity::slug()}->{$entity::$titleColumn};
+            if (isset($model->{$method})) {
+                return $model->{$method}->{$entity::$titleColumn};
             }
         }
 

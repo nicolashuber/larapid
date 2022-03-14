@@ -283,7 +283,7 @@ abstract class Field
     /**
      * Get field value.
      *
-     * @return string
+     * @return mixed
      */
     public function getValue()
     {
@@ -335,11 +335,11 @@ abstract class Field
     /**
      * Get field options.
      *
-     * @return mixed
+     * @return array
      */
     public function getOptions()
     {
-        //
+        return [];
     }
 
     /**
@@ -416,17 +416,6 @@ abstract class Field
             return $this->{$method}($model);
         }
 
-        return $this->display($model);
-    }
-
-    /**
-     * Display field value.
-     *
-     * @param Model $model
-     * @return mixed
-     */
-    public function displayOnIndex(Model $model)
-    {
         return $this->display($model);
     }
 
