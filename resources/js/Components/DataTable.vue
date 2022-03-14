@@ -14,14 +14,14 @@
             <tbody>
                 <tr v-for="(item, index) in data.data" :key="index">
                     <td v-for="(header, column) in headers" :key="column" v-html="item[column]" />
-                    <td width="200px" class="text-center">
-                        <l-btn v-if="item.larapid.routes" :href="item.larapid.routes.edit" size="sm" variant="outline-info" class="me-2">
-                            Edit
+                    <td v-if="item.larapid.routes" class="text-center" :width="getActionWidth(item.larapid.routes)">
+                        <l-btn v-if="item.larapid.routes.edit" :href="item.larapid.routes.edit" size="sm" variant="outline-info" class="me-2">
+                            Edit {{ item.larapid.routes.length }}
                         </l-btn>
-                        <l-btn v-if="item.larapid.routes" :href="item.larapid.routes.detail" size="sm" variant="outline-primary" class="me-2">
+                        <l-btn v-if="item.larapid.routes.detail" :href="item.larapid.routes.detail" size="sm" variant="outline-primary" class="me-2">
                             Detail
                         </l-btn>
-                        <l-btn v-if="item.larapid.routes" size="sm" variant="outline-danger" @click="onDestroy(item.routes.destroy)">
+                        <l-btn v-if="item.larapid.routes.destroy" size="sm" variant="outline-danger" @click="onDestroy(item.routes.destroy)">
                             Delete
                         </l-btn>
                     </td>
@@ -52,6 +52,10 @@ export default {
         }
     },
     methods: {
+        getActionWidth (routes) {
+            return `${70 * Object.keys(routes).length}px`
+        },
+
         onDestroy (route) {
             if (window.confirm('Do you really want to delete this item?')) {
                 this.$inertia.delete(route)

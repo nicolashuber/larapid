@@ -71,7 +71,7 @@ class HasMany extends Field
         LarapidResource::collection($data);
 
         return [
-            'data' => $data,
+            'data' => $data->toArray($request),
             'title' => $entity::$title,
             'columns' => $entity->getIndexColumns(),
             'fields' => $entity->getCreatingFieldsProps(),

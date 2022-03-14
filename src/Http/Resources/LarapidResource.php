@@ -32,6 +32,29 @@ class LarapidResource extends JsonResource
     }
 
     /**
+     * Get routes.
+     *
+     * @param mixed $primaryKey
+     * @param Entity $entity
+     * @return array
+     */
+    protected function routes($primaryKey, $entity)
+    {
+        $routes = [];
+        $actions = ['edit', 'detail', 'destroy'];
+
+        foreach ($actions as $action) {
+            $route = $entity->route($primaryKey, $action);
+
+            if ($route) {
+                $routes[$action] = $route;
+            }
+        }
+
+        return $routes;
+    }
+
+    /**
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -53,11 +76,7 @@ class LarapidResource extends JsonResource
                 $data['id'] = $this->id;
 
                 $data['larapid'] = [
-                    'routes' => [
-                        'edit' => $request->entity->route($this->id, 'edit'),
-                        'detail' => $request->entity->route($this->id, 'detail'),
-                        'destroy' => $request->entity->route($this->id, 'destroy'),
-                    ],
+                    'routes' => $this->routes($this->id, $request->entity),
                 ];
             }
         }

@@ -97,11 +97,16 @@ abstract class Entity
      *
      * @param int|null $id
      * @param string $action
-     * @return string
+     * @return string|null
      */
     public function route($id = null, $action = 'index')
     {
         $requiredId = $action == 'update' || $action == 'edit' || $action == 'destroy' || $action == 'detail';
+        $method = 'enable' . $this->getPageMethod($action);
+
+        if (method_exists($this, $method) && ! $this->$method()) {
+            return null;
+        }
 
         if ($id && $requiredId) {
             return route("larapid.{$action}", [$this::slug(), $id]);
@@ -131,6 +136,36 @@ abstract class Entity
         $classpath = explode('\\', str_replace('entity', '', $classname));
 
         return array_pop($classpath);
+    }
+
+    /**
+     * Enables edit an entity
+     *
+     * @return boolean
+     */
+    public function enableEditing()
+    {
+        return true;
+    }
+
+    /**
+     * Enables viewing details of an entity
+     *
+     * @return boolean
+     */
+    public function enableDetail()
+    {
+        return true;
+    }
+
+    /**
+     * Enables delete an entity
+     *
+     * @return boolean
+     */
+    public function enableDeleting()
+    {
+        return true;
     }
 
     /**
@@ -208,6 +243,12 @@ abstract class Entity
         return $data;
     }
 
+    /**
+     * Get page method.
+     *
+     * @param string $page
+     * @return string
+     */
     public function getPageMethod($page)
     {
         $replace = [
@@ -325,6 +366,12 @@ abstract class Entity
         return $this->getFieldsProps('updating', $model);
     }
 
+    /**
+     * Get entity relations.
+     *
+     * @param Model $model
+     * @return array
+     */
     public function getRelations(Model $model)
     {
         $fields = [];
