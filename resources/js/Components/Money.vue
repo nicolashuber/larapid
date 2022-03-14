@@ -18,6 +18,9 @@ export default {
         const { inputRef } = useCurrencyInput({
             currency: 'BRL',
             locale: 'pt-BR',
+            precision: 2,
+            exportValueAsInteger: true,
+            valueScaling: 'precision',
             autoDecimalDigits: true
         })
 
