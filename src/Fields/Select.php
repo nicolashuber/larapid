@@ -43,9 +43,12 @@ class Select extends Field
     }
 
     /**
-     * Display on index
+     * Get selected option.
+     *
+     * @param Model $model
+     * @return string|null
      */
-    public function displayOnIndex(Model $model)
+    protected function getSelected(Model $model)
     {
         $value = $this->display($model);
         $options = $this->getOptions();
@@ -55,6 +58,28 @@ class Select extends Field
         }
 
         return null;
+    }
+
+    /**
+     * Display on index.
+     *
+     * @param Model $model
+     * @return string|null
+     */
+    public function displayOnIndex(Model $model)
+    {
+        return $this->getSelected($model);
+    }
+
+    /**
+     * Display on detail.
+     *
+     * @param Model $model
+     * @return string|null
+     */
+    public function displayOnDetail(Model $model)
+    {
+        return $this->getSelected($model);
     }
 }
 
