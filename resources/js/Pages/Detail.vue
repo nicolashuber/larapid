@@ -3,7 +3,8 @@
         <l-page-header title="Detail"></l-page-header>
         <l-panel>
             <l-field v-for="(label, column) of columns" horizontal :key="column" :label="label">
-                <l-plain-text :value="data[column]" />
+                <div v-if="column === 'media_id'" v-html="data[column]" />
+                <l-plain-text v-else :value="data[column]" />
             </l-field>
         </l-panel>
 

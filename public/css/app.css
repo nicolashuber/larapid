@@ -11442,6 +11442,16 @@ textarea.form-control-lg {
   width: 10rem;
   height: 10rem;
 }
+.media-display {
+  width: 8rem;
+  height: 8rem;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+.data-table .media-display {
+  width: 3rem;
+  height: 3rem;
+}
 
 .panel {
   padding: 1rem;

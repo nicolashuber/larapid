@@ -12,7 +12,7 @@ return [
     'bool_true' => 'Sim',
     'bool_false' => 'Não',
 
-    'upload_maxsize' => 16777216,
+    'upload_maxsize' => 10000000,
 
     'image_driver' => 'gd',
     'image_encode' => 'jpg',

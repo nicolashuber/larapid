@@ -5,14 +5,15 @@
             class="media-dragable d-flex align-items-center justify-content-center text-center"
             :class="{ 'is-dragover': isDragover }"
             @drop.prevent="add"
-            @dragover.prevent="onDragover"
+            @dragover.prevent="isDragover = true"
             @dragleave.prevent="isDragover = false"
         >
             <l-loading v-if="loading" />
-            <div v-if="! loading && ! previewUrl" class="media-empty">
+            <div v-if="! loading && ! previewUrl" class="media-empty mt-auto">
                 <div v-if="! isDragover">
                     <div class="fw-bold">Drag & Drop</div>
                     <div class="fs-6 text-muted">your files here, or <a href="#" class="text-muted" @click.prevent="openBrowser">browser</a></div>
+                    <div v-if="error" class="fs-6 text-danger mt-3">{{ error }}</div>
                 </div>
                 <div v-else class="fs-5">Drop!</div>
                 <input
@@ -62,12 +63,7 @@ export default {
         }
     },
     methods: {
-        onDragover (e) {
-            console.log(e)
-        },
-
         add (e) {
-            this.loading = true
             this.isDragover = false
 
             this.upload(e.dataTransfer.files[0])
@@ -75,10 +71,10 @@ export default {
 
         remove () {
             this.previewUrl = null
+            this.$emit('update:modelValue', null)
         },
 
         onInput (e) {
-            this.loading = true
             this.isDragover = false
 
             this.upload(e.target.files[0])
@@ -86,6 +82,13 @@ export default {
 
         openBrowser () {
             this.$refs.inputFile.click()
+        },
+
+        setError (error) {
+            this.error = error
+            this.isDragover = false
+
+            return false
         },
 
         validateSize (size) {
@@ -103,16 +106,35 @@ export default {
                 return this.setError('Please enter a valid file')
             }
 
-            if (! this.validateSize(file.size)) {
-                return this.setError(`File size is greater than ${this.options.maxSize} MB`)
-            }
-
             if (! this.validateType(file.name)) {
                 return this.setError(`Invalid file format (available ${this.options.accept.join(', ')})`)
             }
+
+            if (! this.validateSize(file.size)) {
+                return this.setError(`File size is greater than ${this.getFileSize(this.options.maxSize)}`)
+            }
+
+            return true
+        },
+
+        getFileSize (value) {
+            const kilo = (parseInt(value) / 10000)
+
+            if (kilo > 1000) {
+                return `${(kilo / 10).toFixed(2)} MB`
+            }
+
+            return `${kilo.toFixed(2)} kB`
         },
 
         async upload (file) {
+            if (! this.validate(file)) {
+                return
+            }
+
+            this.error = null
+            this.loading = true
+
             const formData = new FormData()
             formData.append('file', file)
 

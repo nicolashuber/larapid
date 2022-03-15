@@ -2,6 +2,7 @@
 
 namespace Internexus\Larapid\Fields;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Internexus\Larapid\Facades\Larapid;
@@ -159,5 +160,40 @@ class Media extends Field
             'mediaGroup' => $this->group,
             'previewUrl' => $this->getPreviewUrl(),
         ];
+    }
+
+    /**
+     * Display image element.
+     *
+     * @param Model $model
+     * @return string
+     */
+    public function displayImage(Model $model)
+    {
+        $this->defaultValue($model);
+
+        return sprintf('<img src="%s" class="media-display" />', $this->getPreviewUrl());
+    }
+
+    /**
+     * Display field value on detail.
+     *
+     * @param Model $model
+     * @return string
+     */
+    public function displayOnDetail(Model $model)
+    {
+        return $this->displayImage($model);
+    }
+
+    /**
+     * Display field value on index.
+     *
+     * @param Model $model
+     * @return string
+     */
+    public function displayOnIndex(Model $model)
+    {
+        return $this->displayImage($model);
     }
 }
