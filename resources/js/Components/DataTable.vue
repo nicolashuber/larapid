@@ -21,7 +21,7 @@
                         <l-btn v-if="item.larapid.routes.detail" :href="item.larapid.routes.detail" size="sm" variant="outline-primary" class="me-2">
                             Detail
                         </l-btn>
-                        <l-btn v-if="item.larapid.routes.destroy" size="sm" variant="outline-danger" @click="onDestroy(item.routes.destroy)">
+                        <l-btn v-if="item.larapid.routes.destroy" size="sm" variant="outline-danger" @click="onDestroy(item.larapid.routes.destroy)">
                             Delete
                         </l-btn>
                     </td>

@@ -19,8 +19,8 @@ export default {
             currency: 'BRL',
             locale: 'pt-BR',
             precision: 2,
-            exportValueAsInteger: true,
-            valueScaling: 'precision',
+            // exportValueAsInteger: true,
+            // valueScaling: 'precision',
             autoDecimalDigits: true
         })
 

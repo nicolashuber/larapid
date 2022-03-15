@@ -15,6 +15,7 @@ class Larapid
      */
     const DEFAULT_CONFIG = [
         'currency' => 'BRL',
+        'currency_symbol' => 'R$',
         'date_mask' => '##/##/####',
         'date_format' => 'd/m/Y',
         'datetime_mask' => '##/##/#### ##:##',

@@ -3,7 +3,8 @@
 namespace Internexus\Larapid\Fields;
 
 use Illuminate\Database\Eloquent\Model;
-use \NumberFormatter;
+use Internexus\Larapid\Facades\Larapid;
+use NumberFormatter;
 
 class Money extends Field
 {
@@ -14,25 +15,45 @@ class Money extends Field
      */
     public static $component = 'money';
 
+    public function formatted($value)
+    {
+        if (! $value) {
+            return null;
+        }
+
+        $formatter = new NumberFormatter('pt_BR', NumberFormatter::DECIMAL);
+        $currency = Larapid::getConfig('currency');
+        $symbol = Larapid::getConfig('currency_symbol');
+
+        return $symbol . ' ' . $formatter->formatCurrency(
+            $value / 100,
+            $currency
+        );
+    }
+
     /**
-     * Display field value.
+     * Display field value on detail.
+     *
+     * @param Model $model
+     * @return mixed
+     */
+    public function displayOnDetail(Model $model)
+    {
+        return $this->formatted(
+            $this->display($model)
+        );
+    }
+
+    /**
+     * Display field value on index.
      *
      * @param Model $model
      * @return mixed
      */
     public function displayOnIndex(Model $model)
     {
-        $value = $this->display($model);
-
-        if (! $value) {
-            return null;
-        }
-
-        $formatter = new NumberFormatter('pt_BR', NumberFormatter::DECIMAL);
-
-        return $formatter->formatCurrency(
-            $value / 100,
-            'BRL'
+        return $this->formatted(
+            $this->display($model)
         );
     }
 }
