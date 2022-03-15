@@ -24,11 +24,39 @@ class Media extends Field
     protected $relation;
 
     /**
-     * Media accept.
+     * Media accept extensions.
+     *
+     * @var array
+     */
+    protected $accept;
+
+    /**
+     * Media min width.
      *
      * @var int
      */
-    protected $accept;
+    protected $minWidth;
+
+    /**
+     * Media min height.
+     *
+     * @var int
+     */
+    protected $minHeight;
+
+    /**
+     * Media max width.
+     *
+     * @var int
+     */
+    protected $maxWidth;
+
+    /**
+     * Media max height.
+     *
+     * @var int
+     */
+    protected $maxHeight;
 
     /**
      * Media max size.
@@ -85,6 +113,36 @@ class Media extends Field
     }
 
     /**
+     * Set minimum image dimensions.
+     *
+     * @param int $width
+     * @param int $height
+     * @return self
+     */
+    public function minDimension(int $width, int $height)
+    {
+        $this->minWidth = $width;
+        $this->minHeight = $height;
+
+        return $this;
+    }
+
+    /**
+     * Set maximum image dimensions.
+     *
+     * @param int $width
+     * @param int $height
+     * @return self
+     */
+    public function maxDimension(int $width, int $height)
+    {
+        $this->maxWidth = $width;
+        $this->maxHeight = $height;
+
+        return $this;
+    }
+
+    /**
      * Set media max size.
      *
      * @param int $size
@@ -97,6 +155,11 @@ class Media extends Field
         return $this;
     }
 
+    /**
+     * Get image accept mimes.
+     *
+     * @return array;
+     */
     public function getAccept()
     {
         if ($this->accept) {
@@ -106,6 +169,11 @@ class Media extends Field
         return Larapid::getConfig('image_accept');
     }
 
+    /**
+     * Get max upload size.
+     *
+     * @return int
+     */
     public function getMaxSize()
     {
         if ($this->maxSize) {
@@ -155,7 +223,13 @@ class Media extends Field
     public function getOptions()
     {
         return [
-            'accept' => $this->getAccept(),
+            'mimes' => $this->getAccept(),
+            'dimensions' => [
+                'minWidth' => $this->minWidth,
+                'minHeight' => $this->minHeight,
+                'maxWidth' => $this->maxWidth,
+                'maxHeight' => $this->maxHeight,
+            ],
             'maxSize' => $this->getmaxSize(),
             'mediaGroup' => $this->group,
             'previewUrl' => $this->getPreviewUrl(),

@@ -20,7 +20,7 @@
                     ref="inputFile"
                     type="file"
                     class="media-input"
-                    :accept="options.accept.map(item => `.${item}`).join(',')"
+                    :accept="options.mimes.map(item => `.${item}`).join(',')"
                     @input="onInput"
                 >
             </div>
@@ -96,7 +96,7 @@ export default {
         },
 
         validateType (name) {
-            const exts = this.options.accept.join('|')
+            const exts = this.options.mimes.join('|')
 
             return name.match(new RegExp(`.(${exts})$`, 'gi'))
         },
@@ -107,7 +107,7 @@ export default {
             }
 
             if (! this.validateType(file.name)) {
-                return this.setError(`Invalid file format (available ${this.options.accept.join(', ')})`)
+                return this.setError(`Invalid file format (available ${this.options.mimes.join(', ')})`)
             }
 
             if (! this.validateSize(file.size)) {
@@ -137,16 +137,26 @@ export default {
 
             const formData = new FormData()
             formData.append('file', file)
+            formData.append('options', JSON.stringify(this.options))
 
-            const { data } = await Axios.post(`/cms/media/${this.options.mediaGroup}`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
+            try {
+                const { data } = await Axios.post(`/cms/media/${this.options.mediaGroup}`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
+
+                this.previewUrl = data.data.url
+                this.$emit('update:modelValue', data.data.id)
+            } catch (e) {
+                if (e.response && e.response.status === 422) {
+                    const data = e.response.data
+
+                    this.setError(data.errors.file[0])
                 }
-            })
-
-            this.loading = false
-            this.previewUrl = data.data.url
-            this.$emit('update:modelValue', data.data.id)
+            } finally {
+                this.loading = false
+            }
         }
     }
 }
