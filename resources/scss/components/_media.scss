@@ -1,0 +1,36 @@
+.media {
+    &-dragable {
+        min-height: 7.125rem;
+        padding: 1rem;
+        border: 1px dashed $gray-300;
+
+        &.is-dragover {
+            border-color: $gray-400;
+            background-color: $gray-200;
+        }
+    }
+
+    &-input {
+        width: 0;
+        height: 0;
+        visibility: hidden;
+    }
+
+    &-preview {
+        display: inline-block;
+        position: relative;
+
+        .btn-close {
+            position: absolute;
+            top: .5rem;
+            right: .5rem;
+            z-index: 1;
+        }
+    }
+
+    &-img {
+        max-width: 100%;
+        max-height: 10rem;
+        object-fit: contain;
+    }
+}

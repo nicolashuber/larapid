@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Internexus\Larapid\Http\Controllers\LarapidController;
 use Internexus\Larapid\Http\Controllers\LoginController;
+use Internexus\Larapid\Http\Controllers\MediaController;
 use Internexus\Larapid\Http\Middleware\Authenticate;
 
 /*
@@ -15,6 +16,8 @@ Route::prefix('cms')->middleware(['web', 'larapid.inertia'])->group(function() {
     Route::post('/login', [LoginController::class, 'login'])->name('larapid.login');
 
     Route::middleware(Authenticate::class)->group(function () {
+        Route::post('/media/{mediaGroup?}', [MediaController::class, 'store']);
+
         Route::get('/', [LarapidController::class, 'dashboard'])->name('larapid.dash');
         Route::get('/{entity}/create', [LarapidController::class, 'create'])->name('larapid.create');
         Route::get('/{entity}/{id}/detail', [LarapidController::class, 'detail'])->name('larapid.detail');

@@ -2,7 +2,7 @@
 
 namespace Internexus\Larapid\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Inertia\Inertia;
 

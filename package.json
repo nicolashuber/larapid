@@ -10,6 +10,7 @@
     "production": "mix --production"
   },
   "dependencies": {
+    "axios": "^0.26.1",
     "bootstrap": "^5.1.0",
     "maska": "^1.5.0",
     "vue-currency-input": "^2.4.0"

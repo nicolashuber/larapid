@@ -1,6 +1,7 @@
 import Url from './Url'
 import Text from './Text'
 import Date from './Date'
+import Media from './Media'
 import Input from './Input'
 import Money from './Money'
 import Number from './Number'
@@ -17,6 +18,7 @@ import Btn from './Btn'
 
 import Form from './Form'
 import Panel from './Panel'
+import Loading from './Loading'
 import Pagination from './Pagination'
 import DataTable from './DataTable'
 import PageHeader from './PageHeader'
@@ -25,6 +27,7 @@ export default {
     'url': Url,
     'text': Text,
     'date': Date,
+    'media': Media,
     'input': Input,
     'money': Money,
     'number': Number,
@@ -41,6 +44,7 @@ export default {
 
     'form': Form,
     'panel': Panel,
+    'loading': Loading,
     'pagination': Pagination,
     'data-table': DataTable,
     'page-header': PageHeader

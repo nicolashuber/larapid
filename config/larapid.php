@@ -10,4 +10,10 @@ return [
 
     'bool_true' => 'Sim',
     'bool_false' => 'Não',
+
+    'image' => [
+        'driver' => 'gd',
+        'encode' => 'jpg',
+        'quality' => 80,
+    ],
 ];
