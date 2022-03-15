@@ -172,7 +172,9 @@ class Media extends Field
     {
         $this->defaultValue($model);
 
-        return sprintf('<img src="%s" class="media-display" />', $this->getPreviewUrl());
+        $url = $this->getPreviewUrl();
+
+        return sprintf('<img src="%s" class="media-display" />', $url ?? asset('vendor/larapid/img/placeholder.png'));
     }
 
     /**
