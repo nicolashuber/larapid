@@ -10,6 +10,13 @@ class MediaGroup extends Model
     use HasFactory;
 
     /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'media_groups';
+
+    /**
      * The primary key for the model.
      *
      * @var string
