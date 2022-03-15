@@ -76,6 +76,10 @@ class MediaService implements MediaServiceContract
     {
         $mimeType = $file->getMimeType();
 
+        if (Str::startsWith($mimeType, 'image/svg+xml')) {
+            return $this->uploadFile($file, $mediaGroup);
+        }
+
         if (Str::startsWith($mimeType, 'image/')) {
             if (! $mediaGroup) {
                 return $this->uploadImage($file);
@@ -94,11 +98,28 @@ class MediaService implements MediaServiceContract
      * @param MediaGroup $mediaGroup
      * @throws \Exception
      */
-    protected function uploadFile(UploadedFile $file, MediaGroup $mediaGroup)
+    protected function uploadFile(UploadedFile $file, MediaGroup $mediaGroup = null)
     {
-        throw new \Exception('Upload enabled for images only');
+        $slug = $mediaGroup ? $mediaGroup->slug : 'general';
+        $path = $file->store(
+            $this->getPathname($file, $slug)
+        );
+
+        return $this->media->create([
+            'url' => $path,
+            'name' => $file->getClientOriginalName(),
+            'mime_type' => $file->getMimeType(),
+            'filesize' => Storage::size($path),
+        ]);
     }
 
+    /**
+     * Get image data.
+     *
+     * @param UploadedFile $file
+     * @param MediaGroup $mediaGroup
+     * @return array
+     */
     protected function getImageData(UploadedFile $file, MediaGroup $mediaGroup = null)
     {
         $slug = $mediaGroup ? $mediaGroup->slug : 'general';
@@ -116,6 +137,12 @@ class MediaService implements MediaServiceContract
         ];
     }
 
+    /**
+     * Upload a image.
+     *
+     * @param UploadedFile $file
+     * @return Media
+     */
     protected function uploadImage(UploadedFile $file)
     {
         return $this->media->create($this->getImageData($file));
@@ -133,8 +160,8 @@ class MediaService implements MediaServiceContract
     {
         $media = $mediaGroup->media()->create($this->getImageData($file, $mediaGroup));
 
-        $encode = $this->config['image']['encode'];
-        $quality = $this->config['image']['quality'];
+        $encode = $this->config['image_encode'];
+        $quality = $this->config['image_quality'];
 
         foreach ($mediaGroup->sizes as $size) {
             $resized = $this->imageProcess->resize($file->path(), $size->width, $size->height);

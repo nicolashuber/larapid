@@ -29,14 +29,14 @@ class LarapidServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton(MediaServiceContract::class, function ($app) {
-            $config = $app['config']['larapid']['image'];
+            $config = $app['config']['larapid'];
 
             return new MediaService(
                 $config,
                 new Media(),
                 new MediaGroup(),
                 new ImageProcessService(
-                    new ImageManager(['driver' => $config['driver']])
+                    new ImageManager(['driver' => $config['image_driver'] ?? 'gd'])
                 )
             );
         });

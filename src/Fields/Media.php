@@ -4,6 +4,7 @@ namespace Internexus\Larapid\Fields;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Internexus\Larapid\Facades\Larapid;
 
 class Media extends Field
 {
@@ -20,6 +21,20 @@ class Media extends Field
      * @var string
      */
     protected $relation;
+
+    /**
+     * Media accept.
+     *
+     * @var int
+     */
+    protected $accept;
+
+    /**
+     * Media max size.
+     *
+     * @var int
+     */
+    protected $maxSize;
 
     /**
      * Field component name.
@@ -53,6 +68,50 @@ class Media extends Field
         $this->group = $group;
 
         return $this;
+    }
+
+    /**
+     * Set media accept.
+     *
+     * @param array $accept
+     * @return self
+     */
+    public function accept(array $accept)
+    {
+        $this->accept = $accept;
+
+        return $this;
+    }
+
+    /**
+     * Set media max size.
+     *
+     * @param int $size
+     * @return self
+     */
+    public function maxSize($size)
+    {
+        $this->maxSize = $size;
+
+        return $this;
+    }
+
+    public function getAccept()
+    {
+        if ($this->accept) {
+            return $this->accept;
+        }
+
+        return Larapid::getConfig('image_accept');
+    }
+
+    public function getMaxSize()
+    {
+        if ($this->maxSize) {
+            return $this->maxSize;
+        }
+
+        return Larapid::getConfig('upload_maxsize');
     }
 
     /**
@@ -95,8 +154,10 @@ class Media extends Field
     public function getOptions()
     {
         return [
+            'accept' => $this->getAccept(),
+            'maxSize' => $this->getmaxSize(),
+            'mediaGroup' => $this->group,
             'previewUrl' => $this->getPreviewUrl(),
-            'mediaGroup' => $this->group
         ];
     }
 }

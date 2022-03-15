@@ -12,9 +12,10 @@ return [
     'bool_true' => 'Sim',
     'bool_false' => 'Não',
 
-    'image' => [
-        'driver' => 'gd',
-        'encode' => 'jpg',
-        'quality' => 80,
-    ],
+    'upload_maxsize' => 16777216,
+
+    'image_driver' => 'gd',
+    'image_encode' => 'jpg',
+    'image_quality' => 80,
+    'image_accept' => ['jpg', 'png', 'svg'],
 ];

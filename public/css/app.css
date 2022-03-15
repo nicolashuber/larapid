@@ -11438,6 +11438,10 @@ textarea.form-control-lg {
   -o-object-fit: contain;
      object-fit: contain;
 }
+.media-img.is-svg {
+  width: 10rem;
+  height: 10rem;
+}
 
 .panel {
   padding: 1rem;

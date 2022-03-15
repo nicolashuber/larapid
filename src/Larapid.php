@@ -22,6 +22,11 @@ class Larapid
         'datetime_format' => 'd/m/Y H:i',
         'bool_true' => 'Sim',
         'bool_false' => 'Não',
+        'upload_maxsize' => 16777216,
+        'image_driver' => 'gd',
+        'image_encode' => 'jpg',
+        'image_quality' => 80,
+        'image_accept' => ['jpg', 'png', 'svg'],
     ];
 
     /**
