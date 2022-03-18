@@ -15,6 +15,23 @@ class Money extends Field
      */
     public static $component = 'money';
 
+    /**
+     * Display field value.
+     *
+     * @param Model $model
+     * @return mixed
+     */
+    public function display(Model $model)
+    {
+        $value = $model->{$this->getColumn()} ?? null;
+
+        if ($value > 0) {
+            return $value / 100;
+        }
+
+        return $value;
+    }
+
     public function formatted($value)
     {
         if (! $value) {
@@ -26,7 +43,7 @@ class Money extends Field
         $symbol = Larapid::getConfig('currency_symbol');
 
         return $symbol . ' ' . $formatter->formatCurrency(
-            $value / 100,
+            $value,
             $currency
         );
     }
