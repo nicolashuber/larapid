@@ -1,5 +1,5 @@
 <template>
-    <app :menu="menu" :user="user">
+    <app :menu="menu" :user="user" :flash="flash">
         <l-page-header :title="$t('page.detail')" />
         <l-panel>
             <l-field v-for="(label, column) of columns" horizontal :key="column" :label="label">

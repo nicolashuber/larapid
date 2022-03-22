@@ -1,5 +1,5 @@
 <template>
-    <app :menu="menu" :user="user">
+    <app :menu="menu" :user="user" :flash="flash">
         <l-page-header :title="$t('page.index')">
             <div class="d-flex justify-content-between">
                 <l-search class="me-3" />
@@ -37,6 +37,10 @@ export default {
             required: true
         },
         user: {
+            type: Object,
+            required: true
+        },
+        flash: {
             type: Object,
             required: true
         }

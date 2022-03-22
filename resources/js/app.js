@@ -46,7 +46,7 @@ const store = createStore({
             commit('ADD_TOAST', item)
             setTimeout(() => {
                 dispatch('removeToast', item)
-            }, 1500)
+            }, 2500)
         },
 
         removeToast ({ commit }, item) {

@@ -40,6 +40,10 @@ class HandleInertiaRequests extends Middleware
         return array_merge(parent::share($request), [
             'menu' => Larapid::menu(),
             'user' => $request->user() ? $request->user()->only('id', 'name', 'email') : null,
+            'flash' => [
+                'type' => fn () => $request->session()->get('flash:type', 'info'),
+                'message' => fn () => $request->session()->get('flash:message')
+            ]
         ]);
     }
 }

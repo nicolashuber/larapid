@@ -45,11 +45,29 @@ export default {
         user: {
             type: Object,
             required: true
+        },
+        flash: {
+            type: Object,
+            required: true
+        }
+    },
+    mounted () {
+        this.showToast(this.flash)
+    },
+    watch: {
+        flash (toast) {
+            this.showToast(toast)
         }
     },
     methods: {
         logout () {
             this.$inertia.post('logout')
+        },
+
+        showToast (toast) {
+            if (toast.type && toast.message) {
+                this.$store.dispatch('addToast', toast)
+            }
         }
     }
 }

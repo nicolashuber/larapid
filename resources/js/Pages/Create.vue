@@ -1,5 +1,5 @@
 <template>
-    <app :menu="menu" :user="user">
+    <app :menu="menu" :user="user" :flash="flash">
         <l-page-header :title="$t('page.create')" />
         <l-form
             :route="route"
@@ -34,6 +34,10 @@ export default {
             required: true
         },
         user: {
+            type: Object,
+            required: true
+        },
+        flash: {
             type: Object,
             required: true
         }

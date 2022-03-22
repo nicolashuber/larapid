@@ -89,7 +89,9 @@ class LarapidController extends Controller
             return redirect()->route('larapid.detail', [$request->relatedEntity, $request->relatedId]);
         }
 
-        return redirect()->route('larapid.index', [$entity::slug()]);
+        return redirect()->route('larapid.index', [$entity::slug()])
+                         ->with('flash:type', 'success')
+                         ->with('flash:message', trans('larapid.store'));
     }
 
     /**
@@ -149,7 +151,9 @@ class LarapidController extends Controller
         $repo = new LarapidRepository($entity->model());
         $repo->update($id, $request->all());
 
-        return redirect()->route('larapid.edit', [$entity::slug(), $id]);
+        return redirect()->route('larapid.edit', [$entity::slug(), $id])
+                         ->with('flash:type', 'success')
+                         ->with('flash:message', trans('larapid.update'));
     }
 
     /**
@@ -164,6 +168,8 @@ class LarapidController extends Controller
         $repo = new LarapidRepository($entity->model());
         $repo->destroy($id);
 
-        return redirect()->route('larapid.index', [$entity::slug()]);
+        return redirect()->route('larapid.index', [$entity::slug()])
+                         ->with('flash:type', 'success')
+                         ->with('flash:message', trans('larapid.destroy'));
     }
 }
