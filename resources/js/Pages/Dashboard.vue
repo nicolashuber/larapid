@@ -1,5 +1,5 @@
 <template>
-    <app :menu="menu">
+    <app :menu="menu" :user="user">
         <h3>Welcome back!</h3>
     </app>
 </template>
@@ -15,6 +15,10 @@ export default {
         menu: {
             type: Array,
             default: []
+        },
+        user: {
+            type: Object,
+            required: true
         }
     }
 }

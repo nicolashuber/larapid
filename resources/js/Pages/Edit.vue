@@ -1,5 +1,5 @@
 <template>
-    <app :menu="menu">
+    <app :menu="menu" :user="user">
         <h3>Edit</h3>
         <l-form
             :data="data"
@@ -35,6 +35,10 @@ export default {
             required: true
         },
         fields: {
+            type: Object,
+            required: true
+        },
+        user: {
             type: Object,
             required: true
         }

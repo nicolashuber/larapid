@@ -1,5 +1,5 @@
 <template>
-    <app :menu="menu">
+    <app :menu="menu" :user="user">
         <l-page-header title="Detail"></l-page-header>
         <l-panel>
             <l-field v-for="(label, column) of columns" horizontal :key="column" :label="label">
@@ -41,6 +41,10 @@ export default {
         },
         relations: {
             type: Object
+        },
+        user: {
+            type: Object,
+            required: true
         }
     }
 }

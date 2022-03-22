@@ -38,7 +38,8 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request)
     {
         return array_merge(parent::share($request), [
-            'menu' => Larapid::menu()
+            'menu' => Larapid::menu(),
+            'user' => $request->user() ? $request->user()->only('id', 'name', 'email') : null,
         ]);
     }
 }

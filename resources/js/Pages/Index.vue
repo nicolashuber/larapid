@@ -1,5 +1,5 @@
 <template>
-    <app :menu="menu">
+    <app :menu="menu" :user="user">
         <l-page-header title="Index">
             <l-btn :href="createRoute" variant="secondary">
                 Create new
@@ -31,6 +31,10 @@ export default {
         },
         createRoute: {
             type: String,
+            required: true
+        },
+        user: {
+            type: Object,
             required: true
         }
     }

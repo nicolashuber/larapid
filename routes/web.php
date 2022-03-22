@@ -14,6 +14,7 @@ use Internexus\Larapid\Http\Middleware\Authenticate;
 Route::prefix('cms')->middleware(['web', 'larapid.inertia'])->group(function() {
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('larapid.login');
     Route::post('/login', [LoginController::class, 'login'])->name('larapid.login');
+    Route::post('/logout', [LoginController::class, 'logout'])->name('larapid.logout');
 
     Route::middleware(Authenticate::class)->group(function () {
         Route::post('/media/{mediaGroup?}', [MediaController::class, 'store']);

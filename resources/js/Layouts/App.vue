@@ -19,7 +19,9 @@
             </nav>
         </aside>
         <main class="main">
-            <header class="header"></header>
+            <header class="header text-muted">
+                {{ user.name }} <small class="ms-1">(<a href="#" @click.prevent="logout">logout</a>)</small>
+            </header>
             <div class="content">
                 <slot />
             </div>
@@ -37,8 +39,17 @@ export default {
     },
     props: {
         menu: {
-            type: Array,
+            type: [Array, Object],
             default: []
+        },
+        user: {
+            type: Object,
+            required: true
+        }
+    },
+    methods: {
+        logout () {
+            this.$inertia.post('logout')
         }
     }
 }

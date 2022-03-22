@@ -2,6 +2,7 @@
 
 namespace Internexus\Larapid\Http\Controllers;
 
+use \Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Inertia\Inertia;
@@ -46,5 +47,16 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         return Inertia::render('Login');
+    }
+
+    /**
+     * The user has logged out of the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return mixed
+     */
+    protected function loggedOut(Request $request)
+    {
+        return redirect('/cms');
     }
 }

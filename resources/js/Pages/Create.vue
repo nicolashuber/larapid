@@ -1,5 +1,5 @@
 <template>
-    <app :menu="menu">
+    <app :menu="menu" :user="user">
         <h3>Create</h3>
         <l-form
             :route="route"
@@ -30,6 +30,10 @@ export default {
             required: true
         },
         fields: {
+            type: Object,
+            required: true
+        },
+        user: {
             type: Object,
             required: true
         }

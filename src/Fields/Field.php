@@ -64,6 +64,13 @@ abstract class Field
     protected $help;
 
     /**
+     * Field is sortable.
+     *
+     * @var boolean
+     */
+    protected $sortable;
+
+    /**
      * Field read only.
      *
      * @var array
@@ -246,6 +253,13 @@ abstract class Field
     public function displayUsing(callable $callback)
     {
         $this->displayUsing = $callback;
+
+        return $this;
+    }
+
+    public function sortable()
+    {
+        $this->sortable = true;
 
         return $this;
     }
