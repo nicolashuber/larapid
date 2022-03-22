@@ -1,6 +1,6 @@
 <template>
     <app :menu="menu" :user="user">
-        <h3>Welcome back!</h3>
+        <h3>{{ $t('page.dashboard') }}</h3>
     </app>
 </template>
 
@@ -13,7 +13,7 @@ export default {
     },
     props: {
         menu: {
-            type: Array,
+            type: Object,
             default: []
         },
         user: {

@@ -1,6 +1,6 @@
 <template>
     <app :menu="menu" :user="user">
-        <l-page-header title="Detail"></l-page-header>
+        <l-page-header :title="$t('page.detail')" />
         <l-panel>
             <l-field v-for="(label, column) of columns" horizontal :key="column" :label="label">
                 <div v-if="column === 'media_id'" v-html="data[column]" />
@@ -11,7 +11,7 @@
         <l-panel v-for="(relation, index) in relations" :key="index" :title="relation.title">
             <template #header>
                 <l-btn size="sm" variant="secondary" :href="relation.routes.create">
-                    Create new
+                    {{ $t('btn.create') }}
                 </l-btn>
             </template>
             <l-data-table :data="relation.data" :headers="relation.columns" :sortable="false" />
@@ -28,7 +28,7 @@ export default {
     },
     props: {
         menu: {
-            type: Array,
+            type: Object,
             default: []
         },
         data: {

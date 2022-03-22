@@ -14,7 +14,7 @@
                         </div>
                     </th>
                     <th class="text-end">
-                        Actions
+                        {{ $t('datatable.actions') }}
                     </th>
                 </tr>
             </thead>
@@ -23,19 +23,19 @@
                     <td v-for="(header, column) in headers" :key="column" v-html="item[column]" />
                     <td v-if="item.larapid.routes" class="text-center" :width="getActionWidth(item.larapid.routes)">
                         <l-btn v-if="item.larapid.routes.edit" :href="item.larapid.routes.edit" size="sm" variant="outline-info" class="me-2">
-                            Edit {{ item.larapid.routes.length }}
+                            {{ $t('btn.edit') }}
                         </l-btn>
                         <l-btn v-if="item.larapid.routes.detail" :href="item.larapid.routes.detail" size="sm" variant="outline-primary" class="me-2">
-                            Detail
+                            {{ $t('btn.detail') }}
                         </l-btn>
                         <l-btn v-if="item.larapid.routes.destroy" size="sm" variant="outline-danger" @click="onDestroy(item.larapid.routes.destroy)">
-                            Delete
+                            {{ $t('btn.destroy') }}
                         </l-btn>
                     </td>
                 </tr>
                 <tr v-if="data.data.length == 0">
                     <td :colspan="Object.keys(headers).length + 1" class="text-center">
-                        No records.
+                        {{ $t('datatable.empty') }}
                     </td>
                 </tr>
             </tbody>
@@ -86,7 +86,7 @@ export default {
     },
     methods: {
         getActionWidth (routes) {
-            return `${70 * Object.keys(routes).length}px`
+            return `${72 * Object.keys(routes).length}px`
         },
 
         onSortBy ({ column, sortable }) {

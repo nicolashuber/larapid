@@ -21,7 +21,7 @@
             </div>
             <div class="form-footer">
                 <l-btn type="submit" variant="primary">
-                    Submit
+                    {{ $t('btn.save') }}
                 </l-btn>
             </div>
         </form>

@@ -20,7 +20,7 @@
         </aside>
         <main class="main">
             <header class="header text-muted">
-                {{ user.name }} <small class="ms-1">(<a href="#" @click.prevent="logout">logout</a>)</small>
+                {{ user.name }} <small class="ms-1">(<a href="#" @click.prevent="logout">{{ $t('auth.logout') }}</a>)</small>
             </header>
             <div class="content">
                 <slot />
@@ -39,7 +39,7 @@ export default {
     },
     props: {
         menu: {
-            type: [Array, Object],
+            type: Object,
             default: []
         },
         user: {

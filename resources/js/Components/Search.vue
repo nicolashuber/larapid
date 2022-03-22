@@ -3,7 +3,7 @@
         <div class="input-group">
             <input v-model="query" type="text" name="query" class="form-control" />
             <l-btn type="submit" variant="secondary">
-                Search
+                {{ $t('btn.search') }}
             </l-btn>
         </div>
     </form>

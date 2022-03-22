@@ -1,6 +1,6 @@
 <template>
     <app :menu="menu" :user="user">
-        <h3>Create</h3>
+        <l-page-header :title="$t('page.create')" />
         <l-form
             :route="route"
             :errors="errors"
@@ -22,7 +22,7 @@ export default {
             required: true
         },
         menu: {
-            type: Array,
+            type: Object,
             default: []
         },
         errors: {

@@ -1,6 +1,6 @@
 <template>
     <app :menu="menu" :user="user">
-        <h3>Edit</h3>
+        <l-page-header :title="$t('page.edit')" />
         <l-form
             :data="data"
             :route="route"
@@ -23,7 +23,7 @@ export default {
             required: true
         },
         menu: {
-            type: Array,
+            type: Object,
             default: []
         },
         route: {

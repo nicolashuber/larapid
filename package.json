@@ -18,6 +18,7 @@
     "bootstrap": "^5.1.0",
     "maska": "^1.5.0",
     "vue-currency-input": "^2.4.0",
+    "vue-i18n": "^9.1.9",
     "vuex": "^4.0.2"
   },
   "devDependencies": {

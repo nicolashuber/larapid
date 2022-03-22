@@ -1,0 +1,28 @@
+{
+    "auth": {
+        "login": "Entrar",
+        "logout": "sair",
+        "username": "E-mail",
+        "password": "Senha"
+    },
+    "btn": {
+        "save": "Salvar",
+        "search": "Pesquisar",
+        "edit": "Editar",
+        "submit": "Enviar",
+        "detail": "Ver",
+        "destroy": "Excluir",
+        "create": "Criar novo"
+    },
+    "page": {
+        "edit": "Editar",
+        "create": "Criar",
+        "index": "Listar",
+        "detail": "Detalhes",
+        "dashboard": "Bem-vindo!"
+    },
+    "datatable": {
+        "empty": "Sem registros.",
+        "actions": "Ações"
+    }
+}

@@ -1,10 +1,10 @@
 <template>
     <app :menu="menu" :user="user">
-        <l-page-header title="Index">
+        <l-page-header :title="$t('page.index')">
             <div class="d-flex justify-content-between">
                 <l-search class="me-3" />
                 <l-btn :href="createRoute" variant="primary">
-                    Create new
+                    {{ $t('btn.create') }}
                 </l-btn>
             </div>
         </l-page-header>
@@ -21,7 +21,7 @@ export default {
     },
     props: {
         menu: {
-            type: Array,
+            type: Object,
             default: []
         },
         data: {
