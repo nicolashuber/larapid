@@ -22,6 +22,7 @@ import Loading from './Loading'
 import Pagination from './Pagination'
 import DataTable from './DataTable'
 import PageHeader from './PageHeader'
+import Notifications from './Notifications'
 
 export default {
     'url': Url,
@@ -47,5 +48,6 @@ export default {
     'loading': Loading,
     'pagination': Pagination,
     'data-table': DataTable,
-    'page-header': PageHeader
+    'page-header': PageHeader,
+    'notifications': Notifications,
 }

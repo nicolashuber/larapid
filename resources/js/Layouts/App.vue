@@ -24,6 +24,7 @@
                 <slot />
             </div>
         </main>
+        <l-notifications />
     </div>
 </template>
 
