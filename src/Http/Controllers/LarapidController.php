@@ -36,7 +36,11 @@ class LarapidController extends Controller
     public function index(Entity $entity, Request $request)
     {
         $repo = new LarapidRepository($entity->model());
-        $data = $request->has('query') ? $repo->search($request->input('query'), $entity->getSearchableColumns()) : $repo->list();
+        $data = $repo->filter(
+            $request->input('query'),
+            $entity->getSearchableColumns(),
+            $request->input('sort')
+        );
 
         return Inertia::render('Index', [
             'data' => LarapidResource::collection($data),

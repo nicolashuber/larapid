@@ -14,7 +14,7 @@
                     Create new
                 </l-btn>
             </template>
-            <l-data-table :data="relation.data" :headers="relation.columns" />
+            <l-data-table :data="relation.data" :headers="relation.columns" :sortable="false" />
         </l-panel>
     </app>
 </template>

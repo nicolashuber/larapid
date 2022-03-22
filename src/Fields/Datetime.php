@@ -14,6 +14,13 @@ class Datetime extends Timestamp
     public static $component = 'date';
 
     /**
+     * Field is sortable.
+     *
+     * @var boolean
+     */
+    protected $sortable = true;
+
+    /**
      * Get date format.
      *
      * @return string

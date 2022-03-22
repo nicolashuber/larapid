@@ -4,7 +4,14 @@
             <thead>
                 <tr>
                     <th v-for="(header, column) in headers" :key="column">
-                        {{ header }}
+                        <div class="d-inline-flex align-items-center" @click="onSortBy(header)">
+                            {{ header.label }}
+                            <l-icon
+                                v-if="sortable && header.sortable"
+                                class="ms-2"
+                                :name="sortBy.column === header.column ? (sortBy.order === 'asc' ? 'sort-up' : 'sort-down') : 'sort'"
+                            />
+                        </div>
                     </th>
                     <th class="text-end">
                         Actions
@@ -49,11 +56,50 @@ export default {
         headers: {
             type: Object,
             required: true
+        },
+        sortable: {
+            type: Boolean,
+            default: true
+        }
+    },
+    data () {
+        return {
+            sortBy: {
+                field: '',
+                order: 'ASC'
+            }
+        }
+    },
+    mounted () {
+        const searchParms = new URLSearchParams(window.location.search)
+
+        if (searchParms.get('sort')) {
+            const sort = searchParms.get('sort').split(':')
+
+            if (sort.length > 1) {
+                this.sortBy = {
+                    column: sort[1],
+                    order: sort[0],
+                }
+            }
         }
     },
     methods: {
         getActionWidth (routes) {
             return `${70 * Object.keys(routes).length}px`
+        },
+
+        onSortBy ({ column, sortable }) {
+            if (! sortable) {
+                return
+            }
+
+            this.sortBy.column = column
+            this.sortBy.order = this.sortBy.order === 'asc' ? 'desc' : 'asc'
+
+            this.$inertia.get(this.$page.url, {
+                sort: `${this.sortBy.order}:${this.sortBy.column}`.toLowerCase()
+            })
         },
 
         onDestroy (route) {

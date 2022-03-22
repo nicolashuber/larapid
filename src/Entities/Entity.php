@@ -197,7 +197,11 @@ abstract class Entity
 
         foreach ($this->getColumns('index') as $field) {
             if ($field->isVisibleOnIndex()) {
-                $headers[$field->getColumn()] = $field->getLabel();
+                $headers[$field->getColumn()] = [
+                    'label' => $field->getLabel(),
+                    'column' => $field->getColumn(),
+                    'sortable' => $field->isSortable()
+                ];
             }
         }
 
@@ -366,12 +370,35 @@ abstract class Entity
         return $this->getFieldsProps('updating', $model);
     }
 
+    /**
+     * Get searchable columns.
+     *
+     * @return array
+     */
     public function getSearchableColumns()
     {
         $fields = [];
 
         foreach ($this->getFieldsForPage('index') as $field) {
             if ($field->isSearchable()) {
+                $fields[] = $field->getColumn();
+            }
+        }
+
+        return $fields;
+    }
+
+    /**
+     * Get sortable columns.
+     *
+     * @return array
+     */
+    public function getSortableColumns()
+    {
+        $fields = [];
+
+        foreach ($this->getFieldsForPage('index') as $field) {
+            if ($field->isSortable()) {
                 $fields[] = $field->getColumn();
             }
         }

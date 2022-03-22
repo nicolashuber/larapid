@@ -41,12 +41,18 @@ class LarapidRepository
      * @param array $fields
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
-    public function search($query, array $fields)
+    public function filter($query, array $searchableFields = [], string $sortBy = null)
     {
         $newQuery = $this->model;
 
-        foreach ($fields as $field) {
+        foreach ($searchableFields as $field) {
             $newQuery = $newQuery->orWhere($field, 'LIKE', "%{$query}%");
+        }
+
+        if ($sortBy) {
+            list($order, $field) = explode(':', $sortBy);
+
+            $newQuery = $newQuery->orderBy($field, $order);
         }
 
         return $newQuery->paginate(25);

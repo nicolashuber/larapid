@@ -40,6 +40,13 @@ class Id extends Field
     protected $showOnUpdating = false;
 
     /**
+     * Field is sortable.
+     *
+     * @var boolean
+     */
+    protected $sortable = true;
+
+    /**
      * Construct a field.
      *
      * @param string $label

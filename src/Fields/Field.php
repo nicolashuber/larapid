@@ -68,14 +68,14 @@ abstract class Field
      *
      * @var boolean
      */
-    protected $sortable;
+    protected $sortable = false;
 
     /**
      * Field is searchable.
      *
      * @var boolean
      */
-    protected $searchable;
+    protected $searchable = false;
 
     /**
      * Field read only.
@@ -678,5 +678,15 @@ abstract class Field
     public function isSearchable()
     {
         return $this->searchable;
+    }
+
+    /**
+     * The field is sortable.
+     *
+     * @return boolean
+     */
+    public function isSortable()
+    {
+        return $this->sortable;
     }
 }

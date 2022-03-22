@@ -15,8 +15,9 @@ import PlainText from './PlainText'
 import BelongsTo from './BelongsTo'
 
 import Btn from './Btn'
-
 import Form from './Form'
+
+import Icon from './Icon'
 import Panel from './Panel'
 import Search from './Search'
 import Loading from './Loading'
@@ -43,8 +44,9 @@ export default {
     'belongs-to': BelongsTo,
 
     'btn': Btn,
-
     'form': Form,
+
+    'icon': Icon,
     'panel': Panel,
     'search': Search,
     'loading': Loading,
