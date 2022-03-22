@@ -18,6 +18,7 @@ import Btn from './Btn'
 
 import Form from './Form'
 import Panel from './Panel'
+import Search from './Search'
 import Loading from './Loading'
 import Pagination from './Pagination'
 import DataTable from './DataTable'
@@ -45,6 +46,7 @@ export default {
 
     'form': Form,
     'panel': Panel,
+    'search': Search,
     'loading': Loading,
     'pagination': Pagination,
     'data-table': DataTable,

@@ -1,9 +1,12 @@
 <template>
     <app :menu="menu" :user="user">
         <l-page-header title="Index">
-            <l-btn :href="createRoute" variant="secondary">
-                Create new
-            </l-btn>
+            <div class="d-flex justify-content-between">
+                <l-search class="me-3" />
+                <l-btn :href="createRoute" variant="primary">
+                    Create new
+                </l-btn>
+            </div>
         </l-page-header>
         <l-data-table :data="data" :headers="headers" />
     </app>

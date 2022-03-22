@@ -35,6 +35,24 @@ class LarapidRepository
     }
 
     /**
+     * Search on entity.
+     *
+     * @param string $query
+     * @param array $fields
+     * @return \Illuminate\Pagination\LengthAwarePaginator
+     */
+    public function search($query, array $fields)
+    {
+        $newQuery = $this->model;
+
+        foreach ($fields as $field) {
+            $newQuery = $newQuery->orWhere($field, 'LIKE', "%{$query}%");
+        }
+
+        return $newQuery->paginate(25);
+    }
+
+    /**
      * Find a entity.
      *
      * @param int $id

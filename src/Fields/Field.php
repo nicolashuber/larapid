@@ -71,6 +71,13 @@ abstract class Field
     protected $sortable;
 
     /**
+     * Field is searchable.
+     *
+     * @var boolean
+     */
+    protected $searchable;
+
+    /**
      * Field read only.
      *
      * @var array
@@ -257,9 +264,26 @@ abstract class Field
         return $this;
     }
 
+    /**
+     * Set field as sortable.
+     *
+     * @return self
+     */
     public function sortable()
     {
         $this->sortable = true;
+
+        return $this;
+    }
+
+    /**
+     * Set field as searchable.
+     *
+     * @return self
+     */
+    public function searchable()
+    {
+        $this->searchable = true;
 
         return $this;
     }
@@ -644,5 +668,15 @@ abstract class Field
     public function isVisibleOnUpdating()
     {
         return $this->showOnUpdating;
+    }
+
+    /**
+     * The field is searchable.
+     *
+     * @return boolean
+     */
+    public function isSearchable()
+    {
+        return $this->searchable;
     }
 }

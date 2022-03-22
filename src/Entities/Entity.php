@@ -290,7 +290,7 @@ abstract class Entity
      */
     public function getIndexFields()
     {
-        return $this->getFields('creating');
+        return $this->getFields('index');
     }
 
     /**
@@ -364,6 +364,19 @@ abstract class Entity
     public function getUpdatingFieldsProps(Model $model)
     {
         return $this->getFieldsProps('updating', $model);
+    }
+
+    public function getSearchableColumns()
+    {
+        $fields = [];
+
+        foreach ($this->getFieldsForPage('index') as $field) {
+            if ($field->isSearchable()) {
+                $fields[] = $field->getColumn();
+            }
+        }
+
+        return $fields;
     }
 
     /**

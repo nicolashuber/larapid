@@ -33,12 +33,13 @@ class LarapidController extends Controller
      * @param Entity $entity
      * @return \Illuminate\Http\Response
      */
-    public function index(Entity $entity)
+    public function index(Entity $entity, Request $request)
     {
         $repo = new LarapidRepository($entity->model());
+        $data = $request->has('query') ? $repo->search($request->input('query'), $entity->getSearchableColumns()) : $repo->list();
 
         return Inertia::render('Index', [
-            'data' => LarapidResource::collection($repo->list()),
+            'data' => LarapidResource::collection($data),
             'headers' => $entity->getIndexColumns(),
             'createRoute' => $entity->route(null, 'create')
         ]);
