@@ -1,6 +1,6 @@
 <template>
     <div class="data-table">
-        <table class="table table-striped table-bordered bg-white mb-0">
+        <table ref="table" class="table table-striped table-bordered bg-white mb-0">
             <thead>
                 <tr>
                     <th v-for="(header, column) in headers" :key="column">
@@ -41,11 +41,14 @@
             </tbody>
         </table>
         <div v-if="data.meta" class="mt-4 d-flex justify-content-between">
-            <div class="d-flex align-items-center">
-                <div class="text-nowrap me-2">
+            <div class="text-nowrap d-flex align-items-center justify-content-start">
+                <div class="me-2">
                     {{ $t('datatable.perPage') }}
                 </div>
                 <l-select v-model="perPage" :options="perPageOptions" @input="refresh" />
+                <l-btn size="sm" variant="outline-primary" class="ms-3" @click="exportCSV">
+                    {{ $t('btn.export-csv') }}
+                </l-btn>
             </div>
             <l-pagination :meta="data.meta" />
         </div>
@@ -131,6 +134,31 @@ export default {
                 sort: this.sortByValue,
                 perPage: this.perPage
             })
+        },
+
+        exportCSV () {
+            const rows = []
+            const table = this.$refs.table
+            const maxRows = table.querySelectorAll('thead th').length - 1
+
+            for (const tr of table.querySelectorAll('tbody tr')) {
+                const columns = []
+                const td = tr.querySelectorAll('td')
+
+                for (let i = 0; i < maxRows; i++) {
+                    columns.push(td[i].innerText)
+                }
+
+                rows.push(columns.join(';'))
+            }
+
+            const encodedUri = encodeURI(`data:text/csv;charset=utf-8,${rows.join('\n')}`)
+            const link = document.createElement('a')
+
+            link.setAttribute('href', encodedUri)
+            link.setAttribute('download', 'export.csv')
+            document.body.appendChild(link)
+            link.click()
         },
 
         onDestroy (route) {

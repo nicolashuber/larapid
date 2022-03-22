@@ -12,7 +12,8 @@
         "submit": "Enviar",
         "detail": "Ver",
         "destroy": "Excluir",
-        "create": "Criar novo"
+        "create": "Criar novo",
+        "export-csv": "Exportar CSV"
     },
     "page": {
         "edit": "Editar",
