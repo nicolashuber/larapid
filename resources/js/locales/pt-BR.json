@@ -13,6 +13,7 @@
         "detail": "Ver",
         "destroy": "Excluir",
         "create": "Criar novo",
+        "export-pdf": "Exportar PDF",
         "export-csv": "Exportar CSV"
     },
     "page": {

@@ -46,8 +46,11 @@
                     {{ $t('datatable.perPage') }}
                 </div>
                 <l-select v-model="perPage" :options="perPageOptions" @input="refresh" />
-                <l-btn size="sm" variant="outline-primary" class="ms-3" @click="exportCSV">
+                <l-btn size="sm" variant="outline-secondary" class="ms-3" @click="exportCSV">
                     {{ $t('btn.export-csv') }}
+                </l-btn>
+                <l-btn size="sm" variant="outline-secondary" class="ms-1" @click="exportPDF">
+                    {{ $t('btn.export-pdf') }}
                 </l-btn>
             </div>
             <l-pagination :meta="data.meta" />
@@ -56,6 +59,9 @@
 </template>
 
 <script>
+import { jsPDF } from 'jspdf'
+import autoTable from 'jspdf-autotable'
+
 export default {
     props: {
         data: {
@@ -136,7 +142,7 @@ export default {
             })
         },
 
-        exportCSV () {
+        getExportData () {
             const rows = []
             const table = this.$refs.table
             const maxRows = table.querySelectorAll('thead th').length - 1
@@ -149,9 +155,39 @@ export default {
                     columns.push(td[i].innerText)
                 }
 
-                rows.push(columns.join(';'))
+                rows.push(columns)
             }
 
+            return rows
+        },
+
+        getExportHeaders () {
+            const table = this.$refs.table
+            const headers = []
+            const maxRows = table.querySelectorAll('thead th').length - 1
+
+            const td = table.querySelectorAll('thead th')
+
+            for (let i = 0; i < maxRows; i++) {
+                headers.push(td[i].innerText)
+            }
+
+            return headers
+        },
+
+        exportPDF () {
+            const pdf = new jsPDF()
+
+            autoTable(pdf, {
+                head: [this.getExportHeaders()],
+                body: this.getExportData()
+            })
+
+            pdf.save('export.pdf')
+        },
+
+        exportCSV () {
+            const rows = this.getExportData().map(item => item.join(';'))
             const encodedUri = encodeURI(`data:text/csv;charset=utf-8,${rows.join('\n')}`)
             const link = document.createElement('a')
 
