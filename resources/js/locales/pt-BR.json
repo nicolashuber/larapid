@@ -23,6 +23,7 @@
     },
     "datatable": {
         "empty": "Sem registros.",
-        "actions": "Ações"
+        "actions": "Ações",
+        "perPage": "Por página"
     }
 }

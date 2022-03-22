@@ -39,6 +39,7 @@ class LarapidController extends Controller
         $data = $repo->filter(
             $request->input('query'),
             $entity->getSearchableColumns(),
+            $request->input('perPage', 25),
             $request->input('sort')
         );
 

@@ -40,7 +40,13 @@
                 </tr>
             </tbody>
         </table>
-        <div v-if="data.meta" class="mt-4 d-flex justify-content-center">
+        <div v-if="data.meta" class="mt-4 d-flex justify-content-between">
+            <div class="d-flex align-items-center">
+                <div class="text-nowrap me-2">
+                    {{ $t('datatable.perPage') }}
+                </div>
+                <l-select v-model="perPage" :options="perPageOptions" @input="refresh" />
+            </div>
             <l-pagination :meta="data.meta" />
         </div>
     </div>
@@ -64,10 +70,26 @@ export default {
     },
     data () {
         return {
+            perPage: 25,
             sortBy: {
                 field: '',
                 order: 'ASC'
+            },
+            perPageOptions: {
+                '10': 10,
+                '25': 25,
+                '50': 50,
+                '100': 100
             }
+        }
+    },
+    computed: {
+        sortByValue () {
+            if (this.sortBy.column) {
+                return `${this.sortBy.order}:${this.sortBy.column}`.toLowerCase()
+            }
+
+            return null
         }
     },
     mounted () {
@@ -83,6 +105,10 @@ export default {
                 }
             }
         }
+
+        if (searchParms.get('perPage')) {
+            this.perPage = searchParms.get('perPage')
+        }
     },
     methods: {
         getActionWidth (routes) {
@@ -97,8 +123,13 @@ export default {
             this.sortBy.column = column
             this.sortBy.order = this.sortBy.order === 'asc' ? 'desc' : 'asc'
 
+            this.refresh()
+        },
+
+        refresh () {
             this.$inertia.get(this.$page.url, {
-                sort: `${this.sortBy.order}:${this.sortBy.column}`.toLowerCase()
+                sort: this.sortByValue,
+                perPage: this.perPage
             })
         },
 

@@ -41,7 +41,7 @@ class LarapidRepository
      * @param array $fields
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
-    public function filter($query, array $searchableFields = [], string $sortBy = null)
+    public function filter($query, array $searchableFields = [], $perPage = 25, string $sortBy = null)
     {
         $newQuery = $this->model;
 
@@ -55,7 +55,7 @@ class LarapidRepository
             $newQuery = $newQuery->orderBy($field, $order);
         }
 
-        return $newQuery->paginate(25);
+        return $newQuery->paginate($perPage);
     }
 
     /**

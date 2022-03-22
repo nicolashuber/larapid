@@ -5,14 +5,12 @@
             <l-field name="email" :error="errors.email">
                 <l-input
                     v-model="form.email"
-                    name="email"
                     :hasError="errors.email != undefined"
                     :placeholder="$t('auth.username')"
                 />
             </l-field>
             <l-password
                 v-model="form.password"
-                name="password"
                 class="mt-3"
                 :placeholder="$t('auth.password')"
             />
