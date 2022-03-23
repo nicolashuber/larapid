@@ -38,7 +38,7 @@ class LarapidResource extends JsonResource
      * @param Entity $entity
      * @return array
      */
-    protected function routes($primaryKey, $entity)
+    protected function routes($primaryKey, $entity, $data)
     {
         $routes = [];
         $actions = ['edit', 'detail', 'destroy'];
@@ -46,7 +46,7 @@ class LarapidResource extends JsonResource
         foreach ($actions as $action) {
             $route = $entity->route($primaryKey, $action);
 
-            if ($route) {
+            if ($entity->enableAction($action, $this->resource) && $route) {
                 $routes[$action] = $route;
             }
         }
@@ -76,7 +76,7 @@ class LarapidResource extends JsonResource
                 $data['id'] = $this->id;
 
                 $data['larapid'] = [
-                    'routes' => $this->routes($this->id, $request->entity),
+                    'routes' => $this->routes($this->id, $request->entity, $this),
                 ];
             }
         }

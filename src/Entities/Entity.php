@@ -102,11 +102,6 @@ abstract class Entity
     public function route($id = null, $action = 'index')
     {
         $requiredId = $action == 'update' || $action == 'edit' || $action == 'destroy' || $action == 'detail';
-        $method = 'enable' . $this->getPageMethod($action);
-
-        if (method_exists($this, $method) && ! $this->$method()) {
-            return null;
-        }
 
         if ($id && $requiredId) {
             return route("larapid.{$action}", [$this::slug(), $id]);
@@ -143,7 +138,7 @@ abstract class Entity
      *
      * @return boolean
      */
-    public function enableEditing()
+    public function enableEditing(Model $model)
     {
         return true;
     }
@@ -153,7 +148,7 @@ abstract class Entity
      *
      * @return boolean
      */
-    public function enableDetail()
+    public function enableDetail(Model $model)
     {
         return true;
     }
@@ -163,8 +158,26 @@ abstract class Entity
      *
      * @return boolean
      */
-    public function enableDeleting()
+    public function enableDeleting(Model $model)
     {
+        return true;
+    }
+
+    /**
+     * Enables action on entity.
+     *
+     * @param string $action
+     * @param Model $model
+     * @return boolean
+     */
+    public function enableAction($action, Model $resource)
+    {
+        $method = 'enable' . $this->getPageMethod($action);
+
+        if (method_exists($this, $method) && ! $this->$method($resource)) {
+            return false;
+        }
+
         return true;
     }
 
@@ -260,6 +273,7 @@ abstract class Entity
             'detail' => 'Detail',
             'edit' => 'Updating',
             'create' => 'Creating',
+            'destroy' => 'Deleting'
         ];
 
         return str_replace(
