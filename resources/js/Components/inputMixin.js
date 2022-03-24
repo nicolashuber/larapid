@@ -1,7 +1,7 @@
 export default {
     props: {
         options: {
-            type: [Object]
+            type: Object
         },
         name: {
             type: String,
@@ -48,6 +48,14 @@ export default {
     methods: {
         onInput (e) {
             this.$emit('update:modelValue', e.target.value)
+        },
+
+        onFocus (e) {
+            this.$emit('focus', e)
+        },
+
+        onBlur (e) {
+            this.$emit('blur', e)
         }
     }
 }

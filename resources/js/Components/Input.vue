@@ -3,7 +3,9 @@
         v-bind="inputBinding"
         :type="type"
         v-maska="mask"
+        @blur="onBlur"
         @input="onInput"
+        @focus="onFocus"
     />
 </template>
 

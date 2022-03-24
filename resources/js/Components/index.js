@@ -13,6 +13,7 @@ import Password from './Password'
 import Textarea from './Textarea'
 import PlainText from './PlainText'
 import BelongsTo from './BelongsTo'
+import Autocomplete from './Autocomplete'
 
 import Btn from './Btn'
 import Form from './Form'
@@ -42,6 +43,7 @@ export default {
     'textarea': Textarea,
     'plain-text': PlainText,
     'belongs-to': BelongsTo,
+    'autocomplete': Autocomplete,
 
     'btn': Btn,
     'form': Form,

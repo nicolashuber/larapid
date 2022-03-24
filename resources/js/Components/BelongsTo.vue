@@ -1,18 +1,24 @@
 <template>
-    <l-select
-        :name="name"
-        :modelValue="modelValue"
-        :options="options"
-        :hasError="hasError"
-        :placeholder="placeholder"
-        @input="onInput"
-    />
+    <div>
+        <l-autocomplete
+            :options="options"
+            :modelValue="modelValue"
+            @change="onChange"
+        />
+    </div>
 </template>
 
 <script>
 import inputMixin from './inputMixin';
 
 export default {
-    mixins: [inputMixin]
+    mixins: [inputMixin],
+    methods: {
+        onChange (e) {
+            if (! (e instanceof Event)) {
+                this.$emit('update:modelValue', e)
+            }
+        }
+    }
 }
 </script>
