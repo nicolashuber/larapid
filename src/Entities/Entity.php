@@ -164,6 +164,39 @@ abstract class Entity
     }
 
     /**
+     * Hook before saving a record.
+     *
+     * @param array $data
+     * @return array
+     */
+    public function beforeSaving($data)
+    {
+        return $data;
+    }
+
+    /**
+     * Hook after created a record.
+     *
+     * @param Model $model
+     * @return void
+     */
+    public function afterCreated(Model $model)
+    {
+        //
+    }
+
+    /**
+     * Hook after updated a record.
+     *
+     * @param Model $model
+     * @return void
+     */
+    public function afterUpdated(Model $model)
+    {
+        //
+    }
+
+    /**
      * Enables action on entity.
      *
      * @param string $action

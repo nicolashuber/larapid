@@ -73,7 +73,7 @@ class LarapidController extends Controller
      */
     public function store(Entity $entity, LarapidRequest $request)
     {
-        $data = $request->all();
+        $data = $entity->beforeSaving($request->all());
         $repo = new LarapidRepository($entity->model());
         $isRelation = $request->has('relatedId') && $request->has('relatedColumn');
 
@@ -83,7 +83,7 @@ class LarapidController extends Controller
             ]);
         }
 
-        $repo->store($data);
+        $entity->afterCreated($repo->store($data));
 
         if ($isRelation) {
             return redirect()->route('larapid.detail', [$request->relatedEntity, $request->relatedId]);
@@ -149,7 +149,9 @@ class LarapidController extends Controller
     public function update($entity, $id, LarapidRequest $request)
     {
         $repo = new LarapidRepository($entity->model());
-        $repo->update($id, $request->all());
+        $data = $entity->beforeSaving($request->all());
+
+        $entity->afterUpdated($repo->update($id, $data));
 
         return redirect()->route('larapid.edit', [$entity::slug(), $id])
                          ->with('flash:type', 'success')
