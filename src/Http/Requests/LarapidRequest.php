@@ -34,7 +34,7 @@ class LarapidRequest extends FormRequest
             if ($method == 'POST') {
                 $rules =  array_merge($rules, $field->getCreationRules());
             } else if ($method == 'PUT') {
-                $rules =  array_merge($rules, $field->getUpdateRules());
+                $rules = array_merge($rules, $field->getUpdateRules());
             }
 
             $validators[$column] = $rules;

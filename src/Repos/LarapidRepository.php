@@ -43,10 +43,12 @@ class LarapidRepository
      */
     public function filter($query, array $searchableFields = [], $perPage = 25, string $sortBy = null)
     {
-        $newQuery = $this->model;
+        $newQuery = $this->model->latest();
 
-        foreach ($searchableFields as $field) {
-            $newQuery = $newQuery->orWhere($field, 'LIKE', "%{$query}%");
+        if (! empty($query)) {
+            foreach ($searchableFields as $field) {
+                $newQuery = $newQuery->orWhere($field, 'LIKE', "%{$query}%");
+            }
         }
 
         if ($sortBy) {
@@ -90,8 +92,9 @@ class LarapidRepository
     public function update($id, $data)
     {
         $item = $this->find($id);
+        $item->update($data);
 
-        return $item->update($data);
+        return $item;
     }
 
     /**
