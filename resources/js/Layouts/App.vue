@@ -1,6 +1,6 @@
 <template>
     <div class="app">
-        <aside class="aside">
+        <aside class="aside" :class="{ active: showMenu }">
             <header class="aside-header">
                 Larapid
             </header>
@@ -20,6 +20,9 @@
         </aside>
         <main class="main">
             <header class="header text-muted">
+                <a href="#" :class="{ 'me-auto': ! showMenu, 'me-5': showMenu }" @click.prevent="showMenu = ! showMenu">
+                    <l-icon :name="showMenu ? 'close' : 'bars'" />
+                </a>
                 {{ user.name }} <small class="ms-1">(<a href="#" @click.prevent="logout">{{ $t('auth.logout') }}</a>)</small>
             </header>
             <div class="content">
@@ -51,6 +54,11 @@ export default {
             required: true
         }
     },
+    data () {
+        return {
+            showMenu: false
+        }
+    },
     mounted () {
         this.showToast(this.flash)
     },
@@ -72,3 +80,10 @@ export default {
     }
 }
 </script>
+
+
+<style lang="scss">
+    .app {
+        overflow-x: hidden;
+    }
+</style>

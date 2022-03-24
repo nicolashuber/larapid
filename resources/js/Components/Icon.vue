@@ -6,10 +6,10 @@
 
 <script>
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faSort, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faClose, faSort, faSortUp, faSortDown, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faSort, faSortUp, faSortDown)
+library.add(faBars, faClose, faSort, faSortUp, faSortDown, faMagnifyingGlass)
 
 export default {
     components: {

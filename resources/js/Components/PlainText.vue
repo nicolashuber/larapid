@@ -1,5 +1,5 @@
 <template>
-    <input type="text" readonly class="form-control-plaintext" :value="value">
+    <input type="text" readonly class="form-control-plaintext text-muted" :value="value">
 </template>
 
 <script>

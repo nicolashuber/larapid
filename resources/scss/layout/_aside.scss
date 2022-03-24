@@ -1,10 +1,12 @@
 .aside {
-    width: $aside-width;
+    width: 0;
     height: 100vh;
     background: $aside-bg;
     top: 0;
     left: auto;
+    overflow: hidden;
     position: fixed;
+    z-index: 10;
 
     &-header {
         height: $header-height;
@@ -13,5 +15,13 @@
         line-height: $header-height;
         text-align: center;
         background: lighten($aside-bg, 3%);
+    }
+
+    @include media-breakpoint-up(md) {
+        width: $aside-width;
+    }
+
+    &.active {
+        width: $aside-width;
     }
 }

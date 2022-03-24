@@ -1,9 +1,15 @@
 <template>
     <form class="search" @submit.prevent="onSubmit">
         <div class="input-group">
-            <input v-model="query" type="text" name="query" class="form-control" />
+            <input
+                v-model="query"
+                type="text"
+                name="query"
+                class="form-control"
+                :placeholder="$t('btn.search')"
+            />
             <l-btn type="submit" variant="secondary">
-                {{ $t('btn.search') }}
+                <l-icon name="magnifying-glass" />
             </l-btn>
         </div>
     </form>
@@ -32,3 +38,11 @@ export default {
     }
 }
 </script>
+
+<style lang="scss">
+    .search {
+        input[type="text"] {
+            max-width: 150px;
+        }
+    }
+</style>
