@@ -20,7 +20,7 @@
         </aside>
         <main class="main">
             <header class="header text-muted">
-                <a href="#" :class="{ 'me-auto': ! showMenu, 'me-5': showMenu }" @click.prevent="showMenu = ! showMenu">
+                <a href="#" class="d-md-none" :class="{ 'me-auto': ! showMenu, 'me-5': showMenu }" @click.prevent="showMenu = ! showMenu">
                     <l-icon :name="showMenu ? 'close' : 'bars'" />
                 </a>
                 {{ user.name }} <small class="ms-1">(<a href="#" @click.prevent="logout">{{ $t('auth.logout') }}</a>)</small>

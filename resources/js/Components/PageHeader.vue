@@ -1,6 +1,6 @@
 <template>
-    <div class="page-header d-md-flex justify-content-between">
-        <h1 class="page-header-title">{{ title }}</h1>
+    <div class="d-md-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 my-0">{{ title }}</h1>
         <div>
             <slot />
         </div>

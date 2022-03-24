@@ -1,7 +1,7 @@
 <template>
     <app :menu="menu" :user="user" :flash="flash">
         <l-page-header :title="$t('page.index')">
-            <div class="d-flex justify-content-between mb-3">
+            <div class="d-flex justify-content-between">
                 <l-search class="me-3" />
                 <l-btn :href="createRoute" variant="primary">
                     {{ $t('btn.create') }}
