@@ -2,6 +2,7 @@
     <l-input
         v-bind="inputBinding"
         type="password"
+        value=""
         @input="onInput"
     />
 </template>
