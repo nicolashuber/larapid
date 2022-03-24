@@ -8,7 +8,7 @@ export default {
             default: ''
         },
         mask: {
-            type: String,
+            type: [Array, String],
             default: ''
         },
         readOnly: {
