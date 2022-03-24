@@ -43,7 +43,7 @@ class LarapidRepository
      */
     public function filter($query, array $searchableFields = [], $perPage = 25, string $sortBy = null)
     {
-        $newQuery = $this->model->latest();
+        $newQuery = $this->model->orderBy('id', 'DESC');
 
         if (! empty($query)) {
             foreach ($searchableFields as $field) {
