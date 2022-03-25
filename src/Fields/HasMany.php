@@ -96,10 +96,12 @@ class HasMany extends Relational
 
         $request->entity = $entity;
 
-        LarapidResource::collection($data);
+        $resource = LarapidResource::collection($data);
 
         return [
-            'data' => $data->toArray($request),
+            'data' => [
+                'data' => $resource->toArray($request)
+            ],
             'title' => $entity::$title,
             'columns' => $entity->getIndexColumns(),
             'fields' => $entity->getCreatingFieldsProps(),

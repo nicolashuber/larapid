@@ -2,9 +2,9 @@
 
 namespace Internexus\Larapid;
 
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
 use Internexus\Larapid\Entities\Entity;
+use Internexus\Larapid\Exceptions\EntityNotFoundException;
 
 class Larapid
 {
@@ -72,15 +72,15 @@ class Larapid
      * Resolve route bind.
      *
      * @param string $entitySlug
-     * @throws ModelNotFoundException
+     * @throws EntityNotFoundException
      * @return Entity
      */
     public function resolveEntity($className)
     {
-        $className = strtolower($className);
+        $namespace = strtolower($className);
 
         foreach ($this->entities as $entity) {
-            if (Str::endsWith(strtolower($entity), $className)) {
+            if (Str::endsWith(strtolower($entity), $namespace)) {
                 $instance = new $entity();
 
                 if ($instance instanceof Entity) {
@@ -89,7 +89,7 @@ class Larapid
             }
         }
 
-        throw new ModelNotFoundException;
+        throw new EntityNotFoundException($className);
     }
 
     public function guestEntity($entitySlug)
