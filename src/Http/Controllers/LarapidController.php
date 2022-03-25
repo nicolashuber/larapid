@@ -83,15 +83,19 @@ class LarapidController extends Controller
             ]);
         }
 
-        $entity->afterCreated($repo->store($data));
+        $model = $repo->store($data);
+        $entity->afterCreated($model);
+
+        $route = $entity->redirectAfterCreate($model);
 
         if ($isRelation) {
-            return redirect()->route('larapid.detail', [$request->relatedEntity, $request->relatedId]);
+            return redirect($route ?? route('larapid.detail', [$request->relatedEntity, $request->relatedId]));
         }
 
-        return redirect()->route('larapid.index', [$entity::slug()])
-                         ->with('flash:type', 'success')
-                         ->with('flash:message', trans('larapid.store'));
+        $route = $rotue ?? route('larapid.index', [$entity::slug()]);
+
+        return redirect($route)->with('flash:type', 'success')
+                               ->with('flash:message', trans('larapid.store'));
     }
 
     /**
@@ -151,11 +155,12 @@ class LarapidController extends Controller
         $repo = new LarapidRepository($entity->model());
         $data = $entity->beforeSaving($request->all());
 
-        $entity->afterUpdated($repo->update($id, $data));
+        $model = $repo->update($id, $data);
+        $entity->afterUpdated($model);
+        $route = $entity->redirectAfterUpdate($model) ?? route('larapid.edit', [$entity::slug(), $id]);
 
-        return redirect()->route('larapid.edit', [$entity::slug(), $id])
-                         ->with('flash:type', 'success')
-                         ->with('flash:message', trans('larapid.update'));
+        return redirect($route)->with('flash:type', 'success')
+                               ->with('flash:message', trans('larapid.update'));
     }
 
     /**
@@ -168,10 +173,12 @@ class LarapidController extends Controller
     public function destroy($entity, $id)
     {
         $repo = new LarapidRepository($entity->model());
+        $model = $repo->find($id);
         $repo->destroy($id);
 
-        return redirect()->route('larapid.index', [$entity::slug()])
-                         ->with('flash:type', 'success')
-                         ->with('flash:message', trans('larapid.destroy'));
+        $route = $entity->redirectAfterDelete($model) ?? route('larapid.index', [$entity::slug()]);
+
+        return redirect($route)->with('flash:type', 'success')
+                               ->with('flash:message', trans('larapid.destroy'));
     }
 }

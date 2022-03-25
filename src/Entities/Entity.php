@@ -472,4 +472,37 @@ abstract class Entity
 
         return $fields;
     }
+
+    /**
+     * Redirect after create an entity.
+     *
+     * @param Model $model
+     * @return string|null
+     */
+    public function redirectAfterCreate(Model $model)
+    {
+        //
+    }
+
+    /**
+     * Redirect after update an entity.
+     *
+     * @param Model $model
+     * @return string|null
+     */
+    public function redirectAfterUpdate(Model $model)
+    {
+        //
+    }
+
+    /**
+     * Redirect after update an entity.
+     *
+     * @param Model $model
+     * @return string|null
+     */
+    public function redirectAfterDelete(Model $model)
+    {
+        //
+    }
 }
