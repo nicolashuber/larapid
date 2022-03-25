@@ -466,7 +466,7 @@ abstract class Entity
 
         foreach ($this->fields() as $field) {
             if (in_array(get_class($field), $relationable)) {
-                $fields[] = $field->getRelation($model);
+                $fields[] = $field->getResource($model);
             }
         }
 

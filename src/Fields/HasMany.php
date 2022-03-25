@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 use Internexus\Larapid\Facades\Larapid;
 use Internexus\Larapid\Http\Resources\LarapidResource;
 
-class HasMany extends Field
+class HasMany extends Relational
 {
     /**
      * Field component name.
@@ -45,20 +45,48 @@ class HasMany extends Field
     protected $showOnDetail = false;
 
     /**
-     * Get field options.
+     * Get relation method name.
      *
-     * @return mixed
+     * @return string
+     */
+    public function getMethod()
+    {
+        if ($this->method) {
+            return $this->method;
+        }
+
+        return lcfirst($this->label);
+    }
+
+    /**
+     * Get relation data.
+     *
+     * @param Model $model
+     * @return \Illuminate\Support\Collection
      */
     public function getRelation(Model $model)
     {
-        $data = [];
-        $request = request();
-        $method = lcfirst($this->label);
-        $entity = Larapid::guestEntity(Str::of($method)->singular());
+        $data = collect([]);
+        $method = $this->getMethod();
 
         if (isset($model->{$method})) {
             $data = $model->{$method}()->paginate();
         }
+
+        return $data;
+    }
+
+    /**
+     * Get field options.
+     *
+     * @param Model $model
+     * @return mixed
+     */
+    public function getResource(Model $model)
+    {
+        $data = $this->getRelation($model);
+        $request = request();
+        $entity = $this->resolveRelationEntity();
 
         $query = [
             'relatedId' => $model->id,
@@ -80,6 +108,4 @@ class HasMany extends Field
             ],
         ];
     }
-
 }
-
