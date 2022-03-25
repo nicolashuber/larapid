@@ -10,10 +10,10 @@
                         <ul v-if="item.subMenu" class="nav-sublist">
                             <li class="nav-group">{{ index }}</li>
                             <li v-for="(subItem, index) in item.subMenu" :key="index" class="nav-item">
-                                <Link :href="subItem.route">{{ subItem.label }}</Link>
+                                <Link :href="subItem.route" :class="{ active: subItem.active }">{{ subItem.label }}</Link>
                             </li>
                         </ul>
-                        <Link v-else :href="item.route">{{ item.label }}</Link>
+                        <Link v-else :href="item.route" :class="{ active: item.active }">{{ item.label }}</Link>
                     </li>
                 </ul>
             </nav>
@@ -69,11 +69,11 @@ export default {
     },
     methods: {
         logout () {
-            this.$inertia.post('logout')
+            this.$inertia.post('/logout')
         },
 
         showToast (toast) {
-            if (toast.type && toast.message) {
+            if (toast && toast.type && toast.message) {
                 this.$store.dispatch('addToast', toast)
             }
         }

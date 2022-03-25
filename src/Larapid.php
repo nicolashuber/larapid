@@ -110,9 +110,13 @@ class Larapid
 
         foreach ($this->entities as $entity) {
             if ($entity::$displayInNavigation) {
+                $route = route('larapid.index', [$entity::slug()]);
+                $current = request()->entity;
+
                 $item = [
-                    'route' => route('larapid.index', [$entity::slug()]),
-                    'label' => $entity::$title
+                    'route' => $route,
+                    'label' => $entity::$title,
+                    'active' => $current ? get_class($current) == $entity : false,
                 ];
 
                 if ($entity::$group) {
