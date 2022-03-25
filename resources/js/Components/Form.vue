@@ -19,7 +19,11 @@
                     />
                 </l-field>
             </div>
-            <div class="form-footer">
+            <div class="form-footer d-flex justify-content-between">
+                <l-btn v-if="urlPrev" type="submit" variant="outline-secondary" :href="urlPrev">
+                    {{ $t('btn.goback') }}
+                </l-btn>
+
                 <l-btn type="submit" variant="primary">
                     {{ $t('btn.save') }}
                 </l-btn>
@@ -47,6 +51,10 @@ export default {
         fields: {
             type: Object,
             required: true
+        },
+        urlPrev: {
+            type: String,
+            default: ''
         }
     },
     data () {

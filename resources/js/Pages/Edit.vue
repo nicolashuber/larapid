@@ -6,6 +6,7 @@
             :route="route"
             :fields="fields"
             :errors="errors"
+            :url-prev="urlPrev"
         />
     </app>
 </template>
@@ -45,6 +46,10 @@ export default {
         flash: {
             type: Object,
             required: true
+        },
+        urlPrev: {
+            type: String,
+            default: ''
         }
     }
 }

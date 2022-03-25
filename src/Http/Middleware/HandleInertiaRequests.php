@@ -3,6 +3,7 @@
 namespace Internexus\Larapid\Http\Middleware;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Inertia\Middleware;
 use Internexus\Larapid\Facades\Larapid;
 
@@ -43,7 +44,15 @@ class HandleInertiaRequests extends Middleware
             'flash' => [
                 'type' => fn () => $request->session()->get('flash:type', 'info'),
                 'message' => fn () => $request->session()->get('flash:message')
-            ]
+            ],
+            'urlPrev'=> function() use ($request) {
+                $prev = url()->previous();
+                $current = $request->url();
+
+                if (Str::startsWith($current, $prev)) {
+                    return $prev;
+                }
+		    },
         ]);
     }
 }
