@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Internexus\Larapid\Facades\Larapid;
+use Internexus\Larapid\Models\Media as MediaModel;
 
 class Media extends Field
 {
@@ -206,7 +207,15 @@ class Media extends Field
     {
         $value = $this->getValue();
 
-        if ($value && $value->{$this->column}) {
+        if (! $value) {
+            return;
+        }
+
+        if ($value instanceof MediaModel) {
+            return $this->url($value->url);
+        }
+
+        if ($value->{$this->column}) {
             if (method_exists($value, $this->relation)) {
                 $media = $value->{$this->relation};
 
