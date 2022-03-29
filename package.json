@@ -14,6 +14,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@fortawesome/vue-fontawesome": "^3.0.0-5",
+    "@vueup/vue-quill": "^1.0.0-beta.8",
     "axios": "^0.26.1",
     "bootstrap": "^5.1.0",
     "html2canvas": "^1.4.1",

@@ -7,6 +7,7 @@ import Money from './Money'
 import Number from './Number'
 import Field from './Field'
 import Email from './Email'
+import Editor from './Editor'
 import Select from './Select'
 import Boolean from './Boolean'
 import Password from './Password'
@@ -37,6 +38,7 @@ export default {
     'number': Number,
     'field': Field,
     'email': Email,
+    'editor': Editor,
     'select': Select,
     'boolean': Boolean,
     'password': Password,
