@@ -11,11 +11,11 @@
             <l-loading v-if="loading" />
             <div v-if="! loading && ! previewUrl" class="media-empty mt-auto">
                 <div v-if="! isDragover">
-                    <div class="fw-bold">Drag & Drop</div>
-                    <div class="fs-6 text-muted">your files here, or <a href="#" class="text-muted" @click.prevent="openBrowser">browser</a></div>
+                    <div class="fw-bold">{{ $t('media.dragndrop') }}</div>
+                    <div class="fs-6 text-muted">{{ $t('media.empty') }} <a href="#" class="text-muted" @click.prevent="openBrowser">{{ $t('media.browser') }}</a></div>
                     <div v-if="error" class="fs-6 text-danger mt-3">{{ error }}</div>
                 </div>
-                <div v-else class="fs-5">Drop!</div>
+                <div v-else class="fs-5">{{ $t('media.drop') }}</div>
                 <input
                     ref="inputFile"
                     type="file"

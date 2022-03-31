@@ -28,5 +28,11 @@
         "empty": "Sem registros.",
         "actions": "Ações",
         "perPage": "Por página"
+    },
+    "media": {
+        "dragndrop": "Arraste e Solte",
+        "empty": "seus arquivos aqui, ou",
+        "browser": "navegue",
+        "drop": "Solte!"
     }
 }
