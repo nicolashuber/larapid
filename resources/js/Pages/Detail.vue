@@ -1,6 +1,10 @@
 <template>
     <app :menu="menu" :user="user" :flash="flash">
-        <l-page-header :title="$t('page.detail')" />
+        <l-page-header :title="$t('page.detail')">
+            <l-btn v-if="backRoute" type="submit" variant="outline-secondary" :href="backRoute">
+                {{ $t('btn.goback') }}
+            </l-btn>
+        </l-page-header>
         <l-panel>
             <l-field v-for="(label, column) of columns" horizontal :key="column" :label="label">
                 <div v-if="column === 'media_id'" v-html="data[column]" />
@@ -45,6 +49,10 @@ export default {
         user: {
             type: Object,
             required: true
+        },
+        backRoute: {
+            type: String,
+            default: ''
         }
     }
 }

@@ -20,7 +20,7 @@
                 </l-field>
             </div>
             <div class="form-footer d-flex justify-content-between">
-                <l-btn v-if="urlPrev" type="submit" variant="outline-secondary" :href="urlPrev">
+                <l-btn v-if="backRoute" type="submit" variant="outline-secondary" :href="backRoute">
                     {{ $t('btn.goback') }}
                 </l-btn>
 
@@ -52,7 +52,7 @@ export default {
             type: Object,
             required: true
         },
-        urlPrev: {
+        backRoute: {
             type: String,
             default: ''
         }

@@ -5,7 +5,7 @@
             :route="route"
             :errors="errors"
             :fields="fields"
-            :url-prev="urlPrev"
+            :back-route="backRoute"
         />
     </app>
 </template>
@@ -42,7 +42,7 @@ export default {
             type: Object,
             required: true
         },
-        urlPrev: {
+        backRoute: {
             type: String,
             default: ''
         }

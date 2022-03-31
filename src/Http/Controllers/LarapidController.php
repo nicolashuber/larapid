@@ -60,7 +60,8 @@ class LarapidController extends Controller
     {
         return Inertia::render('Create', [
             'route' => $entity->route(null, 'store'),
-            'fields' => $entity->getCreatingFieldsProps()
+            'fields' => $entity->getCreatingFieldsProps(),
+            'backRoute' => $entity->route(null, 'index')
         ]);
     }
 
@@ -116,7 +117,8 @@ class LarapidController extends Controller
         return Inertia::render('Detail', [
             'data' => $resource->toArray($request),
             'columns' => $entity->getDetailColumns(),
-            'relations' => $entity->getRelations($data)
+            'relations' => $entity->getRelations($data),
+            'backRoute' => $entity->route(null, 'index')
         ]);
     }
 
@@ -138,7 +140,8 @@ class LarapidController extends Controller
         return Inertia::render('Edit', [
             'data' => $resource->toArray($request),
             'fields' => $entity->getUpdatingFieldsProps($data),
-            'route' => $entity->route($id, 'update')
+            'route' => $entity->route($id, 'update'),
+            'backRoute' => $entity->route(null, 'index')
         ]);
     }
 

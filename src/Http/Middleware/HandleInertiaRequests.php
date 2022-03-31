@@ -44,15 +44,7 @@ class HandleInertiaRequests extends Middleware
             'flash' => [
                 'type' => fn () => $request->session()->get('flash:type', 'info'),
                 'message' => fn () => $request->session()->get('flash:message')
-            ],
-            'urlPrev'=> function() use ($request) {
-                $prev = url()->previous();
-                $current = $request->url();
-
-                if (Str::startsWith($current, $prev)) {
-                    return $prev;
-                }
-		    },
+            ]
         ]);
     }
 }
