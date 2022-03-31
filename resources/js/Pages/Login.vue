@@ -17,6 +17,10 @@
             <l-btn type="submit" class="mt-3">
                 {{ $t('btn.submit') }}
             </l-btn>
+            <div v-if="poweredBy.url" class="text-center mt-4 powered-by">
+                <div class="text-muted mb-1">Powered by</div>
+                <img :src="poweredBy.url" class="powered-by-img" alt="poweredBy.name">
+            </div>
         </form>
     </app>
 </template>
@@ -30,6 +34,7 @@ export default {
     },
     props: {
         errors: Object,
+        poweredBy: Object
     },
     data () {
         return {
@@ -46,3 +51,14 @@ export default {
     }
 }
 </script>
+
+<style lang="scss">
+    .powered-by {
+        font-size: .675rem;
+
+        &-img {
+            height: 40px;
+            object-fit: contain;
+        }
+    }
+</style>

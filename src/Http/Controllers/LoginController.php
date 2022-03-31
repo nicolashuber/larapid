@@ -6,6 +6,7 @@ use \Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Inertia\Inertia;
+use Internexus\Larapid\Facades\Larapid;
 
 class LoginController extends Controller
 {
@@ -46,7 +47,12 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
-        return Inertia::render('Login');
+        return Inertia::render('Login', [
+            'poweredBy' => [
+                'url' => Larapid::getConfig('powered_by_url'),
+                'name' => Larapid::getConfig('powered_by_name'),
+            ]
+        ]);
     }
 
     /**

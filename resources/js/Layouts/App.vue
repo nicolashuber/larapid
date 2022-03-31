@@ -69,7 +69,7 @@ export default {
     },
     methods: {
         logout () {
-            this.$inertia.post('/logout')
+            this.$inertia.post('/cms/logout')
         },
 
         showToast (toast) {

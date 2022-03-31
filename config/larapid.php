@@ -18,4 +18,7 @@ return [
     'image_encode' => 'jpg',
     'image_quality' => 80,
     'image_accept' => ['jpg', 'png', 'svg'],
+
+    'powered_by_url' => null,
+    'powered_by_name' => 'Larapid',
 ];
