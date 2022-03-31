@@ -43,7 +43,7 @@ class LarapidRepository
      */
     public function filter($query, array $searchableFields = [], $perPage = 25, string $sortBy = null)
     {
-        $newQuery = $this->model->orderBy('id', 'DESC');
+        $newQuery = $this->model->query();
 
         if (! empty($query)) {
             foreach ($searchableFields as $field) {
@@ -55,6 +55,8 @@ class LarapidRepository
             list($order, $field) = explode(':', $sortBy);
 
             $newQuery = $newQuery->orderBy($field, $order);
+        } else {
+            $newQuery = $newQuery->orderBy('id', 'desc');
         }
 
         return $newQuery->paginate($perPage);
