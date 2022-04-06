@@ -197,6 +197,28 @@ abstract class Entity
     }
 
     /**
+     * Hook before destroy a record.
+     *
+     * @param Model $model
+     * @return void
+     */
+    public function beforeDestroy(Model $model)
+    {
+        //
+    }
+
+    /**
+     * Hook after destroy a record.
+     *
+     * @param Model $model
+     * @return void
+     */
+    public function afterDestroy(Model $model)
+    {
+        //
+    }
+
+    /**
      * Enables action on entity.
      *
      * @param string $action

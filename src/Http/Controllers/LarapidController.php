@@ -177,7 +177,10 @@ class LarapidController extends Controller
     {
         $repo = new LarapidRepository($entity->model());
         $model = $repo->find($id);
+
+        $entity->beforeDestroy($model);
         $repo->destroy($id);
+        $entity->afterDestroy($model);
 
         $route = $entity->redirectAfterDelete($model) ?? route('larapid.index', [$entity::slug()]);
 
