@@ -226,7 +226,11 @@ class MediaService implements MediaServiceContract
      */
     public function destroy(int $mediaId)
     {
-        $media = $this->media->with('resizes')->findOrFail($mediaId);
+        $media = $this->media->with('resizes')->find($mediaId);
+
+        if (! $media) {
+            return;
+        }
 
         $files = $media->resizes->filter(function ($item) {
             return ! Str::startsWith($item->url, 'http');
