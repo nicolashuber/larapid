@@ -8,6 +8,9 @@
             <div v-if="error" class="invalid-feedback">
                 {{ error }}
             </div>
+            <div v-if="help" class="form-text">
+                {{ help }}
+            </div>
         </div>
     </div>
 </template>

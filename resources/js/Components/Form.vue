@@ -5,6 +5,7 @@
                 <l-field
                     horizontal
                     :name="field.name"
+                    :help="field.help"
                     :label="field.label"
                     :error="errors[field.name]"
                 >
