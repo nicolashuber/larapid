@@ -3,6 +3,8 @@
         v-bind="inputBinding"
         type="number"
         mask="#*"
+        :min="options.min"
+        :max="options.max"
         @input="onInput"
     />
 </template>

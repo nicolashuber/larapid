@@ -11,6 +11,14 @@ export default {
             type: [Array, String],
             default: ''
         },
+        min: {
+            type: Number,
+            default: null
+        },
+        max: {
+            type: Number,
+            default: null
+        },
         readOnly: {
             type: Boolean,
             default: false
@@ -32,6 +40,8 @@ export default {
                 name: this.name,
                 value: this.modelValue,
                 class: this.inputClasses,
+                min: this.min,
+                max: this.max,
                 options: this.options,
                 readonly: this.readOnly,
                 placeholder: this.placeholder

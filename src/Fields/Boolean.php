@@ -26,17 +26,39 @@ class Boolean extends Field
     }
 
     /**
-     * Display field value.
+     * Display field value with badge.
+     *
+     * @param Model $model
+     * @return mixed
+     */
+    public function displayBadge(Model $model)
+    {
+        return sprintf(
+            '<span class="badge bg-secondary">%s</span>',
+            $this->getText($this->display($model))
+        );
+    }
+
+    /**
+     * Display field value on index.
      *
      * @param Model $model
      * @return mixed
      */
     public function displayOnIndex(Model $model)
     {
-        return sprintf(
-            '<span class="badge bg-secondary">%s</span>',
-            $this->getText($this->display($model))
-        );
+        return $this->displayBadge($model);
+    }
+
+    /**
+     * Display field value on detail.
+     *
+     * @param Model $model
+     * @return mixed
+     */
+    public function displayOnDetail(Model $model)
+    {
+        return $this->displayBadge($model);
     }
 
     /**
