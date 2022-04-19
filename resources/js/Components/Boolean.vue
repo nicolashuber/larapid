@@ -24,6 +24,7 @@ export default {
         }
     },
     mounted () {
+        this.choices = this.options.choices
         this.currentValue = this.modelValue
     },
     watch: {

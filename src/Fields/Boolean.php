@@ -38,4 +38,25 @@ class Boolean extends Field
             $this->getText($this->display($model))
         );
     }
+
+    /**
+     * Get field options.
+     *
+     * @return mixed
+     */
+    public function getOptions()
+    {
+        return [
+            'choices' => [
+                [
+                    'label' => Larapid::getConfig('bool_true'),
+                    'value' => 1,
+                ],
+                [
+                    'label' => Larapid::getConfig('bool_false'),
+                    'value' => 2,
+                ]
+            ]
+        ];
+    }
 }
