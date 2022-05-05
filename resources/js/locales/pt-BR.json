@@ -30,7 +30,8 @@
         "perPage": "Por página",
         "showing": "Exibindo",
         "showing-to": "até",
-        "showing-from": "de"
+        "showing-from": "de",
+        "showing-total": "Total"
     },
     "media": {
         "dragndrop": "Arraste e Solte",

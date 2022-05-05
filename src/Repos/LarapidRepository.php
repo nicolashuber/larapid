@@ -3,6 +3,7 @@
 namespace Internexus\Larapid\Repos;
 
 use Illuminate\Database\Eloquent\Model;
+use Internexus\Larapid\Query\Search;
 
 class LarapidRepository
 {
@@ -43,33 +44,9 @@ class LarapidRepository
      */
     public function filter($query, array $searchableFields = [], $perPage = 25, string $sortBy = null)
     {
-        $newQuery = $this->model->query();
+        $search = new Search($searchableFields, $sortBy);
 
-        if (! empty($query)) {
-            if (isset($searchableFields['columns'])) {
-                foreach ($searchableFields['columns'] as $field) {
-                    $newQuery = $newQuery->orWhere($field, 'LIKE', "%{$query}%");
-                }
-            }
-
-            if (isset($searchableFields['relations'])) {
-                foreach ($searchableFields['relations'] as $relation => $column) {
-                    $newQuery = $newQuery->orWhereHas($relation, function ($q) use ($query, $column) {
-                        $q->where($column, 'LIKE', "%{$query}%");
-                    });
-                }
-            }
-        }
-
-        if ($sortBy) {
-            list($order, $field) = explode(':', $sortBy);
-
-            $newQuery = $newQuery->orderBy($field, $order);
-        } else {
-            $newQuery = $newQuery->orderBy('id', 'desc');
-        }
-
-        return $newQuery->paginate($perPage);
+        return $search->runQuery($this->model->query(), $query)->paginate($perPage);
     }
 
     /**

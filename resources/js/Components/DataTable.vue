@@ -56,8 +56,8 @@
                 </l-btn>
             </div>
             <div class="d-flex align-items-center">
-                <span class="me-4">
-                    {{ $t('datatable.showing') }} {{ $t('datatable.showing-from') }} {{ data.meta.from }} {{ $t('datatable.showing-to') }} {{ data.meta.to }}
+                <span v-if="data.data.length > 0" class="me-4">
+                    {{ $t('datatable.showing') }} {{ $t('datatable.showing-from') }} {{ data.meta.from }} {{ $t('datatable.showing-to') }} {{ data.meta.to }} | <span class="text-muted">{{ $t('datatable.showing-total') }} {{ data.meta.total }}</span>
                 </span>
                 <l-pagination :meta="data.meta" />
             </div>

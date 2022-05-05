@@ -445,19 +445,13 @@ abstract class Entity
      *
      * @return array
      */
-    public function getSearchableColumns()
+    public function searchableColumns()
     {
         $fields = [];
 
         foreach ($this->getFieldsForPage('index') as $field) {
             if ($field->isSearchable()) {
-                if ($field instanceof Relational) {
-                    $entity = $field->resolveRelationEntity();
-
-                    $fields['relations'][$field->guestRelationMethod()] = $entity::$titleColumn;
-                } else {
-                    $fields['columns'][] = $field->getColumn();
-                }
+                $fields[] = $field->getColumn();
             }
         }
 
