@@ -4,6 +4,7 @@ namespace Internexus\Larapid\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Internexus\Larapid\Fields\HasMany;
+use Internexus\Larapid\Fields\Relational;
 
 abstract class Entity
 {
@@ -450,7 +451,13 @@ abstract class Entity
 
         foreach ($this->getFieldsForPage('index') as $field) {
             if ($field->isSearchable()) {
-                $fields[] = $field->getColumn();
+                if ($field instanceof Relational) {
+                    $entity = $field->resolveRelationEntity();
+
+                    $fields['relations'][$field->guestRelationMethod()] = $entity::$titleColumn;
+                } else {
+                    $fields['columns'][] = $field->getColumn();
+                }
             }
         }
 

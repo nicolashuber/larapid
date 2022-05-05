@@ -55,7 +55,12 @@
                     {{ $t('btn.export-pdf') }}
                 </l-btn>
             </div>
-            <l-pagination :meta="data.meta" />
+            <div class="d-flex align-items-center">
+                <span class="me-4">
+                    {{ $t('datatable.showing') }} {{ $t('datatable.showing-from') }} {{ data.meta.from }} {{ $t('datatable.showing-to') }} {{ data.meta.to }}
+                </span>
+                <l-pagination :meta="data.meta" />
+            </div>
         </div>
     </div>
 </template>

@@ -46,8 +46,18 @@ class LarapidRepository
         $newQuery = $this->model->query();
 
         if (! empty($query)) {
-            foreach ($searchableFields as $field) {
-                $newQuery = $newQuery->orWhere($field, 'LIKE', "%{$query}%");
+            if (isset($searchableFields['columns'])) {
+                foreach ($searchableFields['columns'] as $field) {
+                    $newQuery = $newQuery->orWhere($field, 'LIKE', "%{$query}%");
+                }
+            }
+
+            if (isset($searchableFields['relations'])) {
+                foreach ($searchableFields['relations'] as $relation => $column) {
+                    $newQuery = $newQuery->orWhereHas($relation, function ($q) use ($query, $column) {
+                        $q->where($column, 'LIKE', "%{$query}%");
+                    });
+                }
             }
         }
 

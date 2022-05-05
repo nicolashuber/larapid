@@ -3,8 +3,6 @@
 namespace Internexus\Larapid\Fields;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
-use Internexus\Larapid\Facades\Larapid;
 use Internexus\Larapid\Http\Resources\LarapidResource;
 
 class HasMany extends Relational

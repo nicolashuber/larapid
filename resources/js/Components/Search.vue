@@ -32,7 +32,8 @@ export default {
     methods: {
         onSubmit () {
             this.$inertia.get(this.$page.url, {
-                query: this.query
+                page: 1,
+                query: this.query,
             })
         }
     }

@@ -27,7 +27,10 @@
     "datatable": {
         "empty": "Sem registros.",
         "actions": "Ações",
-        "perPage": "Por página"
+        "perPage": "Por página",
+        "showing": "Exibindo",
+        "showing-to": "até",
+        "showing-from": "de"
     },
     "media": {
         "dragndrop": "Arraste e Solte",
