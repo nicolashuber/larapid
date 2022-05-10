@@ -4,7 +4,6 @@ namespace Internexus\Larapid\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Internexus\Larapid\Fields\HasMany;
-use Internexus\Larapid\Fields\Relational;
 
 abstract class Entity
 {

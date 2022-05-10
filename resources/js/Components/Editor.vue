@@ -3,6 +3,7 @@
         <QuillEditor
             theme="snow"
             content-type="html"
+            :options="options"
             :placeholder="placeholder"
             :content="modelValue"
             @update:content="onEditorChange"
@@ -19,6 +20,12 @@ export default {
         QuillEditor
     },
     props: {
+        options: {
+            type: Object,
+            default () {
+                return {}
+            }
+        },
         modelValue: {
             type: [Number, String]
         },
@@ -26,10 +33,20 @@ export default {
             type: String
         }
     },
-    data () {
-        return {
-            options: {
-                //
+    computed: {
+        toolbar () {
+            if (this.options.simpleToolbar) {
+                return ['bold', 'italic', 'underline', 'strike']
+            }
+
+            return true
+        },
+
+        options () {
+            return {
+                modules: {
+                    toolbar: this.toolbar
+                }
             }
         }
     },
