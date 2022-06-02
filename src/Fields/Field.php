@@ -89,7 +89,7 @@ abstract class Field
      *
      * @var array
      */
-    protected $displayUsing;
+    protected $displayUsingCb;
 
     /**
      * Field component name.
@@ -259,7 +259,7 @@ abstract class Field
      */
     public function displayUsing(callable $callback)
     {
-        $this->displayUsing = $callback;
+        $this->displayUsingCb = $callback;
 
         return $this;
     }
@@ -437,6 +437,10 @@ abstract class Field
      */
     public function display(Model $model)
     {
+        if ($this->displayUsingCb) {
+            return call_user_func($this->displayUsingCb, $model);
+        }
+
         return $model->{$this->getColumn()} ?? null;
     }
 
