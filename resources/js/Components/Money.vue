@@ -1,27 +1,37 @@
 <template>
     <input
         ref="inputRef"
-        v-bind="inputBinding"
         type="text"
-        v-maska="mask"
-        @input="onInput"
+        class="form-control"
+        :class="{ 'is-invalid': hasError }"
+        :readonly="readOnly"
+        :placeholder="placeholder"
     />
 </template>
 
 <script>
 import { useCurrencyInput } from 'vue-currency-input'
-import inputMixin from './inputMixin';
 
 export default {
-    mixins: [inputMixin],
-    setup () {
+    props: {
+        options: Object,
+        readOnly: Boolean,
+        hasError: Boolean,
+        modelValue: Number,
+        placeholder: String
+    },
+    setup (props) {
         const { inputRef } = useCurrencyInput({
-            currency: 'BRL',
-            locale: 'pt-BR',
-            precision: 2,
-            // exportValueAsInteger: true,
-            // valueScaling: 'precision',
-            autoDecimalDigits: true
+            locale: props.options.locale || 'en-US',
+            currency: props.options.currency || 'USD',
+            currencyDisplay: 'symbol',
+            hideCurrencySymbolOnFocus: true,
+            hideGroupingSeparatorOnFocus: true,
+            hideNegligibleDecimalDigitsOnFocus: true,
+            autoDecimalDigits: false,
+            autoSign: true,
+            useGrouping: true,
+            accountingSign: false
         })
 
         return { inputRef }

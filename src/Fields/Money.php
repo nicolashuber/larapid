@@ -16,6 +16,19 @@ class Money extends Field
     public static $component = 'money';
 
     /**
+     * Get field options.
+     *
+     * @return array
+     */
+    public function getOptions()
+    {
+        return [
+            'currency' => Larapid::getConfig('currency'),
+            'locale' => Larapid::getConfig('currency_locale'),
+        ];
+    }
+
+    /**
      * Display field value.
      *
      * @param Model $model
@@ -38,14 +51,12 @@ class Money extends Field
             return null;
         }
 
-        $formatter = new NumberFormatter('pt_BR', NumberFormatter::DECIMAL);
+        $locale = Larapid::getConfig('currency_locale');
         $currency = Larapid::getConfig('currency');
-        $symbol = Larapid::getConfig('currency_symbol');
 
-        return $symbol . ' ' . $formatter->formatCurrency(
-            $value,
-            $currency
-        );
+        $formatter = new NumberFormatter($locale, NumberFormatter::CURRENCY);
+
+        return $formatter->formatCurrency($value, $currency);
     }
 
     /**
