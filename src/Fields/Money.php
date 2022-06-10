@@ -38,10 +38,6 @@ class Money extends Field
     {
         $value = $model->{$this->getColumn()} ?? null;
 
-        if ($value > 0) {
-            return $value / 100;
-        }
-
         return $value;
     }
 
