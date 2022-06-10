@@ -229,8 +229,8 @@ abstract class Entity
     {
         $method = 'enable' . $this->getPageMethod($action);
 
-        if (method_exists($this, $method) && ! $this->$method($resource)) {
-            return false;
+        if (method_exists($this, $method)) {
+            return $this->$method($resource);
         }
 
         return true;

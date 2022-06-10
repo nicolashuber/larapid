@@ -56,12 +56,18 @@ class LarapidController extends Controller
      * @param Entity $entity
      * @return \Illuminate\Http\Response
      */
-    public function create(Entity $entity)
+    public function create(Entity $entity, Request $request)
     {
+        $route = $entity->route(null, 'index');
+
+        if ($request->has('relatedId') && $request->has('relatedEntity')) {
+            $route = route('larapid.detail', [$request->relatedEntity, $request->relatedId]);
+        }
+
         return Inertia::render('Create', [
             'route' => $entity->route(null, 'store'),
             'fields' => $entity->getCreatingFieldsProps(),
-            'backRoute' => $entity->route(null, 'index')
+            'backRoute' => $route,
         ]);
     }
 

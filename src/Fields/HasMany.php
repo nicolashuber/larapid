@@ -83,7 +83,7 @@ class HasMany extends Relational
     public function getResource(Model $model)
     {
         $data = $this->getRelation($model);
-        $request = request();
+        $request = clone request();
         $entity = $this->resolveRelationEntity();
 
         $query = [
