@@ -43,6 +43,13 @@ abstract class Entity
     public static $group = '';
 
     /**
+     * Parent entity.
+     *
+     * @param Entity
+     */
+    public static $parentEntity;
+
+    /**
      * Define entity fields.
      *
      * @return array
