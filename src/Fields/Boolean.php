@@ -76,7 +76,7 @@ class Boolean extends Field
                 ],
                 [
                     'label' => Larapid::getConfig('bool_false'),
-                    'value' => 2,
+                    'value' => 0,
                 ]
             ]
         ];
