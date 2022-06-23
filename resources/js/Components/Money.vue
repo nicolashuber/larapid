@@ -31,7 +31,8 @@ export default {
             autoDecimalDigits: false,
             autoSign: true,
             useGrouping: true,
-            accountingSign: false
+            accountingSign: false,
+            precision: 2
         })
 
         return { inputRef }
