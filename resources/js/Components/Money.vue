@@ -32,7 +32,8 @@ export default {
             autoSign: true,
             useGrouping: true,
             accountingSign: false,
-            precision: 2
+            precision: 2,
+            valueScaling: 'precision'
         })
 
         return { inputRef }

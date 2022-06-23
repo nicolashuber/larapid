@@ -28,27 +28,14 @@ class Money extends Field
         ];
     }
 
-    /**
-     * Display field value.
-     *
-     * @param Model $model
-     * @return mixed
-     */
-    public function display(Model $model)
-    {
-        $value = $model->{$this->getColumn()} ?? null;
-
-        if ($value > 0) {
-            return $value / 100;
-        }
-
-        return $value;
-    }
-
     public function formatted($value)
     {
         if (! $value) {
             return null;
+        }
+
+        if ($value > 0) {
+            $value /= 100;
         }
 
         $locale = Larapid::getConfig('currency_locale');
