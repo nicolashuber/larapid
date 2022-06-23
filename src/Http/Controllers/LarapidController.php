@@ -2,6 +2,7 @@
 
 namespace Internexus\Larapid\Http\Controllers;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -185,7 +186,13 @@ class LarapidController extends Controller
         $model = $repo->find($id);
 
         $entity->beforeDestroy($model);
-        $repo->destroy($id);
+
+        try {
+            $repo->destroy($id);
+        } catch (ModelNotFoundException $e) {
+            // Do nothing if the model has already been deleted
+        }
+
         $entity->afterDestroy($model);
 
         $route = $entity->redirectAfterDelete($model) ?? route('larapid.index', [$entity::slug()]);
