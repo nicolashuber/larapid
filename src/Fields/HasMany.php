@@ -86,12 +86,7 @@ class HasMany extends Relational
         $request = clone request();
         $entity = $this->resolveRelationEntity();
 
-        $query = [
-            'relatedId' => $model->id,
-            'relatedEntity' => $request->entity->slug(),
-            'relatedColumn' => $this->column,
-        ];
-
+        $parentEntity = $request->entity;
         $request->entity = $entity;
 
         $resource = LarapidResource::collection($data);
@@ -104,7 +99,15 @@ class HasMany extends Relational
             'columns' => $entity->getIndexColumns(),
             'fields' => $entity->getCreatingFieldsProps(),
             'routes' => [
-                'create' => $entity->route(null, 'create') . '?' . http_build_query($query)
+                'create' => $entity->route(null, 'create') . '?' . http_build_query([
+                    'relatedId' => $model->id,
+                    'relatedEntity' => $request->entity->slug(),
+                    'relatedColumn' => $this->column,
+                ]),
+                'attach' => $parentEntity->route($model->id, 'attach') . '?' . http_build_query([
+                    'relatedEntity' => $request->entity->slug(),
+                    'relatedColumn' => $this->column,
+                ]),
             ],
         ];
     }

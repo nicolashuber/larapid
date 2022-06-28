@@ -23,6 +23,10 @@ export default {
             type: Boolean,
             default: false
         },
+        required: {
+            type: Boolean,
+            default: false
+        },
         modelValue: {
             type: [Number, String]
         },
@@ -43,6 +47,7 @@ export default {
                 min: this.min,
                 max: this.max,
                 options: this.options,
+                required: this.required,
                 readonly: this.readOnly,
                 placeholder: this.placeholder
             }

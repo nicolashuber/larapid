@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Internexus\Larapid\Http\Controllers\DataController;
 use Internexus\Larapid\Http\Controllers\LarapidController;
 use Internexus\Larapid\Http\Controllers\LoginController;
 use Internexus\Larapid\Http\Controllers\MediaController;
@@ -19,9 +20,13 @@ Route::prefix('cms')->middleware(['web', 'larapid.inertia'])->group(function() {
     Route::middleware(Authenticate::class)->group(function () {
         Route::post('/media/{mediaGroup?}', [MediaController::class, 'store']);
 
+        Route::get('/data/{entity}/search', [DataController::class, 'search'])->name('larapid.data.search');
+
         Route::get('/', [LarapidController::class, 'dashboard'])->name('larapid.dash');
         Route::get('/{entity}/create', [LarapidController::class, 'create'])->name('larapid.create');
         Route::get('/{entity}/{id}/detail', [LarapidController::class, 'detail'])->name('larapid.detail');
+        Route::get('/{entity}/{id}/attach', [LarapidController::class, 'attach'])->name('larapid.attach');
+        Route::post('/{entity}/{id}/attach', [LarapidController::class, 'postAttach'])->name('larapid.attach');
         Route::get('/{entity}/{id}', [LarapidController::class, 'edit'])->name('larapid.edit');
         Route::put('/{entity}/{id}', [LarapidController::class, 'update'])->name('larapid.update');
         Route::get('/{entity}', [LarapidController::class, 'index'])->name('larapid.index');

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Inertia\Inertia;
 use Internexus\Larapid\Entities\Entity;
+use Internexus\Larapid\Facades\Larapid;
 use Internexus\Larapid\Http\Requests\LarapidRequest;
 use Internexus\Larapid\Http\Resources\LarapidResource;
 use Internexus\Larapid\Repos\LarapidRepository;
@@ -127,6 +128,55 @@ class LarapidController extends Controller
             'relations' => $entity->getRelations($data),
             'backRoute' => $entity->route(null, 'index')
         ]);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param Entity $entity
+     * @param int $id
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function attach(Entity $entity, $id, Request $request)
+    {
+        return Inertia::render('Attach', [
+            'field' => [
+                'name' => $request->relatedColumn,
+                'entity' => $request->relatedEntity,
+            ],
+            'route' => $entity->route($id, 'attach'),
+            'backRoute' => $entity->route($id, 'detail')
+        ]);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param Entity $entity
+     * @param int $id
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function postAttach(Entity $entity, $id, Request $request)
+    {
+        $request->validate([
+            'field' => 'required',
+            'entity' => 'required',
+            'entity_id' => 'required',
+        ]);
+
+        $related = Larapid::resolveEntity($request->entity . 'Entity');
+        $repo = new LarapidRepository($related->model());
+
+        $repo->update($request->entity_id, [
+            $request->field => $id
+        ]);
+
+        $route = $entity->route($id, 'detail');
+
+        return redirect($route)->with('flash:type', 'success')
+                               ->with('flash:message', trans('larapid.attach'));
     }
 
     /**

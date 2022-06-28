@@ -118,7 +118,7 @@ class Larapid
                 $item = [
                     'route' => $route,
                     'label' => $entity::$title,
-                    'active' => $current ? get_class($current) == $entity : false,
+                    'active' => $current && is_object($current) ? get_class($current) == $entity : false,
                 ];
 
                 if ($entity::$group) {

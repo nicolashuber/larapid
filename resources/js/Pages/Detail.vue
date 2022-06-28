@@ -14,9 +14,14 @@
 
         <l-panel v-for="(relation, index) in relations" :key="index" :title="relation.title">
             <template #header>
-                <l-btn size="sm" variant="secondary" :href="relation.routes.create">
-                    {{ $t('btn.create') }}
-                </l-btn>
+                <div>
+                    <l-btn size="sm" variant="secondary" :href="relation.routes.create">
+                        {{ $t('btn.create') }}
+                    </l-btn>
+                    <l-btn v-if="relation.routes.attach" size="sm" variant="outline-secondary" class="ms-2" :href="relation.routes.attach">
+                        {{ $t('btn.attach') }}
+                    </l-btn>
+                </div>
             </template>
             <l-data-table :data="relation.data" :headers="relation.columns" :sortable="false" />
         </l-panel>
@@ -47,6 +52,10 @@ export default {
             type: Object
         },
         user: {
+            type: Object,
+            required: true
+        },
+        flash: {
             type: Object,
             required: true
         },

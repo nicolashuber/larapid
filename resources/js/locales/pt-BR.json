@@ -7,6 +7,7 @@
     },
     "btn": {
         "save": "Salvar",
+        "attach": "Vincular existente",
         "search": "Pesquisar",
         "edit": "Editar",
         "goback": "Voltar",
@@ -22,6 +23,7 @@
         "create": "Criar",
         "index": "Listar",
         "detail": "Detalhes",
+        "attach": "Vincular",
         "dashboard": "Bem-vindo!"
     },
     "datatable": {
@@ -38,5 +40,11 @@
         "empty": "seus arquivos aqui, ou",
         "browser": "navegue",
         "drop": "Solte!"
+    },
+    "attach": {
+        "label": "Selecione um item abaixo para vincular"
+    },
+    "autocomplete": {
+        "empty": "Nenhum registro encotrado"
     }
 }

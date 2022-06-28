@@ -108,7 +108,7 @@ abstract class Entity
      */
     public function route($id = null, $action = 'index')
     {
-        $requiredId = $action == 'update' || $action == 'edit' || $action == 'destroy' || $action == 'detail';
+        $requiredId = in_array($action, ['update', 'edit', 'destroy', 'detail', 'attach']);
 
         if ($id && $requiredId) {
             return route("larapid.{$action}", [$this::slug(), $id]);
@@ -533,5 +533,18 @@ abstract class Entity
     public function redirectAfterDelete(Model $model)
     {
         //
+    }
+
+    /**
+     * Get entity title for relation option.
+     *
+     * @param Model $model
+     * @return mixed
+     */
+    public function title(Model $model)
+    {
+        $column = self::$titleColumn;
+
+        return $model->$column;
     }
 }
