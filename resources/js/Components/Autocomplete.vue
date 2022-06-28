@@ -83,7 +83,11 @@ export default {
         },
 
         suggestions () {
-            if (this.filter && this.arrayOptions.length > 0) {
+            if (this.arrayOptions.length > 0) {
+                if (! this.filter) {
+                    return this.arrayOptions.splice(0, this.maxResults)
+                }
+
                 const query = this.filter.toLowerCase()
 
                 return this.arrayOptions.filter(item => item.text && item.text.toLowerCase().includes(query) && item.text !== this.filter).splice(0, this.maxResults)

@@ -15,6 +15,8 @@ class BelongsTo extends Relational
      */
     public static $component = 'belongs-to';
 
+    protected $customQueryCb;
+
     /**
      * Display field value on index.
      *
@@ -75,8 +77,14 @@ class BelongsTo extends Relational
             $primaryKey = $model->getKeyName();
 
             if (! $this->isAjax) {
-                $data = $model->pluck($entity::$titleColumn, $primaryKey)->all();
-            } else if ($this->getValue()) {
+                $query =  $model->query();
+
+                if ($this->customQueryCb) {
+                    $query = call_user_func($this->customQueryCb, $query);
+                }
+
+                $data = $query->pluck($entity::$titleColumn, $primaryKey)->all();
+            } else if ($value) {
                 if (isset($value->$primaryKey)) {
                     $default = $entity->title($model->find($value->$primaryKey));
                 }
@@ -89,6 +97,13 @@ class BelongsTo extends Relational
             'default' => $default,
             'isAjax' => $this->isAjax,
         ];
+    }
+
+    public function customQuery(callable $callback)
+    {
+        $this->customQueryCb = $callback;
+
+        return $this;
     }
 
     public function isAjax()
