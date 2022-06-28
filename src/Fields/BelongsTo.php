@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class BelongsTo extends Relational
 {
+    protected $isAjax = false;
+
     /**
      * Field component name.
      *
@@ -63,15 +65,37 @@ class BelongsTo extends Relational
      */
     public function getOptions()
     {
+        $data = [];
+        $default = null;
         $entity = $this->resolveRelationEntity();
 
         if ($entity) {
             $model = $entity->model();
+            $value = $this->getValue();
+            $primaryKey = $model->getKeyName();
 
-            return $model->pluck($entity::$titleColumn, $model->getKeyName())->all();
+            if (! $this->isAjax) {
+                $data = $model->pluck($entity::$titleColumn, $primaryKey)->all();
+            } else if ($this->getValue()) {
+                if (isset($value->$primaryKey)) {
+                    $default = $entity->title($model->find($value->$primaryKey));
+                }
+            }
         }
 
-        return [];
+        return [
+            'data' => $data,
+            'entity' => $this->entity ? $this->entity::slug() : null,
+            'default' => $default,
+            'isAjax' => $this->isAjax,
+        ];
+    }
+
+    public function isAjax()
+    {
+        $this->isAjax = true;
+
+        return $this;
     }
 }
 

@@ -39,6 +39,10 @@ export default {
         entity: {
             type: String,
         },
+        isAjax: {
+            type: Boolean,
+            default: false
+        },
         required: {
             type: Boolean,
             default: false
@@ -54,25 +58,42 @@ export default {
     },
     data () {
         return {
+            data: [],
             focus: false,
             filter: '',
             dirty: false,
         }
     },
     mounted () {
-        if (this.modelValue) {
-            this.filter = this.options[this.modelValue]
+        if (this.isServerSearch) {
+            this.filter = this.options.default
+        } else if (this.modelValue) {
+            this.filter = this.options.data[this.modelValue]
         }
     },
     computed: {
         arrayOptions () {
-            return Object.entries(this.options).map((e) => ( { id: e[0], text: e[1] } ))
+            const data = this.isServerSearch ? this.data : this.options.data
+
+            if (Object.entries(data).length > 0) {
+                return Object.entries(data).map((e) => ( { id: e[0], text: e[1] } ))
+            }
+
+            return {}
         },
 
         suggestions () {
-            const query = this.filter.toLowerCase()
+            if (this.filter && this.arrayOptions.length > 0) {
+                const query = this.filter.toLowerCase()
 
-            return this.arrayOptions.filter(item => item.text.toLowerCase().includes(query) && item.text !== this.filter).splice(0, this.maxResults)
+                return this.arrayOptions.filter(item => item.text && item.text.toLowerCase().includes(query) && item.text !== this.filter).splice(0, this.maxResults)
+            }
+
+            return []
+        },
+
+        isServerSearch () {
+            return this.options.entity && this.options.isAjax
         }
     },
     methods: {
@@ -90,19 +111,19 @@ export default {
             this.dirty = true
             this.filter = e.target.value
 
-            if (this.entity) {
+            if (this.isServerSearch) {
                 this.search(this.filter)
             }
         },
 
         search: debounce(async function (query) {
-            const { data } = await axios.get(`/cms/data/${this.entity}/search`, {
+            const { data } = await axios.get(`/cms/data/${this.options.entity}/search`, {
                 params: {
                     query
                 }
             })
 
-            this.$emit('loaded', data)
+            this.data = data
         }, 200),
 
         setOption ({ id, text }) {

@@ -12,18 +12,15 @@
                         v-model="form.entity_id"
                         required
                         name="entity_id"
-                        :entity="field.entity"
                         :options="options"
                         :has-error="errors.entity_id != undefined"
                         :max-results="10"
-                        @loaded="options = $event"
                     />
                 </l-field>
                 <div class="form-footer d-flex justify-content-between">
                     <l-btn v-if="backRoute" type="submit" variant="outline-secondary" :href="backRoute">
                         {{ $t('btn.goback') }}
                     </l-btn>
-
                     <l-btn type="submit" variant="primary">
                         {{ $t('btn.save') }}
                     </l-btn>
@@ -76,6 +73,12 @@ export default {
                 id: null
             },
             options: {}
+        }
+    },
+    beforeMount () {
+        this.options = {
+            isAjax: true,
+            entity: this.field.entity
         }
     },
     methods: {
