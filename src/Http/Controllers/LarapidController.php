@@ -48,7 +48,7 @@ class LarapidController extends Controller
         return Inertia::render('Index', [
             'data' => LarapidResource::collection($data),
             'headers' => $entity->getIndexColumns(),
-            'createRoute' => $entity->route(null, 'create')
+            'createRoute' => $entity->enableCreating() ? $entity->route(null, 'create') : null
         ]);
     }
 

@@ -145,6 +145,16 @@ abstract class Entity
      *
      * @return boolean
      */
+    public function enableCreating()
+    {
+        return true;
+    }
+
+    /**
+     * Enables edit an entity
+     *
+     * @return boolean
+     */
     public function enableEditing(Model $model)
     {
         return true;
@@ -541,10 +551,12 @@ abstract class Entity
      * @param Model $model
      * @return mixed
      */
-    public function title(Model $model)
+    public function title(?Model $model)
     {
-        $column = self::$titleColumn;
+        if ($model) {
+            $column = self::$titleColumn;
 
-        return $model->$column;
+            return $model->$column;
+        }
     }
 }

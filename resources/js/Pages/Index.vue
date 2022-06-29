@@ -2,8 +2,8 @@
     <app :menu="menu" :user="user" :flash="flash">
         <l-page-header :title="$t('page.index')">
             <div class="d-flex justify-content-between">
-                <l-search class="me-3" />
-                <l-btn :href="createRoute" variant="primary">
+                <l-search />
+                <l-btn v-if="createRoute" :href="createRoute" variant="primary" class="ms-3">
                     {{ $t('btn.create') }}
                 </l-btn>
             </div>
