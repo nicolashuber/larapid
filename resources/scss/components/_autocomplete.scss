@@ -14,7 +14,15 @@
         display: block;
         padding: .5rem .75rem;
         background: $gray-100;
-        border-bottom: 1px solid $gray-200;
-        text-decoration: none;
+
+        & + & {
+            border-top: 1px solid $gray-200;
+        }
+    }
+
+    &-results {
+        font-size: .75rem;
+        background: darken($gray-200, .1);
+        border-top: 1px solid $gray-200;
     }
 }

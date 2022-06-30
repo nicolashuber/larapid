@@ -5,15 +5,19 @@
             ref="inputRef"
             :required="required"
             :has-error="hasError"
+            :placeholder="placeholder"
             @blur="onBlur"
             @focus="onFocus"
             @input="onInput"
         />
-        <ul v-if="focus && suggestions.length > 0" class="list-unstyled autocomplete-dropdown">
-            <li v-for="option in suggestions" :key="option.id">
-                <a href="#" class="autocomplete-option" @click.prevent="setOption(option)">
+        <ul v-show="focus && suggestions.length > 0" class="list-unstyled autocomplete-dropdown">
+            <li v-for="option in suggestions" :key="option.id" class="autocomplete-option">
+                <a href="#" class="text-decoration-none" @click.prevent="setOption(option)">
                     {{ option.text }}
                 </a>
+            </li>
+            <li v-show="arrayOptions.length > maxResults" class="autocomplete-results py-2 text-center">
+                Exibindo {{ maxResults }} resultados, pesquise para filtrar
             </li>
         </ul>
         <ul v-if="focus && dirty && suggestions.length === 0" class="list-unstyled autocomplete-dropdown">
@@ -72,6 +76,14 @@ export default {
         }
     },
     computed: {
+        placeholder () {
+            if (this.options.isAjax) {
+                return this.$t('autocomplete.placeholder')
+            }
+
+            return this.$t('autocomplete.select')
+        },
+
         arrayOptions () {
             const data = this.isServerSearch ? this.data : this.options.data
 

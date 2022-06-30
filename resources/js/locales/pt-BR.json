@@ -45,7 +45,9 @@
         "label": "Selecione um item abaixo para vincular"
     },
     "autocomplete": {
-        "empty": "Nenhum registro encontrado"
+        "empty": "Nenhum registro encontrado",
+        "select": "Selecione um item",
+        "placeholder": "Digite para pesquisar"
     },
     "metric": {
         "latest": "Últimos",
