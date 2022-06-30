@@ -43,6 +43,20 @@ class HasMany extends Relational
     protected $showOnDetail = false;
 
     /**
+     * Show field only on detail.
+     *
+     * @var boolean
+     */
+    protected $enableAttach = false;
+
+    public function enableAttach()
+    {
+        $this->enableAttach = true;
+
+        return $this;
+    }
+
+    /**
      * Get relation method name.
      *
      * @return string
@@ -88,8 +102,24 @@ class HasMany extends Relational
 
         $parentEntity = $request->entity;
         $request->entity = $entity;
+        $request->parentEntity = $parentEntity;
 
         $resource = LarapidResource::collection($data);
+
+        $routes = [
+            'create' => $entity->route(null, 'create') . '?' . http_build_query([
+                'relatedId' => $model->id,
+                'relatedEntity' => $parentEntity->slug(),
+                'relatedColumn' => $this->column,
+            ]),
+        ];
+
+        if ($this->enableAttach) {
+            $routes['attach'] = $parentEntity->route($model->id, 'attach') . '?' . http_build_query([
+                'relatedEntity' => $request->entity->slug(),
+                'relatedColumn' => $this->column,
+            ]);
+        }
 
         return [
             'data' => [
@@ -98,17 +128,7 @@ class HasMany extends Relational
             'title' => $entity::$title,
             'columns' => $entity->getIndexColumns(),
             'fields' => $entity->getCreatingFieldsProps(),
-            'routes' => [
-                'create' => $entity->route(null, 'create') . '?' . http_build_query([
-                    'relatedId' => $model->id,
-                    'relatedEntity' => $request->entity->slug(),
-                    'relatedColumn' => $this->column,
-                ]),
-                'attach' => $parentEntity->route($model->id, 'attach') . '?' . http_build_query([
-                    'relatedEntity' => $request->entity->slug(),
-                    'relatedColumn' => $this->column,
-                ]),
-            ],
+            'routes' => $routes,
         ];
     }
 }

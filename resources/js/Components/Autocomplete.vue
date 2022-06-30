@@ -22,7 +22,7 @@
         </ul>
         <ul v-if="focus && dirty && suggestions.length === 0" class="list-unstyled autocomplete-dropdown">
             <li class="autocomplete-option text-muted text-center">
-                {{ $t('autocomplete.empty') }}
+                {{ loading ? $t('autocomplete.loading') : $t('autocomplete.empty') }}
             </li>
         </ul>
     </div>
@@ -66,6 +66,7 @@ export default {
             focus: false,
             filter: '',
             dirty: false,
+            loading: false,
         }
     },
     mounted () {
@@ -133,13 +134,17 @@ export default {
         },
 
         search: debounce(async function (query) {
-            const { data } = await axios.get(`/cms/data/${this.options.entity}/search`, {
-                params: {
-                    query
-                }
-            })
+            this.loading = true
 
-            this.data = data
+            try {
+                const { data } = await axios.get(`/cms/data/${this.options.entity}/search`, {
+                    params: { query }
+                })
+
+                this.data = data
+            } finally {
+                this.loading = false
+            }
         }, 200),
 
         setOption ({ id, text }) {

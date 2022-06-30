@@ -47,6 +47,7 @@
     "autocomplete": {
         "empty": "Nenhum registro encontrado",
         "select": "Selecione um item",
+        "loading": "Carregando...",
         "placeholder": "Digite para pesquisar"
     },
     "metric": {

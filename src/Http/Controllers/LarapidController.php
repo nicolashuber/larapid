@@ -193,14 +193,19 @@ class LarapidController extends Controller
     {
         $repo = new LarapidRepository($entity->model());
         $data = $repo->find($id);
+        $goBack = $entity->route(null, 'index');
 
         $resource = new LarapidResource($data);
+
+        if ($request->has('relatedId') && $request->has('relatedEntity')) {
+            $goBack = route('larapid.detail', [$request->relatedEntity, $request->relatedId]);
+        }
 
         return Inertia::render('Edit', [
             'data' => $resource->toArray($request),
             'fields' => $entity->getUpdatingFieldsProps($data),
             'route' => $entity->route($id, 'update'),
-            'backRoute' => $entity->route(null, 'index')
+            'backRoute' => $goBack
         ]);
     }
 
