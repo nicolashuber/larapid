@@ -24,7 +24,7 @@
         "index": "Listar",
         "detail": "Detalhes",
         "attach": "Vincular",
-        "dashboard": "Bem-vindo!"
+        "dashboard": "Dashboard"
     },
     "datatable": {
         "empty": "Sem registros.",
@@ -45,6 +45,12 @@
         "label": "Selecione um item abaixo para vincular"
     },
     "autocomplete": {
-        "empty": "Nenhum registro encotrado"
+        "empty": "Nenhum registro encontrado"
+    },
+    "metric": {
+        "latest": "Últimos",
+        "range": {
+            "days": "dias"
+        }
     }
 }

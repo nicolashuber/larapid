@@ -2,11 +2,11 @@
     <div class="app">
         <aside class="aside" :class="{ active: showMenu }">
             <header class="aside-header">
-                Larapid
+                {{ app.title }}
             </header>
             <nav class="nav">
                 <ul class="nav-list">
-                    <li v-for="(item, index) in menu" :key="index" class="nav-item">
+                    <li v-for="(item, index) in app.menu" :key="index" class="nav-item">
                         <ul v-if="item.subMenu" class="nav-sublist">
                             <li class="nav-group">{{ index }}</li>
                             <li v-for="(subItem, index) in item.subMenu" :key="index" class="nav-item">
@@ -23,7 +23,9 @@
                 <a href="#" class="d-md-none" :class="{ 'me-auto': ! showMenu, 'me-5': showMenu }" @click.prevent="showMenu = ! showMenu">
                     <l-icon :name="showMenu ? 'close' : 'bars'" />
                 </a>
-                {{ user.name }} <small class="ms-1">(<a href="#" @click.prevent="logout">{{ $t('auth.logout') }}</a>)</small>
+                <template v-if="app.user">
+                    {{ app.user.name }} <small class="ms-1">(<a href="#" @click.prevent="logout">{{ $t('auth.logout') }}</a>)</small>
+                </template>
             </header>
             <div class="content">
                 <slot />
@@ -41,15 +43,7 @@ export default {
         Link
     },
     props: {
-        menu: {
-            type: Object,
-            default: []
-        },
-        user: {
-            type: Object,
-            required: true
-        },
-        flash: {
+        app: {
             type: Object,
             required: true
         }
@@ -60,10 +54,10 @@ export default {
         }
     },
     mounted () {
-        this.showToast(this.flash)
+        this.showToast(this.app.flash)
     },
     watch: {
-        flash (toast) {
+        'app.flash' (toast) {
             this.showToast(toast)
         }
     },
@@ -80,7 +74,6 @@ export default {
     }
 }
 </script>
-
 
 <style lang="scss">
     .app {

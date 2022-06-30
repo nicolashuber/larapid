@@ -5,6 +5,7 @@ namespace Internexus\Larapid;
 use Illuminate\Support\Str;
 use Internexus\Larapid\Entities\Entity;
 use Internexus\Larapid\Exceptions\EntityNotFoundException;
+use Internexus\Larapid\Metrics\Metric;
 
 class Larapid
 {
@@ -39,6 +40,13 @@ class Larapid
     private $entities = [];
 
     /**
+     * Application metrics.
+     *
+     * @var array
+     */
+    private $metrics = [];
+
+    /**
      * Constructor.
      *
      * @param array $config
@@ -68,6 +76,17 @@ class Larapid
     public function entities(array $entities)
     {
         $this->entities = $entities;
+    }
+
+    /**
+     * Set application metrics.
+     *
+     * @param array $metrics
+     * @return void
+     */
+    public function metrics(array $metrics)
+    {
+        $this->metrics = $metrics;
     }
 
     /**
@@ -108,12 +127,18 @@ class Larapid
      */
     public function menu()
     {
-        $items = [];
+        $request = request();
+
+        $items = [[
+            'route' => route('larapid.dash'),
+            'label' => 'Dashboard',
+            'active' => $request->route()->getName() == 'larapid.dash',
+        ]];
 
         foreach ($this->entities as $entity) {
             if ($entity::$displayInNavigation) {
                 $route = route('larapid.index', [$entity::slug()]);
-                $current = request()->entity;
+                $current = $request->entity;
 
                 $item = [
                     'route' => $route,
@@ -130,5 +155,27 @@ class Larapid
         }
 
         return $items;
+    }
+
+    /**
+     * Get dashboard metrics.
+     *
+     * @return array
+     */
+    public function dashboard()
+    {
+        $data = [];
+
+        foreach ($this->metrics as $metric) {
+            if (method_exists($metric, 'make')) {
+                $instance = $metric::make();
+
+                if ($instance instanceof Metric) {
+                    $data[] = $instance->display();
+                }
+            }
+        }
+
+        return $data;
     }
 }

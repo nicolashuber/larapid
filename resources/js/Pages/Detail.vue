@@ -1,5 +1,5 @@
 <template>
-    <app :menu="menu" :user="user" :flash="flash">
+    <app :app="app">
         <l-page-header :title="$t('page.detail')">
             <l-btn v-if="backRoute" type="submit" variant="outline-secondary" :href="backRoute">
                 {{ $t('btn.goback') }}
@@ -36,9 +36,9 @@ export default {
         App
     },
     props: {
-        menu: {
+        app: {
             type: Object,
-            default: []
+            required: true
         },
         data: {
             type: Object,
@@ -50,14 +50,6 @@ export default {
         },
         relations: {
             type: Object
-        },
-        user: {
-            type: Object,
-            required: true
-        },
-        flash: {
-            type: Object,
-            required: true
         },
         backRoute: {
             type: String,

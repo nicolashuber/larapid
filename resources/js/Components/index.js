@@ -22,6 +22,7 @@ import Form from './Form'
 import Icon from './Icon'
 import Panel from './Panel'
 import Search from './Search'
+import Metric from './Metric'
 import Loading from './Loading'
 import Pagination from './Pagination'
 import DataTable from './DataTable'
@@ -53,6 +54,7 @@ export default {
     'icon': Icon,
     'panel': Panel,
     'search': Search,
+    'metric': Metric,
     'loading': Loading,
     'pagination': Pagination,
     'data-table': DataTable,

@@ -1,5 +1,5 @@
 <template>
-    <app :menu="menu" :user="user" :flash="flash">
+    <app :app="app">
         <l-page-header :title="$t('page.index')">
             <div class="d-flex justify-content-between">
                 <l-search />
@@ -20,9 +20,9 @@ export default {
         App
     },
     props: {
-        menu: {
+        app: {
             type: Object,
-            default: []
+            required: true
         },
         data: {
             type: Object,
@@ -34,14 +34,6 @@ export default {
         },
         createRoute: {
             type: String,
-            required: true
-        },
-        user: {
-            type: Object,
-            required: true
-        },
-        flash: {
-            type: Object,
             required: true
         }
     }
