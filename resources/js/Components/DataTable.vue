@@ -48,10 +48,10 @@
                     {{ $t('datatable.perPage') }}
                 </div>
                 <l-select v-model="perPage" :options="perPageOptions" @input="refresh" />
-                <l-btn size="sm" variant="outline-secondary" class="ms-3" @click="exportCSV">
+                <l-btn size="sm" variant="outline-secondary" class="ms-3" :disabled="data.data.length === 0" @click="exportCSV">
                     {{ $t('btn.export-csv') }}
                 </l-btn>
-                <l-btn size="sm" variant="outline-secondary" class="ms-1" @click="exportPDF">
+                <l-btn size="sm" variant="outline-secondary" class="ms-1" :disabled="data.data.length === 0" @click="exportPDF">
                     {{ $t('btn.export-pdf') }}
                 </l-btn>
             </div>

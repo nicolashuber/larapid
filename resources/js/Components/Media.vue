@@ -42,11 +42,12 @@ export default {
             required: true
         },
         modelValue: {
-            type: Object
+            type: Number
         },
     },
     data () {
         return {
+            error: null,
             loading: false,
             isDragover: false,
             previewUrl: null

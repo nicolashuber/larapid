@@ -75,19 +75,18 @@ class BelongsTo extends Relational
             $model = $entity->model();
             $value = $this->getValue();
             $primaryKey = $model->getKeyName();
+            $query = $model->query();
 
             if (! $this->isAjax) {
-                $query =  $model->query();
-
                 if ($this->customQueryCb) {
                     $query = call_user_func($this->customQueryCb, $query);
                 }
 
                 $data = $query->pluck($entity::$titleColumn, $primaryKey)->all();
             } else if ($value) {
-                if (isset($value->$primaryKey)) {
-                    $default = $entity->title($model->find($value->$primaryKey));
-                }
+                $column = $this->getColumn();
+
+                $default = $entity->title($model->find($value->$column));
             }
         }
 
