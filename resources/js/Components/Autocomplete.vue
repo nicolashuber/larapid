@@ -10,13 +10,13 @@
             @focus="onFocus"
             @input="onInput"
         />
-        <ul v-show="focus && suggestions.length > 0" class="list-unstyled autocomplete-dropdown">
+        <ul v-if="focus && suggestions.length > 0" class="list-unstyled autocomplete-dropdown">
             <li v-for="option in suggestions" :key="option.id" class="autocomplete-option">
                 <a href="#" class="text-decoration-none" @click.prevent="setOption(option)">
                     {{ option.text }}
                 </a>
             </li>
-            <li v-show="arrayOptions.length > maxResults" class="autocomplete-results py-2 text-center">
+            <li v-if="arrayOptions.length > maxResults" class="autocomplete-results py-2 text-center">
                 Exibindo {{ maxResults }} resultados, pesquise para filtrar
             </li>
         </ul>
@@ -69,7 +69,7 @@ export default {
             loading: false,
         }
     },
-    mounted () {
+    beforeMount () {
         if (this.isServerSearch) {
             this.filter = this.options.default
         } else if (this.modelValue) {
@@ -96,14 +96,16 @@ export default {
         },
 
         suggestions () {
-            if (this.arrayOptions.length > 0) {
+            const options = [...this.arrayOptions]
+
+            if (options.length > 0) {
                 if (! this.filter) {
-                    return this.arrayOptions.splice(0, this.maxResults)
+                    return options.splice(0, this.maxResults)
                 }
 
                 const query = this.filter.toLowerCase()
 
-                return this.arrayOptions.filter(item => item.text && item.text.toLowerCase().includes(query) && item.text !== this.filter).splice(0, this.maxResults)
+                return options.filter(item => item.text && item.text.toLowerCase().includes(query) && item.text !== this.filter).splice(0, this.maxResults)
             }
 
             return []

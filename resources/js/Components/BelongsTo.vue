@@ -3,6 +3,7 @@
         <l-autocomplete
             :options="options"
             :modelValue="modelValue"
+            :hasError="hasError"
             @change="onChange"
         />
     </div>

@@ -5,7 +5,7 @@
         </label>
         <div :class="{ 'col-sm-10': horizontal }">
             <slot />
-            <div v-if="error" class="invalid-feedback">
+            <div v-if="error" class="invalid-feedback d-block">
                 {{ error }}
             </div>
             <div v-if="help" class="form-text">
