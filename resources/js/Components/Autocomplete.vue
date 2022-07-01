@@ -10,14 +10,11 @@
             @focus="onFocus"
             @input="onInput"
         />
-        <ul v-if="focus && suggestions.length > 0" class="list-unstyled autocomplete-dropdown">
+        <ul v-show="focus && suggestions.length > 0" class="list-unstyled autocomplete-dropdown">
             <li v-for="option in suggestions" :key="option.id" class="autocomplete-option">
                 <a href="#" class="text-decoration-none" @click.prevent="setOption(option)">
                     {{ option.text }}
                 </a>
-            </li>
-            <li v-if="arrayOptions.length > maxResults" class="autocomplete-results py-2 text-center">
-                Exibindo {{ maxResults }} resultados, pesquise para filtrar
             </li>
         </ul>
         <ul v-if="focus && dirty && suggestions.length === 0" class="list-unstyled autocomplete-dropdown">
@@ -50,10 +47,6 @@ export default {
         required: {
             type: Boolean,
             default: false
-        },
-        maxResults: {
-            type: Number,
-            default: 4
         },
         hasError: {
             type: Boolean,
@@ -88,27 +81,19 @@ export default {
         arrayOptions () {
             const data = this.isServerSearch ? this.data : this.options.data
 
-            if (Object.entries(data).length > 0) {
-                return Object.entries(data).map((e) => ( { id: e[0], text: e[1] } ))
-            }
-
-            return {}
+            return Object.entries(data).map((e) => ( { id: e[0], text: e[1] } ))
         },
 
         suggestions () {
             const options = [...this.arrayOptions]
 
-            if (options.length > 0) {
-                if (! this.filter) {
-                    return options.splice(0, this.maxResults)
-                }
-
-                const query = this.filter.toLowerCase()
-
-                return options.filter(item => item.text && item.text.toLowerCase().includes(query) && item.text !== this.filter).splice(0, this.maxResults)
+            if (! this.filter || this.isServerSearch) {
+                return options
             }
 
-            return []
+            const query = this.filter.toLowerCase()
+
+            return options.filter(item => item.text && item.text.toLowerCase().includes(query) && item.text !== this.filter) || []
         },
 
         isServerSearch () {

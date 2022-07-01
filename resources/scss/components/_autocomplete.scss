@@ -3,6 +3,9 @@
 
     &-dropdown {
         width: 100%;
+        max-height: 200px;
+        overflow-y: auto;
+        background: $gray-100;
         position: absolute;
         top: 100%;
         margin-top: .5rem;
@@ -18,11 +21,5 @@
         & + & {
             border-top: 1px solid $gray-200;
         }
-    }
-
-    &-results {
-        font-size: .75rem;
-        background: darken($gray-200, .1);
-        border-top: 1px solid $gray-200;
     }
 }

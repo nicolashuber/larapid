@@ -10,9 +10,10 @@ class DataController extends Controller
 {
     public function search(Entity $entity, Request $request)
     {
-        $query = $request->input('query');
+        $value = $request->input('query');
+        $query = $entity::$model::where($entity::$titleColumn, 'LIKE', "%$value%");
 
-        return $entity::$model::where($entity::$titleColumn, 'LIKE', "%$query%")->paginate(8)->mapWithKeys(function($item) use ($entity) {
+        return $query->paginate(8)->mapWithKeys(function($item) use ($entity) {
             return [$item->id => $entity->title($item)];
         });
     }
