@@ -82,7 +82,11 @@ class BelongsTo extends Relational
                     $query = call_user_func($this->customQueryCb, $query);
                 }
 
-                $data = $query->pluck($entity::$titleColumn, $primaryKey)->all();
+                $data = $query->limit(500)->get()->mapWithKeys(function ($item) use ($entity, $primaryKey) {
+                    return [
+                        $item->$primaryKey => $entity->title($item)
+                    ];
+                });
             } else if ($value) {
                 $column = $this->getColumn();
 

@@ -22,7 +22,7 @@
                 <tbody>
                     <tr v-for="(item, index) in data.data" :key="index">
                         <td v-for="(header, column) in headers" :key="column" v-html="item[column]" />
-                        <td v-if="item.larapid.routes" class="text-center" :width="getActionWidth(item.larapid.routes)">
+                        <td v-if="item.larapid && item.larapid.routes" class="text-center" :width="getActionWidth(item.larapid.routes)">
                             <l-btn v-if="item.larapid.routes.edit" :href="item.larapid.routes.edit" size="sm" variant="outline-info" class="me-2">
                                 {{ $t('btn.edit') }}
                             </l-btn>
